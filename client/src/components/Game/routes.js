@@ -5,17 +5,20 @@ import { Route, IndexRoute } from 'react-router';
 import RequireAuth from '../auth/require_auth';
 
 import Game from './components/index.js'
+import ActionList from './components/Action'
+import CharacterDetail from './components/Character/Detail'
+import LocationDetail from './components/Location/Detail'
 
 export default (
-  <Route path='play'>
+  <Route path='game'>
     <IndexRoute component={RequireAuth(Game)} />
-
+    <Route path='action' component={RequireAuth(ActionList)} />
+    <Route path='character/:name' component={RequireAuth(CharacterDetail)} />
+    <Route path='location/:name' component={RequireAuth(LocationDetail)} />
   </Route>
 );
-    // <Route path='action' component={RequireAuth(Action)} />
     // <Route path='action/:name' component={RequireAuth(ActionDetail)} />
     // <Route path='messages' component={RequireAuth(Messages)} />
-    // <Route path='character/:name' component={RequireAuth(Character)} />
     // <Route path='character/:name/attack' component={RequireAuth(AttackCharacter)} />
     // <Route path='location/:name' component={RequireAuth(Location)} />
     // <Route path='location/:name/charms' component={RequireAuth(Charms)} />

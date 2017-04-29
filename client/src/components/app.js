@@ -11,8 +11,6 @@ class App extends Component {
         <div className="container">
           {this.props.children}
         </div>
-
-        <FooterTemplate />
       </div>
     );
   }

@@ -15,10 +15,10 @@ const config = {
       test: /\.(js|jsx)$/,
       loader: 'babel',
     },
-      {
-        test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css!sass'),
-      }],
+    {
+      test: /\.scss$/,
+      loader: ExtractTextPlugin.extract('css!sass'),
+    }],
   },
   devServer: {
     historyApiFallback: true,

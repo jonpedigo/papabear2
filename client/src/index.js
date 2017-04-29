@@ -13,6 +13,8 @@ import { AUTH_USER } from './actions/types';
 // Import stylesheets
 import './public/stylesheets/base.scss';
 
+import './components/Game/components/index.scss';
+
 // Initialize Google Analytics
 ReactGA.initialize('UA-000000-01');
 

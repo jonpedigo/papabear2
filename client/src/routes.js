@@ -36,8 +36,6 @@ import AdminDashboard from './components/admin/dashboard';
 // Import higher order components
 import RequireAuth from './components/auth/require_auth';
 
-console.log(GameRoutes)
-
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={HomePage} />
