@@ -6,7 +6,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <HeaderTemplate logo="Your Site" />
+        <HeaderTemplate logo="Papa Bear 2" />
 
         <div className="container">
           {this.props.children}

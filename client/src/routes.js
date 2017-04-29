@@ -3,6 +3,8 @@ import { Route, IndexRoute } from 'react-router';
 
 // Import miscellaneous routes and other requirements
 import App from './components/app';
+import GameRoutes from './components/Game/routes';
+
 import NotFoundPage from './components/pages/not-found-page';
 
 // Import static pages
@@ -34,6 +36,8 @@ import AdminDashboard from './components/admin/dashboard';
 // Import higher order components
 import RequireAuth from './components/auth/require_auth';
 
+console.log(GameRoutes)
+
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={HomePage} />
@@ -49,6 +53,8 @@ export default (
     <Route path="billing/settings" component={RequireAuth(BillingSettings)} />
 
     <Route path="profile" component={RequireAuth(ViewProfile)} />
+
+    {GameRoutes}
 
     <Route path="admin" component={RequireAuth(AdminDashboard)} />
 
