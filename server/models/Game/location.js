@@ -1,20 +1,24 @@
 // Importing Node packages required for schema
 const mongoose = require('mongoose');
+const extend = require('mongoose-schema-extend');
 
 const Schema = mongoose.Schema;
 
 //= ===============================
-// User Schema
+// Location Schema
 //= ===============================
 const LocationSchema = new Schema({
-  name: { type : String }
-  activities: {
-    type: [],
-  },
+  name: { type : String },
+  actionsAvailable: [ { type : String } ],
   private: { type : Boolean },
+  description: { type : String },
   teamId: {
     type: Schema.Types.ObjectId,
     ref: 'Team'
+  },
+  category : {
+    enum: ['mine', 'field', 'lumberyard', 'barracks', 'sewers', 'tower', 'gate', 'supplyDepot', 'royalChambers', 'townCenter'],
+    type: String
   },
   supply: {
     type: [],
@@ -23,7 +27,17 @@ const LocationSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Conversation'
   },
-  occupants: [{ type: Schema.Types.ObjectId, ref: 'Character' }]
+  teamId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Team'
+  },
+  occupants: [{ type: Schema.Types.ObjectId, ref: 'Character' }],
+  capacity: {
+    type : Number
+  },
+  removed: {
+    type : Boolean
+  }
 },
 {
   timestamps: true
@@ -33,8 +47,6 @@ const LocationSchema = new Schema({
 // Location ORM Methods
 //= ===============================
 
-
-// Method to compare password for login
 LocationSchema.methods.allowAccess = function (candidate, cb) {
 
 

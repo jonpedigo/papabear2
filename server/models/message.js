@@ -1,5 +1,6 @@
 const mongoose = require('mongoose'),
   Schema = mongoose.Schema;
+const extend = require('mongoose-schema-extend');
 
 const MessageSchema = new Schema({
   conversationId: {
@@ -12,11 +13,39 @@ const MessageSchema = new Schema({
   },
   author: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'Character'
   }
 },
-  {
-    timestamps: true // Saves createdAt and updatedAt as dates. createdAt will be our timestamp.
-  });
+{
+  timestamps: true // Saves createdAt and updatedAt as dates. createdAt will be our timestamp.
+});
+
+const LogSchema = MessageSchema.extend({
+  log: {
+    type: Boolean,
+    default : true
+  },
+  actors: [{
+    replace: { type: String },
+    value : {
+      type: Schema.Types.ObjectId,
+      ref: 'Character'
+    }
+  }],
+  props : [{
+    replace: { type: String },
+    value : {
+      type: Schema.Types.ObjectId,
+      ref: 'Item'
+    }
+  }],
+  settings : [{
+    replace: { type: String },
+    value : {
+      type: Schema.Types.ObjectId,
+      ref: 'Location'
+    }
+  }]
+})
 
 module.exports = mongoose.model('Message', MessageSchema);

@@ -1,13 +1,14 @@
 // Importing Node packages required for schema
 const mongoose = require('mongoose');
+const SKILLS = require('../../constants').SKILLS
 
 const Schema = mongoose.Schema;
 
 //= ===============================
-// User Schema
+// Character Schema
 //= ===============================
 const CharacterSchema = new Schema({
-  firstName: { type : String },
+  name: { type : String },
   familyId : {
     type: Schema.Types.ObjectId,
     ref: 'Family'
@@ -15,6 +16,10 @@ const CharacterSchema = new Schema({
   teamId: {
     type: Schema.Types.ObjectId,
     ref: 'Team'
+  },
+  currentAction : {
+    type: Schema.Types.ObjectId,
+    ref: 'Action'
   },
   equipment : {
     charm : {
@@ -25,6 +30,17 @@ const CharacterSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Item'
     }
+  },
+  damage : {
+    type: Number 
+  },
+  logs: [{ type: Schema.Types.ObjectId, ref: 'Log' }],
+  skills : SKILLS.reduce((obj, skill) => obj[skill] = {type : Number}, {}),
+  dead: {
+    type: Boolean
+  },
+  removed: {
+    type : Boolean
   }
 },
 {
@@ -37,7 +53,7 @@ const CharacterSchema = new Schema({
 
 
 // Method to compare password for login
-CharacterSchema.methods.allowAccess = function (candidate, cb) {
+CharacterSchema.methods.death = function (cb) {
 
 
 };

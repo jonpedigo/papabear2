@@ -25,6 +25,16 @@ const io = require('socket.io').listen(server);
 
 socketEvents(io);
 
+//just testing syntax of models
+require('./models/Game/action')
+require('./models/Game/character')
+require('./models/Game/family')
+require('./models/Game/item')
+require('./models/Game/location')
+require('./models/Game/team')
+require('./models/Game/game')
+
+
 // Set static file location for production
 // app.use(express.static(__dirname + '/public'));
 
