@@ -45,12 +45,27 @@ GameSchema.methods.start = function (cb) {
 }
 
 GameSchema.methods.init = function (cb) {
-
+  let game = {
+    stateMap : {},
+    onlineCharacters : {},
+    sockets: {}
+  }
 }
 
 GameSchema.methods.update = function (cb) {
   this.nodes.forEach((node) => {
-    node.value.update(this.stateRef)
+    node.value.update(this.stateMap)
+  })
+}
+
+GameSchema.methods.update = function (cb) {
+  this.onlineCharacters.forEach((character) => {
+    let diff = {}
+    // chats/logs should be instant!
+    // get game metadata (map information, kingdom destroyed)
+    // get data about current location
+    // get data about player
+    this.sockets[character._id].emit('update_state', diff)
   })
 }
 
@@ -64,35 +79,9 @@ GameSchema.methods.restore = function (cb) {
 
 module.exports = mongoose.model('Game', GameSchema)
 
-//combat maybe should be on the loop....player intereaction stuff can get messy if peoeple decide to attack eachotheer. Just send time stamp of when the request is recieved? I mean this is an issue on any mltiplayer Game
-//TWO PEOPLE try to enter the same location at the same time?
-//two people try to use the same materials at the same time? 
-
 // What needs updating on a loop?
 // player actions.....other than that...nothing? AI? papa bear?
 // player actions and NPCS essentially
-
-// start action
-// end action
-
-// requests neccesary
-// sneak into ___
-// steal item
-// check levels
-
-// plant bug
-
-// attack person
-// send troops to Location
-
-// craft item
-// equip
-// give
-
-// send chat
-// store log
-
-// go
 
 // need to save on loop
 // characters, families (EXPERIENCE)

@@ -1,16 +1,16 @@
-const AuthenticationController = require('./controllers/authentication');
-const UserController = require('./controllers/user');
-const ChatController = require('./controllers/chat');
-const CommunicationController = require('./controllers/communication');
-const StripeController = require('./controllers/stripe');
+const AuthenticationController = require('../controllers/authentication');
+const UserController = require('../controllers/user');
+const ChatController = require('../controllers/chat');
+const CommunicationController = require('../controllers/communication');
+const StripeController = require('../controllers/stripe');
 const express = require('express');
 const passport = require('passport');
-const ROLE_MEMBER = require('./constants').ROLE_MEMBER;
-const ROLE_CLIENT = require('./constants').ROLE_CLIENT;
-const ROLE_OWNER = require('./constants').ROLE_OWNER;
-const ROLE_ADMIN = require('./constants').ROLE_ADMIN;
+const ROLE_MEMBER = require('../constants').ROLE_MEMBER;
+const ROLE_CLIENT = require('../constants').ROLE_CLIENT;
+const ROLE_OWNER = require('../constants').ROLE_OWNER;
+const ROLE_ADMIN = require('../constants').ROLE_ADMIN;
 
-const passportService = require('./config/passport');
+const passportService = require('../config/passport');
 
 // Middleware to require login/auth
 const requireAuth = passport.authenticate('jwt', { session: false });

@@ -15,6 +15,11 @@ exports = module.exports = function (io) {
       // console.log('joined ' + conversation);
     });
 
+    socket.on('leave game', (gameId) => {
+      socket.leave(gameId);
+      // console.log('joined ' + conversation);
+    });
+
     socket.on('leave conversation', (conversation) => {
       socket.leave(conversation);
       // console.log('left ' + conversation);
