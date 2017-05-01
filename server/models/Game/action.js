@@ -15,10 +15,6 @@ const ActionSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Location'
   },
-  characterId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Location'
-  },
   removed: {
     type: Boolean
   }

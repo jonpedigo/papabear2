@@ -9,6 +9,12 @@ exports = module.exports = function (io) {
       // console.log('joined ' + conversation);
     });
 
+    // On conversation entry, join broadcast channel
+    socket.on('join game', (gameId) => {
+      socket.join(gameId);
+      // console.log('joined ' + conversation);
+    });
+
     socket.on('leave conversation', (conversation) => {
       socket.leave(conversation);
       // console.log('left ' + conversation);
