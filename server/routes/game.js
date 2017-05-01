@@ -1,20 +1,21 @@
 const express = require('express')
 const passport = require('passport')
 
+const gameController = require('../controllers/game')
+const actionController = require('../controllers/action')
+const combatController = require('../controllers/combat')
+const craftingController = require('../controllers/crafting')
+const notificationController = require('../controllers/notification')
+const stealthController = require('../controllers/stealth')
+const travelController = require('../controllers/travel')
+const warController = require('../controllers/war')
+
 // Middleware to require login/auth
 const requireAuth = passport.authenticate('jwt', { session: false })
 const requireLogin = passport.authenticate('local', { session: false })
 
 module.exports = function (app, io) {
 
-  const actionController = require('../controllers/action')(io)
-  const combatController = require('../controllers/combat')(io)
-  const craftingController = require('../controllers/crafting')(io)
-  const gameController = require('../controllers/game')(io)
-  const notificationController = require('../controllers/notification')(io)
-  const stealthController = require('../controllers/stealth')(io)
-  const travelController = require('../controllers/travel')(io)
-  const warController = require('../controllers/war')(io)
 
   //all the controllers also need the game.....which we get from the route
 

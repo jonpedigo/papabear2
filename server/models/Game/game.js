@@ -16,6 +16,9 @@ const GameSchema = new Schema({
     ref: { type: String },
     value: { id: Schema.Types.ObjectId, refPath: 'nodes.ref' }
   }]},
+  lifespan: {
+    ref: { type: String }
+  },
   removed: {
     type: Boolean
   }
