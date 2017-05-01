@@ -53,8 +53,29 @@ const WeaponSchema = ItemSchema.extend({
 
 const Weapon = mongoose.model('Weapon', WeaponSchema)
 
+// = ===============================
+// Bug Schema
+// = ===============================
+const BugSchema = ItemSchema.extend({
+  category: {
+    type: String,
+    default: 'charm'
+  },
+  ownerId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Character'
+  },
+  slot: {
+    type: String,
+    default: 'defense'
+  }
+})
+
+const Bug = mongoose.model('Bug', BugSchema)
+
 module.exports = {
   Item,
   Charm,
-  Weapon
+  Weapon,
+  Bug
 }

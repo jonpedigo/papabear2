@@ -21,7 +21,11 @@ const CharacterSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Action'
   },
-  equipment: {
+  currentLocation: {
+    type: Schema.Types.ObjectId,
+    ref: 'Location'
+  },
+  slots: {
     charm: {
       type: Schema.Types.ObjectId,
       ref: 'Item'
@@ -29,12 +33,15 @@ const CharacterSchema = new Schema({
     weapon: {
       type: Schema.Types.ObjectId,
       ref: 'Item'
-    }
+    },
+    bugs: [ {
+      type: Schema.Types.ObjectId,
+      ref: 'Item'
+    }]
   },
   damage: {
     type: Number
   },
-  logs: [{ type: Schema.Types.ObjectId, ref: 'Log' }],
   skills: SKILLS.reduce((obj, skill) => obj[skill] = {type: Number}, {}),
   dead: {
     type: Boolean

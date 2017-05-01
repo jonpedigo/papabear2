@@ -14,7 +14,6 @@ const FamilySchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Team'
   },
-  characters: [{ type: Schema.Types.ObjectId, ref: 'Character' }],
   skills: SKILLS.reduce((obj, skill) => obj[skill] = {type: Number}, {}),
   removed: {
     type: Boolean

@@ -11,7 +11,7 @@ const TeamSchema = new Schema({
   name: { type: String },
   characters: [{ type: Schema.Types.ObjectId, ref: 'Character' }],
   king: {
-    equipment: {
+    slots: {
       charm: {
         type: Schema.Types.ObjectId,
         ref: 'Item'
