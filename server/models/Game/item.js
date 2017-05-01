@@ -1,58 +1,57 @@
 // Importing Node packages required for schema
-const mongoose = require('mongoose');
-const extend = require('mongoose-schema-extend');
+const mongoose = require('mongoose')
+const extend = require('mongoose-schema-extend')
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
-//= ===============================
+// = ===============================
 // Item Schema
-//= ===============================
+// = ===============================
 const ItemSchema = new Schema({
-  name: { type : String },
-  category :  { 
+  name: { type: String },
+  category: {
     enum: ['charm', 'weapon', 'ore', 'wood', 'animal'],
-    type : String
+    type: String
   },
   removed: {
-    type : Boolean
+    type: Boolean
   },
-  image : { type : String }
-});
+  image: { type: String }
+})
 
-const Item = mongoose.model('Item', ItemSchema);
+const Item = mongoose.model('Item', ItemSchema)
 
-//= ===============================
+// = ===============================
 // Charm Schema
-//= ===============================
+// = ===============================
 const CharmSchema = ItemSchema.extend({
-  category :  { 
-    type : String,
-    default : "charm"
+  category: {
+    type: String,
+    default: 'charm'
   },
-  slot : { 
-    type : String,
-    default: "defense"
+  slot: {
+    type: String,
+    default: 'defense'
   }
-});
+})
 
+const Charm = mongoose.model('Charm', CharmSchema)
 
-const Charm = mongoose.model('Charm', CharmSchema);
-
-//= ===============================
+// = ===============================
 // Weapon Schema
-//= ===============================
+// = ===============================
 const WeaponSchema = ItemSchema.extend({
-  category :  { 
-    type : String,
-    default : "weapon"
+  category: {
+    type: String,
+    default: 'weapon'
   },
-  slot : { 
-    type : String,
-    default: "offense"
+  slot: {
+    type: String,
+    default: 'offense'
   }
-});
+})
 
-const Weapon = mongoose.model('Weapon', WeaponSchema);
+const Weapon = mongoose.model('Weapon', WeaponSchema)
 
 module.exports = {
   Item,

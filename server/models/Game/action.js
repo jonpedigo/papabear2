@@ -1,14 +1,13 @@
 // Importing Node packages required for schema
-const mongoose = require('mongoose');
-const extend = require('mongoose-schema-extend');
+const mongoose = require('mongoose')
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
-//= ===============================
+// = ===============================
 // Action Schema
-//= ===============================
+// = ===============================
 const ActionSchema = new Schema({
-  category : {
+  category: {
     enum: ['woodcutting', 'mining', 'herding', 'training', 'guarding'],
     type: String
   },
@@ -16,20 +15,18 @@ const ActionSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Location'
   },
-  characterId : {
+  characterId: {
     type: Schema.Types.ObjectId,
     ref: 'Location'
   },
   removed: {
-    type : Boolean
+    type: Boolean
   }
-},
-{
+}, {
   timestamps: true
 })
 
-const Action = mongoose.model('Action', ActionSchema);
-
+const Action = mongoose.model('Action', ActionSchema)
 
 // //= ===============================
 // // Woodcutting Schema
@@ -44,10 +41,9 @@ const Action = mongoose.model('Action', ActionSchema);
 
 // WoodcuttingSchema.method.update = function(character, cb){
 
-// };
+// }
 
-// const Woodcutting = mongoose.model('Woodcutting', WoodcuttingSchema);
-
+// const Woodcutting = mongoose.model('Woodcutting', WoodcuttingSchema)
 
 // //= ===============================
 // // Mining Schema
@@ -62,9 +58,9 @@ const Action = mongoose.model('Action', ActionSchema);
 
 // MiningSchema.method.update = function(character, cb){
 
-// };
+// }
 
-// const Mining = mongoose.model('Mining', MiningSchema);
+// const Mining = mongoose.model('Mining', MiningSchema)
 
 // //= ===============================
 // // Herding Schema
@@ -79,9 +75,9 @@ const Action = mongoose.model('Action', ActionSchema);
 
 // HerdingSchema.method.update = function(character, cb){
 
-// };
+// }
 
-// const Herding = mongoose.model('Herding', HerdingSchema);
+// const Herding = mongoose.model('Herding', HerdingSchema)
 
 // //= ===============================
 // // Training Schema
@@ -99,9 +95,9 @@ const Action = mongoose.model('Action', ActionSchema);
 
 // TrainingSchema.method.update = function(character, cb){
 
-// };
+// }
 
-// const Training = mongoose.model('Training', TrainingSchema);
+// const Training = mongoose.model('Training', TrainingSchema)
 
 // //= ===============================
 // // Gurading Schema
@@ -116,9 +112,9 @@ const Action = mongoose.model('Action', ActionSchema);
 
 // GuardingSchema.method.update = function(character, cb){
 
-// };
+// }
 
-// const Guarding = mongoose.model('Guarding', GuardingSchema);
+// const Guarding = mongoose.model('Guarding', GuardingSchema)
 
 // module.exports = {
 //   Action,
@@ -130,4 +126,3 @@ const Action = mongoose.model('Action', ActionSchema);
 // }
 
 module.exports = Action
-

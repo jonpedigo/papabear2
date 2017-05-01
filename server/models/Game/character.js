@@ -1,15 +1,15 @@
 // Importing Node packages required for schema
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 const SKILLS = require('../../constants').SKILLS
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
-//= ===============================
+// = ===============================
 // Character Schema
-//= ===============================
+// = ===============================
 const CharacterSchema = new Schema({
-  name: { type : String },
-  familyId : {
+  name: { type: String },
+  familyId: {
     type: Schema.Types.ObjectId,
     ref: 'Family'
   },
@@ -17,22 +17,22 @@ const CharacterSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Team'
   },
-  currentAction : {
+  currentAction: {
     type: Schema.Types.ObjectId,
     ref: 'Action'
   },
-  equipment : {
-    charm : {
+  equipment: {
+    charm: {
       type: Schema.Types.ObjectId,
       ref: 'Item'
     },
-    weapon : {
+    weapon: {
       type: Schema.Types.ObjectId,
       ref: 'Item'
     }
   },
-  damage : {
-    type: Number 
+  damage: {
+    type: Number
   },
   logs: [{ type: Schema.Types.ObjectId, ref: 'Log' }],
   skills : SKILLS.reduce((obj, skill) => obj[skill] = {type : Number}, {}),
@@ -40,22 +40,19 @@ const CharacterSchema = new Schema({
     type: Boolean
   },
   removed: {
-    type : Boolean
+    type: Boolean
   }
-},
-{
+}, {
   timestamps: true
-});
+})
 
-//= ===============================
+// = ===============================
 // Character ORM Methods
-//= ===============================
-
+// = ===============================
 
 // Method to compare password for login
 CharacterSchema.methods.death = function (cb) {
 
+}
 
-};
-
-module.exports = mongoose.model('Character', CharacterSchema);
+module.exports = mongoose.model('Character', CharacterSchema)

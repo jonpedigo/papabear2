@@ -1,18 +1,18 @@
 // Importing Node packages required for schema
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 const KINGDOM_LOCATIONS = require('../../constants').KINGDOM_LOCATIONS
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
-//= ===============================
+// = ===============================
 // Team Schema
-//= ===============================
+// = ===============================
 const TeamSchema = new Schema({
-  name: { type : String },
+  name: { type: String },
   characters: [{ type: Schema.Types.ObjectId, ref: 'Character' }],
-  king : {
-    equipment : {
-      charm : {
+  king: {
+    equipment: {
+      charm: {
         type: Schema.Types.ObjectId,
         ref: 'Item'
       },
@@ -26,26 +26,24 @@ const TeamSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Action'
   },
-  locations : KINGDOM_LOCATIONS.reduce((obj, skill) => obj[skill] = {type: Schema.Types.ObjectId, ref: 'Locaton'}, {}),
+  locations: KINGDOM_LOCATIONS.reduce((obj, skill) => obj[skill] = {type: Schema.Types.ObjectId, ref: 'Locaton'}, {}),
   dead: {
-    type : Boolean
+    type: Boolean
   },
   removed: {
-    type : Boolean
+    type: Boolean
   }
-},
-{
+}, {
   timestamps: true
-});
+})
 
-//= ===============================
+// = ===============================
 // Team ORM Methods
-//= ===============================
+// = ===============================
 
 // Method to compare password for login
 TeamSchema.methods.destroy = function (cb) {
 
+}
 
-};
-
-module.exports = mongoose.model('Team', TeamSchema);
+module.exports = mongoose.model('Team', TeamSchema)
