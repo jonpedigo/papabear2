@@ -41,7 +41,6 @@ const TeamSchema = new Schema({
 // Team ORM Methods
 // = ===============================
 
-// Method to compare password for login
 TeamSchema.methods.destroy = function (cb) {
 
 }

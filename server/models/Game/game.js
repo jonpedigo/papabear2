@@ -20,7 +20,6 @@ const GameSchema = new Schema({
 // Game ORM Methods
 // = ===============================
 
-// Method to compare password for login
 GameSchema.methods.destroy = function (cb) {
 
 }

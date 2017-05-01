@@ -35,7 +35,7 @@ const CharacterSchema = new Schema({
     type: Number
   },
   logs: [{ type: Schema.Types.ObjectId, ref: 'Log' }],
-  skills : SKILLS.reduce((obj, skill) => obj[skill] = {type : Number}, {}),
+  skills: SKILLS.reduce((obj, skill) => obj[skill] = {type: Number}, {}),
   dead: {
     type: Boolean
   },
@@ -50,7 +50,6 @@ const CharacterSchema = new Schema({
 // Character ORM Methods
 // = ===============================
 
-// Method to compare password for login
 CharacterSchema.methods.death = function (cb) {
 
 }

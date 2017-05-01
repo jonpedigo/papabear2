@@ -27,7 +27,6 @@ const FamilySchema = new Schema({
 // Family ORM Methods
 // = ===============================
 
-// Method to compare password for login
 FamilySchema.methods.createCharacter = function (cb) {
 
 }
