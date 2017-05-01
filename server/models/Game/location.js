@@ -43,6 +43,10 @@ const LocationSchema = new Schema({
     type: Boolean,
     default: false
   },
+  // only on resource locations
+  exhaustion: {
+    type: Number
+  },
   removed: {
     type: Boolean
   }
