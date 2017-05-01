@@ -24,25 +24,25 @@ module.exports = mongoose.model('Message', MessageSchema)
 const LogSchema = MessageSchema.extend({
   log: {
     type: Boolean,
-    default : true
+    default: true
   },
   actors: [{
     replace: { type: String },
-    value : {
+    value: {
       type: Schema.Types.ObjectId,
       ref: 'Character'
     }
   }],
-  props : [{
+  props: [{
     replace: { type: String },
-    value : {
+    value: {
       type: Schema.Types.ObjectId,
       ref: 'Item'
     }
   }],
-  settings : [{
+  settings: [{
     replace: { type: String },
-    value : {
+    value: {
       type: Schema.Types.ObjectId,
       ref: 'Location'
     }
