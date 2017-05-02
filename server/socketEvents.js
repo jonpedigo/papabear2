@@ -3,6 +3,8 @@ exports = module.exports = function (io) {
   io.on('connection', (socket) => {
     // console.log('a user connected');
 
+    socket.emit('update game', { locations : [0,1], player : { a: 1 } })
+
     // On conversation entry, join broadcast channel
     socket.on('enter conversation', (conversation) => {
       socket.join(conversation);

@@ -8,11 +8,12 @@ import cookie from 'react-cookie';
 import routes from './routes';
 import reducers from './reducers/index';
 import ReactGA from 'react-ga';
-import { AUTH_USER } from './actions/types';
+import { AUTH_USER, UPDATE_GAME } from './actions/types';
+
+import socket from './actions/socket'
 
 // Import stylesheets
 import './public/stylesheets/base.scss';
-
 import './components/Game/components/index.scss';
 
 // Initialize Google Analytics
@@ -23,7 +24,13 @@ function logPageView() {
 }
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
+
 const store = createStoreWithMiddleware(reducers);
+
+//update the store when we recieve a game state update from the server
+socket.on('update game', (game) => {
+	store.dispatch({ type: UPDATE_GAME, game: game })
+})
 
 const token = cookie.load('token');
 

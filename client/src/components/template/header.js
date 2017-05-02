@@ -7,13 +7,13 @@ class HeaderTemplate extends Component {
     if (this.props.authenticated) {
       return [
         <li key={`${1}header`}>
-          <Link to='game/action'>Action</Link>
+          <Link to="/">Home</Link>
         </li>,
         <li key={`${2}header`}>
-          <Link to='game/location/red_castle'>Location</Link>
+          <Link to="game">Game</Link>
         </li>,
         <li key={`${3}header`}>
-          <Link to='game/character/sonofjon'>Character</Link>
+          <Link to="logout">Logout</Link>
         </li>,
       ];
     } else {

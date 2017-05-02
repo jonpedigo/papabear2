@@ -1,14 +1,14 @@
 const express = require('express')
 const passport = require('passport')
 
-const gameController = require('../controllers/game')
-const actionController = require('../controllers/action')
-const combatController = require('../controllers/combat')
-const craftingController = require('../controllers/crafting')
-const notificationController = require('../controllers/notification')
-const stealthController = require('../controllers/stealth')
-const travelController = require('../controllers/travel')
-const warController = require('../controllers/war')
+const gameController = require('../controllers/Game/game')
+const actionController = require('../controllers/Game/action')
+const combatController = require('../controllers/Game/combat')
+const craftingController = require('../controllers/Game/crafting')
+const notificationController = require('../controllers/Game/notification')
+const stealthController = require('../controllers/Game/stealth')
+const travelController = require('../controllers/Game/travel')
+const warController = require('../controllers/Game/war')
 
 // Middleware to require login/auth
 const requireAuth = passport.authenticate('jwt', { session: false })

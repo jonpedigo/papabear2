@@ -10,11 +10,11 @@ const GameSchema = new Schema({
   name: { type: String },
   state: { type: [{
     ref: { type: String },
-    value: { id: Schema.Types.ObjectId, refPath: 'state.ref' }
+    value: { type: Schema.Types.ObjectId, refPath: 'state.ref' }
   }]},
   nodes: { type: [{
     ref: { type: String },
-    value: { id: Schema.Types.ObjectId, refPath: 'nodes.ref' }
+    value: { type: Schema.Types.ObjectId, refPath: 'nodes.ref' }
   }]},
   lifespan: {
     ref: { type: String }
@@ -85,6 +85,7 @@ module.exports = mongoose.model('Game', GameSchema)
 // What needs updating on a loop?
 // player actions.....other than that...nothing? AI? papa bear?
 // player actions and NPCS essentially
+// players and location because they have HP
 
 // need to save on loop
 // characters, families (EXPERIENCE)

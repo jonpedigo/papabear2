@@ -1,12 +1,9 @@
 import { reset } from 'redux-form';
 import { browserHistory } from 'react-router';
 import { getData, postData, putData, deleteData } from './index';
-import io from 'socket.io-client';
 import { CHAT_ERROR, FETCH_CONVERSATIONS, FETCH_RECIPIENTS, START_CONVERSATION, SEND_REPLY, FETCH_SINGLE_CONVERSATION } from './types';
-
+import socket from './socket'
 // Connect to socket.io server
-export const socket = io.connect('http://localhost:3000');
-
 
 //= ===============================
 // Messaging actions

@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
-import Navigation from './Navigation';
+import GameCard from './GameCard'
+import { connect } from 'react-redux';
+
 
 class Game extends Component {
   render() {
     return (
       <div>
         <div className="Game">
-          {"WASSUP LETS PLAY"}
+        	<GameCard></GameCard>
         </div>
       </div>
     );
   }
 }
 
-export default Game;
+function mapStateToProps(state) {
+  return {
+    game: state.game,
+  };
+}
+
+export default connect(mapStateToProps)(Game);
