@@ -57,7 +57,17 @@ const CharacterSchema = new Schema({
 // Character ORM Methods
 // = ===============================
 
-CharacterSchema.methods.death = function (cb) {
+CharacterSchema.methods.init = function (state, cb) {
+
+  // tools.populateWithState('currentLocation', 'currentAction', ).bind(this)
+  // function populatewithState(){
+  //  arguments.forEach( (arg) => {
+  //   if (this[arg]) this[arg] = state[this[arg]]
+  // })
+  // }
+  // if (this.currentAction) this.currentAction = state[this.currentAction]
+  // if (this.currentLocation) this.currentLocation = state.locations.find(l => this.currentLocation === l._id)
+  // if (this.currentAction) this.currentAction = state.locations.find(l => this.currentAction === l._id)
 
 }
 

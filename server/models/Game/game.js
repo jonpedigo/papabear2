@@ -10,12 +10,15 @@ const GameSchema = new Schema({
   name: { type: String },
   state: { type: [{
     ref: { type: String },
+    update: { type: Boolean },
     value: { type: Schema.Types.ObjectId, refPath: 'state.ref' }
   }]},
-  nodes: { type: [{
-    ref: { type: String },
-    value: { type: Schema.Types.ObjectId, refPath: 'nodes.ref' }
-  }]},
+
+  // not sure whats necessary yets
+  // nodes: { type: [{
+  //   ref: { type: String },
+  //   value: { type: Schema.Types.ObjectId, refPath: 'nodes.ref' }
+  // }]},
   lifespan: {
     ref: { type: String }
   },
@@ -48,11 +51,25 @@ GameSchema.methods.start = function (cb) {
 }
 
 GameSchema.methods.init = function (cb) {
-  let game = {
-    stateMap : {},
-    onlineCharacters : {},
-    sockets: {}
-  }
+  // restore state from db
+  this.populate('state.value').then(game => {
+    // set all references on all state objects to specific objects, and map based on id and reference AKA {locations, items, actions, characters, teams}
+    let stateMap = game.state.reduce((map, doc) => {
+      doc.init(game.state, () => {
+        // put into reference array
+        if (map[doc.ref]) {
+          map[doc.ref].push(doc.value)
+        } else {
+          map[doc.ref] = doc.value
+        }
+        // set id in map
+        map[doc.value._id] = doc.value
+      })
+    }, {})
+
+    this.stateMap = stateMap
+    //
+  })
 }
 
 GameSchema.methods.update = function (cb) {
@@ -61,6 +78,7 @@ GameSchema.methods.update = function (cb) {
   })
 }
 
+// this model should not actually send socket information out - this should only be responsible for updating the state of the game or its childrens state. move this to game schema
 GameSchema.methods.update = function (cb) {
   this.onlineCharacters.forEach((character) => {
     let diff = {}
@@ -73,10 +91,6 @@ GameSchema.methods.update = function (cb) {
 }
 
 GameSchema.methods.save = function (cb) {
-
-}
-
-GameSchema.methods.restore = function (cb) {
 
 }
 

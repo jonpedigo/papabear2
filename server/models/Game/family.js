@@ -10,6 +10,8 @@ const Schema = mongoose.Schema
 
 const FamilySchema = new Schema({
   name: { type: String },
+
+  // just for now while families are LOCKED to teams and therefore all characters are locked to teams
   teamId: {
     type: Schema.Types.ObjectId,
     ref: 'Team'

@@ -14,6 +14,10 @@ const warController = require('../controllers/Game/war')
 const requireAuth = passport.authenticate('jwt', { session: false })
 const requireLogin = passport.authenticate('local', { session: false })
 
+//should this component handle all the networking?? I REALLY DONT KNOW WHERE TO DO SOCKETS OR SHOULD ALL COMPONENTS BE ABLE TO USE sockets
+/// IT CANT REaLLY BE IN HERE BECAUSE THERES NO ROUTE TO TRIGGER THIS, UNlESS THE GAME STARTING ROUTE DOES IT
+// I CAN EITHER GIVE IT TO EVERY CONTROLLER OR GIVE IT JUST TO THE GAME CONTROLLER
+
 module.exports = function (app, io) {
 
 
