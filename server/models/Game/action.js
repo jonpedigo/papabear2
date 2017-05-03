@@ -16,7 +16,8 @@ const ActionSchema = new Schema({
     ref: 'Location'
   },
   removed: {
-    type: Boolean
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true

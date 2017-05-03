@@ -17,24 +17,24 @@ const CharacterSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Team'
   },
-  currentAction: {
+  currentActionId: {
     type: Schema.Types.ObjectId,
     ref: 'Action'
   },
-  currentLocation: {
+  currentLocationId: {
     type: Schema.Types.ObjectId,
     ref: 'Location'
   },
   slots: {
-    charm: {
+    charmId: {
       type: Schema.Types.ObjectId,
       ref: 'Item'
     },
-    weapon: {
+    weaponId: {
       type: Schema.Types.ObjectId,
       ref: 'Item'
     },
-    bugs: [ {
+    bugIds: [{
       type: Schema.Types.ObjectId,
       ref: 'Item'
     }]
@@ -42,12 +42,16 @@ const CharacterSchema = new Schema({
   damage: {
     type: Number
   },
+  primary: {
+    type: Boolean
+  },
   skills: SKILLS.reduce((obj, skill) => obj[skill] = {type: Number}, {}),
   dead: {
     type: Boolean
   },
   removed: {
-    type: Boolean
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true

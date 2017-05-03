@@ -9,7 +9,7 @@ const Schema = mongoose.Schema
 // = ===============================
 const TeamSchema = new Schema({
   name: { type: String },
-  characters: [{ type: Schema.Types.ObjectId, ref: 'Character' }],
+  // characterIds: [{ type: Schema.Types.ObjectId, ref: 'Character' }],
   king: {
     slots: {
       charm: {
@@ -22,16 +22,17 @@ const TeamSchema = new Schema({
       }
     }
   },
-  idleAction: {
+  idleActionId: {
     type: Schema.Types.ObjectId,
     ref: 'Action'
   },
-  locations: KINGDOM_LOCATIONS.reduce((obj, skill) => obj[skill] = {type: Schema.Types.ObjectId, ref: 'Locaton'}, {}),
+  locationCategories: KINGDOM_LOCATIONS.reduce((obj, skill) => obj[skill] = {type: Schema.Types.ObjectId, ref: 'Locaton'}, {}),
   dead: {
     type: Boolean
   },
   removed: {
-    type: Boolean
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true

@@ -23,7 +23,7 @@ const LocationSchema = new Schema({
     enum: ['mine', 'field', 'lumberyard', 'barracks', 'sewers', 'tower', 'gate', 'supplyDepot', 'royalChambers', 'townCenter'],
     type: String
   },
-  bugs: [{
+  bugIds: [{
     type: Schema.Types.ObjectId,
     ref: 'Item'
   }],
@@ -44,11 +44,13 @@ const LocationSchema = new Schema({
     default: false
   },
   // only on resource locations
-  exhaustion: {
+  deficit: {
     type: Number
+    default: 0,
   },
   removed: {
-    type: Boolean
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true

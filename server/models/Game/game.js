@@ -8,7 +8,7 @@ const Schema = mongoose.Schema
 // = ===============================
 const GameSchema = new Schema({
   name: { type: String },
-  state: { type: [{
+  stateIds: { type: [{
     ref: { type: String },
     update: { type: Boolean },
     value: { type: Schema.Types.ObjectId, refPath: 'state.ref' }
@@ -23,7 +23,8 @@ const GameSchema = new Schema({
     ref: { type: String }
   },
   removed: {
-    type: Boolean
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true
@@ -52,9 +53,9 @@ GameSchema.methods.start = function (cb) {
 
 GameSchema.methods.init = function (cb) {
   // restore state from db
-  this.populate('state.value').then(game => {
+  this.populate('stateIds.value').then(game => {
     // set all references on all state objects to specific objects, and map based on id and reference AKA {locations, items, actions, characters, teams}
-    let stateMap = game.state.reduce((map, doc) => {
+    let state = game.stateIds.reduce((map, doc) => {
       doc.init(game.state, () => {
         // put into reference array
         if (map[doc.ref]) {
@@ -67,27 +68,18 @@ GameSchema.methods.init = function (cb) {
       })
     }, {})
 
-    this.stateMap = stateMap
+    this.state = state
     //
   })
 }
 
 GameSchema.methods.update = function (cb) {
-  this.nodes.forEach((node) => {
-    node.value.update(this.stateMap)
-  })
+
 }
 
 // this model should not actually send socket information out - this should only be responsible for updating the state of the game or its childrens state. move this to game schema
 GameSchema.methods.update = function (cb) {
-  this.onlineCharacters.forEach((character) => {
-    let diff = {}
-    // chats/logs should be instant!
-    // get game metadata (map information, kingdom destroyed)
-    // get data about current location
-    // get data about player
-    this.sockets[character._id].emit('update_state', diff)
-  })
+
 }
 
 GameSchema.methods.save = function (cb) {

@@ -11,6 +11,10 @@ const Schema = mongoose.Schema
 const FamilySchema = new Schema({
   name: { type: String },
 
+  gameId : {
+    type: Schema.Types.ObjectId,
+    ref: 'Game'
+  },
   // just for now while families are LOCKED to teams and therefore all characters are locked to teams
   teamId: {
     type: Schema.Types.ObjectId,
@@ -18,7 +22,8 @@ const FamilySchema = new Schema({
   },
   skills: SKILLS.reduce((obj, skill) => obj[skill] = {type: Number}, {}),
   removed: {
-    type: Boolean
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true

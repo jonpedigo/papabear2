@@ -14,9 +14,12 @@ const ItemSchema = new Schema({
     type: String
   },
   removed: {
-    type: Boolean
+    type: Boolean,
+    default: false
   },
   image: { type: String }
+}, {
+  timestamps: true
 })
 
 const Item = mongoose.model('Item', ItemSchema)
