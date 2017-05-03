@@ -1,6 +1,5 @@
 // Importing Node packages required for schema
 const mongoose = require('mongoose')
-const extend = require('mongoose-schema-extend')
 
 const Schema = mongoose.Schema
 
@@ -64,7 +63,7 @@ const BugSchema = ItemSchema.extend({
     type: String,
     default: 'charm'
   },
-  ownerId: {
+  owner: {
     type: Schema.Types.ObjectId,
     ref: 'Character'
   },

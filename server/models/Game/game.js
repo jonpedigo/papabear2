@@ -8,17 +8,11 @@ const Schema = mongoose.Schema
 // = ===============================
 const GameSchema = new Schema({
   name: { type: String },
-  stateIds: { type: [{
+  saveState: { type: [{
     ref: { type: String },
     update: { type: Boolean },
     value: { type: Schema.Types.ObjectId, refPath: 'state.ref' }
   }]},
-
-  // not sure whats necessary yets
-  // nodes: { type: [{
-  //   ref: { type: String },
-  //   value: { type: Schema.Types.ObjectId, refPath: 'nodes.ref' }
-  // }]},
   lifespan: {
     ref: { type: String }
   },
@@ -53,9 +47,9 @@ GameSchema.methods.start = function (cb) {
 
 GameSchema.methods.init = function (cb) {
   // restore state from db
-  this.populate('stateIds.value').then(game => {
+  this.populate('saveState.value').then(game => {
     // set all references on all state objects to specific objects, and map based on id and reference AKA {locations, items, actions, characters, teams}
-    let state = game.stateIds.reduce((map, doc) => {
+    let state = game.saveState.reduce((map, doc) => {
       doc.init(game.state, () => {
         // put into reference array
         if (map[doc.ref]) {
@@ -68,7 +62,7 @@ GameSchema.methods.init = function (cb) {
       })
     }, {})
 
-    this.state = state
+    this.stat = state
     //
   })
 }

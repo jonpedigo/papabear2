@@ -1,6 +1,6 @@
 // Importing Node packages required for schema
 const mongoose = require('mongoose')
-const SKILLS = require('../../constants').SKILLS
+const SKILLS = require('../../../shared/design').SKILLS
 
 const Schema = mongoose.Schema
 
@@ -9,32 +9,36 @@ const Schema = mongoose.Schema
 // = ===============================
 const CharacterSchema = new Schema({
   name: { type: String },
-  familyId: {
+  family: {
     type: Schema.Types.ObjectId,
     ref: 'Family'
   },
-  teamId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Team'
+  primary: {
+    type: Boolean
   },
-  currentActionId: {
+  // pb3:  will mean they are the owner of that kingdom
+  kingdom: {
+    type: Schema.Types.ObjectId,
+    ref: 'Kingdom'
+  },
+  currentAction: {
     type: Schema.Types.ObjectId,
     ref: 'Action'
   },
-  currentLocationId: {
+  currentLocation: {
     type: Schema.Types.ObjectId,
     ref: 'Location'
   },
   slots: {
-    charmId: {
+    charm: {
       type: Schema.Types.ObjectId,
       ref: 'Item'
     },
-    weaponId: {
+    weapon: {
       type: Schema.Types.ObjectId,
       ref: 'Item'
     },
-    bugIds: [{
+    bugs: [{
       type: Schema.Types.ObjectId,
       ref: 'Item'
     }]
@@ -42,10 +46,7 @@ const CharacterSchema = new Schema({
   damage: {
     type: Number
   },
-  primary: {
-    type: Boolean
-  },
-  skills: SKILLS.reduce((obj, skill) => obj[skill] = {type: Number}, {}),
+  skills: SKILLS.reduce((obj, skill) => obj[skill] = {type: Number, default: 0}, {}),
   dead: {
     type: Boolean
   },

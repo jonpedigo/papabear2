@@ -39,7 +39,15 @@ const UserSchema = new Schema({
     activeUntil: { type: Date }
   },
   resetPasswordToken: { type: String },
-  resetPasswordExpires: { type: Date }
+  resetPasswordExpires: { type: Date },
+  family: {
+    type: Schema.Types.ObjectId,
+    ref: 'Family'
+  },
+  game: {
+    type: Schema.Types.ObjectId,
+    ref: 'Game'
+  }
 },
 {
   timestamps: true

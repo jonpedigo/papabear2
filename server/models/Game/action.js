@@ -11,7 +11,7 @@ const ActionSchema = new Schema({
     enum: ['woodcutting', 'mining', 'herding', 'training', 'guarding'],
     type: String
   },
-  locationId: {
+  location: {
     type: Schema.Types.ObjectId,
     ref: 'Location'
   },

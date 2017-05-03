@@ -15,15 +15,15 @@ const LocationSchema = new Schema({
     x: { type: Number },
     y: { type: Number }
   },
-  teamId: {
+  kingdom: {
     type: Schema.Types.ObjectId,
-    ref: 'Team'
+    ref: 'Kingdom'
   },
   category: {
     enum: ['mine', 'field', 'lumberyard', 'barracks', 'sewers', 'tower', 'gate', 'supplyDepot', 'royalChambers', 'townCenter'],
     type: String
   },
-  bugIds: [{
+  bugs: [{
     type: Schema.Types.ObjectId,
     ref: 'Item'
   }],
@@ -45,8 +45,8 @@ const LocationSchema = new Schema({
   },
   // only on resource locations
   deficit: {
-    type: Number
-    default: 0,
+    type: Number,
+    default: 0
   },
   removed: {
     type: Boolean,

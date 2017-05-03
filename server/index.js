@@ -6,8 +6,10 @@ const express = require('express'),
   websiteRouter = require('./routes/website'),
   gameRouter = require('./routes/game'),
   mongoose = require('mongoose'),
+  extend = require('mongoose-schema-extend'),
   socketEvents = require('./socketEvents'),
   config = require('./config/main');
+
 
 // Database Setup
 mongoose.connect(config.database)
@@ -34,7 +36,7 @@ require('./models/Game/character')
 require('./models/Game/family')
 require('./models/Game/item')
 require('./models/Game/location')
-require('./models/Game/team')
+require('./models/Game/kingdom')
 require('./models/Game/game')
 
 

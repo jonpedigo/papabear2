@@ -1,15 +1,16 @@
 // Importing Node packages required for schema
 const mongoose = require('mongoose')
-const KINGDOM_LOCATIONS = require('../../constants').KINGDOM_LOCATIONS
+const DEFAULT_KINGDOM_LOCATIONS = require('../../../shared/design').DEFAULT_KINGDOM_LOCATIONS
 
 const Schema = mongoose.Schema
 
 // = ===============================
-// Team Schema
+// Kingdom Schema
 // = ===============================
-const TeamSchema = new Schema({
+const KingdomSchema = new Schema({
   name: { type: String },
-  // characterIds: [{ type: Schema.Types.ObjectId, ref: 'Character' }],
+
+  // pb3: this is only temporary and would be switched with a character
   king: {
     slots: {
       charm: {
@@ -22,11 +23,11 @@ const TeamSchema = new Schema({
       }
     }
   },
-  idleActionId: {
+  idleAction: {
     type: Schema.Types.ObjectId,
     ref: 'Action'
   },
-  locationCategories: KINGDOM_LOCATIONS.reduce((obj, skill) => obj[skill] = {type: Schema.Types.ObjectId, ref: 'Locaton'}, {}),
+  locationCategories: DEFAULT_KINGDOM_LOCATIONS.reduce((obj, skill) => obj[skill] = {type: Schema.Types.ObjectId, ref: 'Locaton'}, {}),
   dead: {
     type: Boolean
   },
@@ -39,11 +40,11 @@ const TeamSchema = new Schema({
 })
 
 // = ===============================
-// Team ORM Methods
+// Kingdom ORM Methods
 // = ===============================
 
-TeamSchema.methods.destroy = function (cb) {
+KingdomSchema.methods.destroy = function (cb) {
 
 }
 
-module.exports = mongoose.model('Team', TeamSchema)
+module.exports = mongoose.model('Kingdom', KingdomSchema)
