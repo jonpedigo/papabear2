@@ -30,11 +30,10 @@ module.exports = function () {
 		return result
 	}
 
-	const buildClientState = (id, player) => {
-		let game = games[id]
-
+	const buildClientState = (game, player) => {
 		///I could just map the arrays in there with literally just like
 
+		let clientState = {}
 		// locations.map((old){
 		// 	let locaton = {}
 		//	location.name = old.name
