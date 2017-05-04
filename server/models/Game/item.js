@@ -6,17 +6,18 @@ const Schema = mongoose.Schema
 // = ===============================
 // Item Schema
 // = ===============================
+
+//flavor, slot
 const ItemSchema = new Schema({
   name: { type: String },
   category: {
-    enum: ['charm', 'weapon', 'ore', 'wood', 'animal'],
+    enum: ['charm', 'weapon', 'bug', 'ore', 'wood', 'animal'],
     type: String
   },
   removed: {
     type: Boolean,
     default: false
-  },
-  image: { type: String }
+  }
 }, {
   timestamps: true
 })
@@ -30,10 +31,6 @@ const CharmSchema = ItemSchema.extend({
   category: {
     type: String,
     default: 'charm'
-  },
-  slot: {
-    type: String,
-    default: 'defense'
   }
 })
 
@@ -46,10 +43,6 @@ const WeaponSchema = ItemSchema.extend({
   category: {
     type: String,
     default: 'weapon'
-  },
-  slot: {
-    type: String,
-    default: 'offense'
   }
 })
 
@@ -61,15 +54,11 @@ const Weapon = mongoose.model('Weapon', WeaponSchema)
 const BugSchema = ItemSchema.extend({
   category: {
     type: String,
-    default: 'charm'
+    default: 'bug'
   },
   owner: {
     type: Schema.Types.ObjectId,
     ref: 'Character'
-  },
-  slot: {
-    type: String,
-    default: 'defense'
   }
 })
 

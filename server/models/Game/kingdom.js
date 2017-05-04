@@ -27,7 +27,8 @@ const KingdomSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Action'
   },
-  locationCategories: DEFAULT_KINGDOM_LOCATIONS.reduce((obj, skill) => obj[skill] = {type: Schema.Types.ObjectId, ref: 'Locaton'}, {}),
+  // im not sure a kingdom needs access to its locations?
+  // locations: DEFAULT_KINGDOM_LOCATIONS.reduce((obj, skill) => obj[skill] = {type: Schema.Types.ObjectId, ref: 'Locaton'}, {}),
   dead: {
     type: Boolean
   },

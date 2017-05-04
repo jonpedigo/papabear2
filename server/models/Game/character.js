@@ -7,6 +7,8 @@ const Schema = mongoose.Schema
 // = ===============================
 // Character Schema
 // = ===============================
+
+//levels and such
 const CharacterSchema = new Schema({
   name: { type: String },
   family: {
@@ -44,9 +46,10 @@ const CharacterSchema = new Schema({
     }]
   },
   damage: {
-    type: Number
+    type: Number,
+    default: 0
   },
-  skills: SKILLS.reduce((obj, skill) => obj[skill] = {type: Number, default: 0}, {}),
+  experience: SKILLS.reduce((obj, skill) => obj[skill] = {type: Number, default: 0}, {}),
   dead: {
     type: Boolean
   },

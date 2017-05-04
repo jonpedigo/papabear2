@@ -26,8 +26,6 @@ if (process.env.NODE_ENV != config.test_env) {
 
 const io = require('socket.io').listen(server)
 
-socketEvents(io)
-
 // var game = require('./controllers/Game/game')(io)
 
 //just testing syntax of models

@@ -6,11 +6,11 @@ const Schema = mongoose.Schema
 // = ===============================
 // Location Schema
 // = ===============================
+
+//capacity, actionsavailable, description, private
+//characters
 const LocationSchema = new Schema({
   name: { type: String },
-  actionsAvailable: [ { type: String } ],
-  private: { type: Boolean },
-  description: { type: String },
   coordinates: {
     x: { type: Number },
     y: { type: Number }
@@ -27,12 +27,9 @@ const LocationSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Item'
   }],
-  conversationId: {
+  conversation: {
     type: Schema.Types.ObjectId,
     ref: 'Conversation'
-  },
-  capacity: {
-    type: Number
   },
   // only on supplyDepots
   supply: {

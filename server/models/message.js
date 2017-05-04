@@ -21,8 +21,8 @@ const MessageSchema = new Schema({
 
 module.exports = mongoose.model('Message', MessageSchema)
 
-const LogSchema = MessageSchema.extend({
-  log: {
+const RecordSchema = MessageSchema.extend({
+  Record: {
     type: Boolean,
     default: true
   },
@@ -49,4 +49,4 @@ const LogSchema = MessageSchema.extend({
   }]
 })
 
-module.exports = mongoose.model('Log', LogSchema)
+module.exports = mongoose.model('Record', RecordSchema)

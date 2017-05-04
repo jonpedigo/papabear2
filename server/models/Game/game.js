@@ -11,9 +11,9 @@ const GameSchema = new Schema({
   saveState: { type: [{
     ref: { type: String },
     update: { type: Boolean },
-    value: { type: Schema.Types.ObjectId, refPath: 'state.ref' }
+    value: { type: Schema.Types.ObjectId, refPath: 'saveState.ref' }
   }]},
-  lifespan: {
+  age: {
     ref: { type: String }
   },
   removed: {
