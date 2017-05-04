@@ -53,6 +53,7 @@ const CharacterSchema = new Schema({
   dead: {
     type: Boolean
   },
+  options : {},
   removed: {
     type: Boolean,
     default: false

@@ -6,6 +6,8 @@ const Schema = mongoose.Schema
 // = ===============================
 // Game Schema
 // = ===============================
+
+//state, interval, characters, nodes
 const GameSchema = new Schema({
   name: { type: String },
   saveState: { type: [{

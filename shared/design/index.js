@@ -17,6 +17,7 @@ const CLIENT_STATE = function(player){
 			damage: player.damage,
 			experience: player.experience,
 			primary: player.primary,
+			options: player.options,
 			dead: player.dead,
 			currentAction: {
 				_id: player.currentAction._id,
@@ -39,7 +40,7 @@ const CLIENT_STATE = function(player){
 						}
 				}),
 				// end supply map--
-				team: {
+				kingdom: {
 					_id: player.currentLocation.kingdom.name._id,
 					name: player.currentLocation.kingdom.name
 				},
@@ -108,12 +109,11 @@ const CLIENT_STATE = function(player){
 		}
 	}
 
-
-
 	return clientState
 }
 
 module.exports = {
   SKILLS,
-  DEFAULT_KINGDOM_LOCATIONS
+  DEFAULT_KINGDOM_LOCATIONS,
+  CLIENT_STATE
 }
