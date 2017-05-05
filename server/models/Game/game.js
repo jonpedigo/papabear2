@@ -30,8 +30,15 @@ const GameSchema = new Schema({
 // Game ORM Methods
 // = ===============================
 
-GameSchema.methods.addNode = function (cb) {
-
+GameSchema.methods.add = function (gameObject, options, cb) {
+  //how do I find collection of an object?
+  console.log(Date.now(), `${options.ref} with id ${gameObject._id} added to game id ${this._id}`, `update: ${optons.update}`, `category: ${gameObject.category}`, `name: ${gameObject.name}`)
+  if(options.update){
+    gameObject.update = options.update
+    this.nodes.push(gameObject)
+  }
+  this.saveState.push({value: gameObject, ref: options.ref})
+  this.state[gameObject._id] = gameObject
 }
 
 // for the controller
@@ -52,6 +59,8 @@ GameSchema.methods.init = function (cb) {
   this.populate('saveState.value').then(game => {
     // set all references on all state objects to specific objects, and map based on id and reference AKA {locations, items, actions, characters, teams}
     let state = game.saveState.reduce((map, doc) => {
+      if(doc.removed) return
+
       doc.init(game.state, () => {
         // put into reference array
         if (map[doc.ref]) {
@@ -64,7 +73,8 @@ GameSchema.methods.init = function (cb) {
       })
     }, {})
 
-    this.stat = state
+    this.state = state
+    cb(null, state)
     //
   })
 }

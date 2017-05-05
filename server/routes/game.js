@@ -10,7 +10,7 @@ const craftingController = require('../controllers/Game/crafting')
 const familyController = require('../controllers/Game/family')
 const notificationController = require('../controllers/Game/notification')
 const itemController = require('../controllers/Game/item')
-const familyController = require('../controllers/Game/record')
+const recordController = require('../controllers/Game/record')
 const stealthController = require('../controllers/Game/stealth')
 const travelController = require('../controllers/Game/travel')
 const warController = require('../controllers/Game/war')
@@ -30,10 +30,10 @@ const characterSelected = (req, res, next) => {
   next()
 }
 
-const getState = (req, res, next) => {
-  let state = gameController.getState(req.user.game)
-  if (!state) return next('No game state!')
-  req.state = state
+const getGame = (req, res, next) => {
+  let game = gameController.getGame(req.user.game)
+  if (!game) return next('No game!')
+  req.game = game
   next()
 }
 
@@ -77,15 +77,33 @@ module.exports = function (app, io) {
   apiRoutes.use(userAccountReady)
 
   //load the game state
-  apiRoutes.use(getState)
+  apiRoutes.use(getGame)
+
+
+  characterRoutes.param('/:characterId', (req, res, next) => {
+
+  })
 
   //make sure if the character already got one, that the players team is ready for a new player. if not, then error
   characterRoutes.post('/', (req, res, next) => {
 
   })
 
+  characterRoutes.post('/:characterId', (req, res, next) => {
+
+  })
+
+  familyRoutes.param('/:familyId', (req, res, next) => {
+
+  })
+
   //createa a family? right.. make sure the damn user aint already got one
   familyRoutes.post('/', (req, res, next) => {
+    
+  })
+
+  //updates a family
+  familyRoutes.post('/:familyId', (req, res, next) => {
     
   })
 
@@ -109,10 +127,6 @@ module.exports = function (app, io) {
   // = ==============================================================================
   // Play the GAME! Routes (user has selected a character)
   // = ========================
-
-  characterRoutes.param('/:characterId', (req, res, next) => {
-
-  })
 
 ////all these routes need to ensure that the characterId is in the same location as the playerId
   characterRoutes.post('/:characterId/attack', (req, res, next) => {
@@ -170,7 +184,7 @@ module.exports = function (app, io) {
     
   })
 
-  apiRoutes.use('/location' locationRoutes)
+  apiRoutes.use('/location', locationRoutes)
 
 
   itemRoutes.param('/:itemId', (req, res, next) => {
@@ -226,7 +240,6 @@ module.exports = function (app, io) {
   apiRoutes.use('/action', actionRoutes)
 
 //ensure super admin
-
   gameRoutes.param('/:gameId', (req, res, next) => {
 
   })

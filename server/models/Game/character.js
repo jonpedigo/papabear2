@@ -1,6 +1,6 @@
 // Importing Node packages required for schema
 const mongoose = require('mongoose')
-const SKILLS = require('../../../shared/design').SKILLS
+const SKILLS_LIST = require('../../../shared/design').SKILLS.LIST
 
 const Schema = mongoose.Schema
 
@@ -49,7 +49,7 @@ const CharacterSchema = new Schema({
     type: Number,
     default: 0
   },
-  experience: SKILLS.reduce((obj, skill) => obj[skill] = {type: Number, default: 0}, {}),
+  experience: SKILLS_LIST.reduce((obj, skill) => obj[skill] = {type: Number, default: 0}, {}),
   dead: {
     type: Boolean
   },
