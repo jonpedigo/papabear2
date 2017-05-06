@@ -5,8 +5,8 @@
 // 4. make information more important than strength? logs, chat and such
 // 5. learn more about how unveiling secret mechanics influences play (originally learned through papabear 1, result : its fun! sometimes feels unfair...)
 
-const ITEMS = require('/items')
-const SKILLS = require('/skills')
+const ITEMS = require('./items')
+const SKILLS = require('./skills')
 
 const DEFAULT_KINGDOM_LOCATIONS = ['mine', 'field', 'lumberyard', 'barracks', 'sewers', 'tower', 'gate', 'supplyDepot', 'royalChambers', 'townCenter']
 

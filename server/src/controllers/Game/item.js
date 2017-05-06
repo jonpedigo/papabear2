@@ -1,10 +1,10 @@
-const ITEMS = require('../../../shared/design/game').ITEMS
+const ITEMS = require('../../../../shared/design/game').ITEMS
 const itemModel = require('../../models/Game/item').Item
 
 module.exports = function () {
 
-	const add = (game, params, cb) => {
-		itemModel.create(params).then((item) => {
+	const add = (game, props, cb) => {
+		itemModel.create(props).then((item) => {
 			game.add(item)
 			cb(null, item)
 		}).catch(cb)

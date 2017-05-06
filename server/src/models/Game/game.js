@@ -41,6 +41,13 @@ GameSchema.methods.add = function (gameObject, options, cb) {
   this.state[gameObject._id] = gameObject
 }
 
+GameSchema.methods.getById = function (id) {
+  return this.state[id]
+}
+
+GameSchema.methods.getCollection = function (collectionName) {
+  return this.state[collectionName]
+}
 // for the controller
 // GameSchema.methods.findTeamForFamily = function (cb) {
 //
@@ -66,7 +73,7 @@ GameSchema.methods.init = function (cb) {
         if (map[doc.ref]) {
           map[doc.ref].push(doc.value)
         } else {
-          map[doc.ref] = doc.value
+          map[doc.ref] = [doc.value]
         }
         // set id in map
         map[doc.value._id] = doc.value
@@ -77,10 +84,6 @@ GameSchema.methods.init = function (cb) {
     cb(null, state)
     //
   })
-}
-
-GameSchema.methods.update = function (cb) {
-
 }
 
 // this model should not actually send socket information out - this should only be responsible for updating the state of the game or its childrens state. move this to game schema

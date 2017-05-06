@@ -26,7 +26,7 @@ const userAccountReady = (req, res, next) => {
 }
 
 const characterSelected = (req, res, next) => {
-  if (!req.session.character) return next('User needs to select character to play with before playing')
+  if (!req.session.player) return next('User needs to select player to play with before playing')
   next()
 }
 
@@ -79,41 +79,67 @@ module.exports = function (app, io) {
   //load the game state
   apiRoutes.use(getGame)
 
-
   characterRoutes.param('/:characterId', (req, res, next) => {
-
+    req.character = req.game.getById(req.game._id, req.params.characterId)
+    if(!req.character) return next('No character with that Id')
+    next()
   })
 
   //make sure if the character already got one, that the players team is ready for a new player. if not, then error
   characterRoutes.post('/', (req, res, next) => {
+    let props = req.body
 
+    if (!props.family) props.family = family._id
+    else if (props.family !== family._id) return next('You cannot create a character that isnt in your family')
+   
+    let family = req.session.player.family
+    if (family.characters.length && !familyController.canAddCharacter(req.game, family)) return next('You cannot add a character to this family right now')
+    
+    characterController.add(req.game, props, (err, character) => {
+      if(err) return next(err)
+      res.json(character)
+    })
   })
 
   characterRoutes.post('/:characterId', (req, res, next) => {
-
+    if (!req.character.family._id !== req.session.player.family._id) return next('You cannot update a character that isnt in your family')
+    req.character.update(req.body, (err, character) => {
+      if(err) return next(err)
+      res.json(character)
+    })
   })
 
   familyRoutes.param('/:familyId', (req, res, next) => {
-
+    req.family = req.game.getById(req.game._id, req.params.familyId)
+    if(!req.family) return next('No family with that Id')
+    next()
   })
 
   //createa a family? right.. make sure the damn user aint already got one
+  //needs to put it in a random kingdom
   familyRoutes.post('/', (req, res, next) => {
-    
+    if (req.user.family) return next('You already have a family')
+    familyController.add(req.game, req.body, (err, family) => {
+      if (err) next(err)
+      familyController.findKingdom(req.game, family)
+    })
   })
 
   //updates a family
   familyRoutes.post('/:familyId', (req, res, next) => {
-    
+    if (!req.family._id !== req.session.player.family._id) return next('You cannot update a family that isnt yours')
+    req.family.update(req.body, (err, family) => {
+      if(err) return next(err)
+      res.json(family)
+    })
   })
 
   apiRoutes.use('/family', familyRoutes)
 
   //set character on the session by selecting it
   characterRoutes.post('/select', (req, res, next) => {
-    let gameId = req.user.game
     let characterId = req.body.characterId
-    let character = gameController.get(gameId, characterId)
+    let character = gameController.getById(req.game._id, characterId)
     req.session.player = character
     res.json(character)
   })

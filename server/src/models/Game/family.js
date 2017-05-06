@@ -1,6 +1,6 @@
 // Importing Node packages required for schema
 const mongoose = require('mongoose')
-const SKILLS_LIST = require('../../../shared/design').SKILLS.LIST
+const SKILLS_LIST = require('../../../../shared/design').SKILLS.LIST
 
 const Schema = mongoose.Schema
 
@@ -29,8 +29,9 @@ const FamilySchema = new Schema({
 // Family ORM Methods
 // = ===============================
 
-FamilySchema.methods.createCharacter = function (cb) {
-
+FamilySchema.methods.update = function(props, cb){
+  Object.assign(this, props, {updated: true})
+  cb(null, this)
 }
 
 module.exports = mongoose.model('Family', FamilySchema)

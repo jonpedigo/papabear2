@@ -3,11 +3,11 @@ import design from '../../../shared/design/game';
 
 const DEFAULT_STATE = { state : { locations: [], player : {} }, design };
 
-export default function (default = DEFAULT_STATE, action) {
+export default function (default_state = DEFAULT_STATE, action) {
   switch (action.type) {
     case UPDATE_GAME:
-      return { ...default, state: { locations: action.game.locations, player : action.game.player } }
+      return { ...default_state, state: { locations: action.game.locations, player : action.game.player } }
   }
 
-  return state;
+  return default_state;
 }

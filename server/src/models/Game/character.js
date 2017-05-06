@@ -1,6 +1,6 @@
 // Importing Node packages required for schema
 const mongoose = require('mongoose')
-const SKILLS_LIST = require('../../../shared/design').SKILLS.LIST
+const SKILLS_LIST = require('../../../../shared/design').SKILLS.LIST
 
 const Schema = mongoose.Schema
 
@@ -65,6 +65,15 @@ const CharacterSchema = new Schema({
 // = ===============================
 // Character ORM Methods
 // = ===============================
+
+CharacterSchema.methods.loop = function(game){
+
+}
+
+CharacterSchema.methods.update = function(props, cb){
+  Object.assign(this, props, {updated: true})
+  cb(null, this)
+}
 
 CharacterSchema.methods.init = function (state, cb) {
 

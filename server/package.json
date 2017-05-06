@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -S --ui bdd --require ./tests/spec_helper.js --recursive ./tests --reporter spec",
-    "dev": "nodemon index.js"
+    "dev": "nodemon src/index.js --watch src --watch ../shared/design"
   },
   "keywords": [
     "mern",
