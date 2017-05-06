@@ -32,10 +32,10 @@ const CharacterSchema = new Schema({
     ref: 'Location'
   },
   slots: {
-    charm: {
+    charms:[{
       type: Schema.Types.ObjectId,
       ref: 'Item'
-    },
+    }],
     weapon: {
       type: Schema.Types.ObjectId,
       ref: 'Item'
