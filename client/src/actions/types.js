@@ -43,4 +43,12 @@ export const CREATE_CUSTOMER = 'create_customer',
 // Game Actions
 //= =====================
 export const UPDATE_GAME = 'update_game';
+export const GAME_ERROR = 'game_error';
+export const EVENT_RESULT = 'event_result';
+export const EVENT_SUCCESS = 'event_success';
+export const SET_PLAYER = 'set_player';
+export const SET_KINGDOM = 'set_kingdom';
+export const SET_FAMILY = 'set_family';
+export const SET_GAME = 'set_game';
+
 

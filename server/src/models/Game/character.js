@@ -18,7 +18,7 @@ const CharacterSchema = new Schema({
   primary: {
     type: Boolean
   },
-  // pb3:  will mean they are the owner of that kingdom
+  // pb3:  need a boolean to tell if this character is the OWNER of that kingdom or just a resident
   kingdom: {
     type: Schema.Types.ObjectId,
     ref: 'Kingdom'
@@ -51,7 +51,8 @@ const CharacterSchema = new Schema({
   },
   experience: SKILLS_LIST.reduce((obj, skill) => obj[skill] = {type: Number, default: 0}, {}),
   dead: {
-    type: Boolean
+    type: Boolean,
+    default: false
   },
   options : {},
   removed: {
@@ -75,7 +76,7 @@ CharacterSchema.methods.update = function(props, cb){
   cb(null, this)
 }
 
-CharacterSchema.methods.init = function (state, cb) {
+CharacterSchema.methods.initialize = function (state, cb) {
 
   // tools.populateWithState('currentLocation', 'currentAction', ).bind(this)
   // function populatewithState(){

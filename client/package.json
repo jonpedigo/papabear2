@@ -4,7 +4,7 @@
   "description": "Client-side of Papa Bear 2.",
   "main": "index.js",
   "scripts": {
-    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js"
+    "start": "webpack-dev-server -d"
   },
   "author": "Joshua Slate",
   "license": "MIT",

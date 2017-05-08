@@ -7,9 +7,13 @@ console.log(path.resolve(__dirname, "../shared/**/*.js"))
 const config = {
   context: __dirname,
   entry: './src/index.js',
+  devtool: "source-map",
   output: {
     path: __dirname,
     filename: 'bundle.js',
+    devtoolLineToLine: true,
+    sourceMapFilename: "./bundle.js.map",
+    pathinfo: true
   },
   module: {
     loaders: [{

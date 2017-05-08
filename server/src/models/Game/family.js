@@ -34,4 +34,9 @@ FamilySchema.methods.update = function(props, cb){
   cb(null, this)
 }
 
+FamilySchema.methods.initialize = function(state, cb){
+  this.characters = []
+
+}
+
 module.exports = mongoose.model('Family', FamilySchema)

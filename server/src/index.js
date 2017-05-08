@@ -6,13 +6,22 @@ const express = require('express'),
   websiteRouter = require('./routes/website'),
   gameRouter = require('./routes/game'),
   mongoose = require('mongoose'),
+  session = require('express-session'),
   extend = require('mongoose-schema-extend'),
   socketEvents = require('./socketEvents'),
+  passport = require('passport'),
+  cookieParser = require('cookie-parser')
   config = require('./config/main');
 
+mongoose.Promise = require('bluebird');
 
 // Database Setup
-mongoose.connect(config.database)
+mongoose.connect(config.database, function(err){
+  if(err) console.log(err)
+  else{
+    console.log("Mongoose connected on " + config.database)
+  }
+})
 
 // Start the server
 let server
@@ -37,23 +46,28 @@ require('./models/Game/location')
 require('./models/Game/kingdom')
 require('./models/Game/game')
 
-
+gameController = require('./controllers/Game/game')()
+gameController.populateGames()
 // Set static file location for production
 // app.use(express.static(__dirname + '/public'))
 
 // Setting up basic middleware for all Express requests
+// app.use(cookieParser('keyboard cat'));
 app.use(bodyParser.urlencoded({ extended: false })) // Parses urlencoded bodies
 app.use(bodyParser.json()) // Send JSON responses
 app.use(logger('dev')) // Log requests to API using morgan
 
 // Enable CORS from client-side
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
+  res.header('Access-Control-Allow-Origin', req.headers.origin)
   res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials')
-  res.header('Access-Control-Allow-Credentials', 'true')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials, X-HTTP-Method-Override')
+  res.header('Access-Control-Allow-Credentials', true)
   next()
 })
+
+app.use(cookieParser(config.secret))
+app.use(passport.initialize())
 
 // Import routes to be served
 websiteRouter(app)

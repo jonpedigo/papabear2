@@ -8,6 +8,7 @@ import cookie from 'react-cookie';
 import routes from './routes';
 import reducers from './reducers/index';
 import ReactGA from 'react-ga';
+import { resumeGame } from './actions/auth'
 import { AUTH_USER, UPDATE_GAME } from './actions/types';
 
 import socket from './actions/socket'
@@ -33,10 +34,12 @@ socket.on('update game', (game) => {
 })
 
 const token = cookie.load('token');
-
-if (token) {
+const user = cookie.load('user');
+if (token && user) {
   // Update application state. User has token and is probably authenticated
+  console.log("RESUMING GAME")
   store.dispatch({ type: AUTH_USER });
+  store.dispatch(resumeGame())
 }
 
 ReactDOM.render(

@@ -47,7 +47,15 @@ const UserSchema = new Schema({
   game: {
     type: Schema.Types.ObjectId,
     ref: 'Game'
-  }
+  },
+  kingdom: {
+    type: Schema.Types.ObjectId,
+    ref: 'Kingdom'
+  },
+  currentCharacter: {
+    type: Schema.Types.ObjectId,
+    ref: 'Character'
+  },
 },
 {
   timestamps: true

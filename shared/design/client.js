@@ -1,3 +1,5 @@
+const CLIENT = {}
+
 const PLAYER_STATE = function(player){
 	return {
 		player: {
@@ -105,13 +107,13 @@ const META_STATE = function(game){
 		locations: game['Locations'].map((loc) => {
 			return {
 				_id: loc._id,
-				coordinates: loc.coordinates
+				coordinates: loc.coordinates,
 				distribution: loc.characters
 				.reduce((map, character, index, array) => {
 					if(map[character.kingdom.name]) map[character.kingdom.name]++
 					else map[character.kingdom.name] = 1
 					map.total++
-				
+
 					//if this is the last element in the array
 					if(index === array.length -1){
 						for(var prop of map){

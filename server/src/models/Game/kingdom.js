@@ -30,7 +30,8 @@ const KingdomSchema = new Schema({
   // im not sure a kingdom needs access to its locations?
   // locations: DEFAULT_KINGDOM_LOCATIONS.reduce((obj, skill) => obj[skill] = {type: Schema.Types.ObjectId, ref: 'Locaton'}, {}),
   dead: {
-    type: Boolean
+    type: Boolean,
+    default: false
   },
   removed: {
     type: Boolean,
@@ -46,6 +47,10 @@ const KingdomSchema = new Schema({
 
 KingdomSchema.methods.destroy = function (cb) {
 
+}
+
+KingdomSchema.methods.initialize = function (state, cb) {
+  this.characters = []
 }
 
 module.exports = mongoose.model('Kingdom', KingdomSchema)

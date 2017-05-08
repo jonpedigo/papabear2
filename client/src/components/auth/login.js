@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router';
-import { loginUser } from '../../actions/auth';
+import { login } from '../../actions/auth';
 
 const form = reduxForm({
   form: 'login',
@@ -10,7 +10,9 @@ const form = reduxForm({
 
 class Login extends Component {
   handleFormSubmit(formProps) {
-    this.props.loginUser(formProps);
+    console.log(formProps)
+    debugger;
+    this.props.login(formProps);
   }
 
   renderAlert() {
@@ -54,4 +56,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { loginUser })(form(Login));
+export default connect(mapStateToProps, { login })(form(Login));

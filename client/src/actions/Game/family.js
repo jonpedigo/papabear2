@@ -8,7 +8,7 @@ import socket from '../socket'
 // Game actions
 //= ===============================
 
-export function createCharacter({ props,  }) {
+export function createFamily( props ) {
   const data = { composedMessage };
   const url = `/character/`;
   return (dispatch) => {

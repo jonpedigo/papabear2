@@ -3,9 +3,10 @@ const gameController = require('../../controllers/Game/game')
 
 module.exports = function () {
 
+	//honestly shouldnt do async here, should just set as updated
 	const add = (game, props, cb) => {
+		props.kingdom = findKingdom(game)._id
 		familyModel.create(props).then((family) => {
-			gameController.findKingdomForFamily(game, family)
 			game.add(family)
 			cb(null, family)
 		}).catch(cb)
@@ -22,8 +23,8 @@ module.exports = function () {
 		if(withMoreCharacters >= (otherKingdoms.length/2) ) return true
 	}
 
-	const findKingdom = (game, family) => {
-		let kingdoms = game.getCollecton('Kingdom')
+	const findKingdom = (game) => {
+		let kingdoms = game.getCollection('Kingdom')
 		
 		let averagePopulation = kingdoms.reduce((prev, kingdom) => {
 			return prev+ kingdom.characters.length

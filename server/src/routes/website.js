@@ -13,8 +13,8 @@ const ROLE_ADMIN = require('../constants').ROLE_ADMIN;
 const passportService = require('../config/passport');
 
 // Middleware to require login/auth
-const requireAuth = passport.authenticate('jwt', { session: false });
-const requireLogin = passport.authenticate('local', { session: false });
+const requireAuth = passport.authenticate('jwt', { session: true });
+const requireLogin = passport.authenticate('local', { session: true });
 
 module.exports = function (app) {
   // Initializing route groups

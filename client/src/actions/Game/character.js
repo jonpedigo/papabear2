@@ -8,14 +8,14 @@ import socket from '../socket'
 // Game actions
 //= ===============================
 
-export function createCharacter({ props,  }) {
-  const data = { composedMessage };
-  const url = `/character/`;
+export function createCharacter(props) {
+  const data = props;
+  const url = `/character`;
   return (dispatch) => {
-    postData('create_character', CHAT_ERROR, true, url, dispatch, data);
-
+    postData('create_character', 'GAME_ERROR', true, url, dispatch, data);
     // Clear form after message is sent
-    dispatch(reset('composeMessage'));
-    browserHistory.push(`/dashboard/conversation/view/${response.data.conversationId}`);
+    // dispatch(reset('composeMessage'));
+    //
+    // browserHistory.push(`/dashboard/conversation/view/${response.data.conversationId}`);
   };
 }

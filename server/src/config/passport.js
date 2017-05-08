@@ -32,7 +32,6 @@ const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeader(),
   // Telling Passport where to find the secret
   secretOrKey: config.secret
-
   // TO-DO: Add issuer and audience checks
 };
 

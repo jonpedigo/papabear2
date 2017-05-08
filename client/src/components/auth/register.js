@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { registerUser } from '../../actions/auth';
+import { register } from '../../actions/auth';
 
 const form = reduxForm({
   form: 'register',
@@ -39,7 +39,7 @@ function validate(formProps) {
 
 class Register extends Component {
   handleFormSubmit(formProps) {
-    this.props.registerUser(formProps);
+    this.props.register(formProps);
   }
 
   renderAlert() {
@@ -59,6 +59,7 @@ class Register extends Component {
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
         {this.renderAlert()}
         <div className="row">
+          User:
           <div className="col-md-6">
             <label>First Name</label>
             <Field name="firstName" className="form-control" component={renderField} type="text" />
@@ -80,6 +81,18 @@ class Register extends Component {
             <Field name="password" className="form-control" component={renderField} type="password" />
           </div>
         </div>
+
+        <div className="row">
+          Character:
+          <div className="col-md-6">
+            <label>First Name</label>
+            <Field name="characterFirstName" className="form-control" component={renderField} type="text" />
+          </div>
+          <div className="col-md-6">
+            <label>Last Name</label>
+            <Field name="characterLastName" className="form-control" component={renderField} type="text" />
+          </div>
+        </div>
         <button type="submit" className="btn btn-primary">Register</button>
       </form>
     );
@@ -94,4 +107,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { registerUser })(form(Register));
+export default connect(mapStateToProps, { register })(form(Register));

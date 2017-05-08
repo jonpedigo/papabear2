@@ -6,7 +6,8 @@ const mailgun = require('../config/mailgun');
 const setUserInfo = require('../helpers').setUserInfo;
 const getRole = require('../helpers').getRole;
 const config = require('../config/main');
-
+const Character = require('../models/Game/character')
+const passport = require('passport')
 // Generate JWT
 // TO-DO Add issuer and audience
 function generateToken(user) {
@@ -15,16 +16,24 @@ function generateToken(user) {
   });
 }
 
+
+passport.serializeUser(function(user, done) {
+  //just for now I guess when theres only one character they could possibly use
+  Character.findOne({family: user.family}).then((character) => {
+    user.currentCharacter = character._id
+    done(null, user);
+  }).catch(done)
+
+});
 //= =======================================
 // Login Route
 //= =======================================
 exports.login = function (req, res, next) {
-  const userInfo = setUserInfo(req.user);
-
+  let userInfo = setUserInfo(req.user)
   res.status(200).json({
     token: `JWT ${generateToken(userInfo)}`,
-    user: userInfo
-  });
+    user: userInfo,
+  })
 };
 
 
@@ -82,6 +91,7 @@ exports.register = function (req, res, next) {
         token: `JWT ${generateToken(userInfo)}`,
         user: userInfo
       });
+
     });
   });
 };

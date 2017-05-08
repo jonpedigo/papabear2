@@ -9,6 +9,10 @@ exports.setUserInfo = function setUserInfo(request) {
     _id: request._id,
     firstName: request.profile.firstName,
     lastName: request.profile.lastName,
+    game: request.game,
+    family: request.family,
+    kingdom: request.kingdom,
+    currentCharacter: request.currentCharacter,
     email: request.email,
     role: request.role
   };

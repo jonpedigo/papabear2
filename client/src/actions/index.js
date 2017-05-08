@@ -48,17 +48,21 @@ export function postData(action, errorType, isAuthReq, url, dispatch, data) {
   let headers = {};
 
   if (isAuthReq) {
-    headers = { headers: { Authorization: cookie.load('token') } };
+    headers = { withCredentials: true, headers: { Authorization: cookie.load('token') } };
   }
 
-  axios.post(requestUrl, data, headers)
+  return axios.post(requestUrl, data, headers)
   .then((response) => {
+    console.log("...here", response.data)
+    if(response.data.user) cookie.save('user', response.data.user, { path: '/' });
+    console.log(response.data)
     dispatch({
       type: action,
       payload: response.data,
     });
   })
   .catch((error) => {
+    console.log(error)
     errorHandler(dispatch, error.response, errorType);
   });
 }
@@ -69,7 +73,7 @@ export function getData(action, errorType, isAuthReq, url, dispatch) {
   let headers = {};
 
   if (isAuthReq) {
-    headers = { headers: { Authorization: cookie.load('token') } };
+    headers = { withCredentials: true, headers: { Authorization: cookie.load('token') } };
   }
 
   axios.get(requestUrl, headers)
@@ -90,7 +94,7 @@ export function putData(action, errorType, isAuthReq, url, dispatch, data) {
   let headers = {};
 
   if (isAuthReq) {
-    headers = { headers: { Authorization: cookie.load('token') } };
+    headers = { withCredentials: true, headers: { Authorization: cookie.load('token') } };
   }
 
   axios.put(requestUrl, data, headers)
@@ -111,7 +115,7 @@ export function deleteData(action, errorType, isAuthReq, url, dispatch) {
   let headers = {};
 
   if (isAuthReq) {
-    headers = { headers: { Authorization: cookie.load('token') } };
+    headers = { withCredentials: true, headers: { Authorization: cookie.load('token') } };
   }
 
   axios.delete(requestUrl, headers)

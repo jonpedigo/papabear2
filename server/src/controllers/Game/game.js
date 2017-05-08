@@ -1,4 +1,7 @@
-const games = []
+const games = {}
+
+let Game = require('../../models/Game/game')
+let Kingdom = require('../../models/Game/kingdom')
 
 module.exports = function () {
 
@@ -14,7 +17,21 @@ module.exports = function () {
 		return games[id]
 	}
 
+	const populateGames = (cb) => {
+
+		//this will need some serious re-work when the game actually is real...
+		Game.find({}).then((allGames) =>{
+			allGames.forEach((game) => {
+				games[game._id] = game
+				game.initialize((err)=> {
+					game.start()
+				})
+			})
+		})
+	}
+
   return {
+  	populateGames,
   	getGame
   }
 }

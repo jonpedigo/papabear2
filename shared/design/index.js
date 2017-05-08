@@ -7,12 +7,12 @@
 
 const ITEMS = require('./items')
 const SKILLS = require('./skills')
-const CLIENT_STATE = require('./client_state')
+const CLIENT = require('./client')
 const DEFAULT_KINGDOM_LOCATIONS = ['mine', 'field', 'lumberyard', 'barracks', 'sewers', 'tower', 'gate', 'supplyDepot', 'royalChambers', 'townCenter']
 
 module.exports = {
   SKILLS,
   DEFAULT_KINGDOM_LOCATIONS,
-  CLIENT_STATE,
+  CLIENT,
   ITEMS
 }
