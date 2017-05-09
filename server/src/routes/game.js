@@ -124,10 +124,12 @@ module.exports = function (app, io) {
     let props = req.body
     let familyId = req.user.family
     let family = req.game.getById(familyId)
-    console.log(familyId, props)
     if (!props.family) props.family = familyId
     else if (props.family != familyId) return next('You cannot create a character that isnt in your family')
     if (family.characters.length && !familyController.canAddCharacter(req.game, family)) return next('You cannot add a character to this family right now')
+    
+    props.kingdom = family.kingdom
+    props.family = family._id
     characterController.add(req.game, props, (err, character) => {
       if(err) return next(err)
       req.user.currentCharacter = character._id
