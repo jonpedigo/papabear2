@@ -95,7 +95,6 @@ GameSchema.methods.initialize = function (cb) {
       doc.value.initialize(this.state)
     })
 
-
     this.initialized = true
     if(cb) cb(null, state)
     //

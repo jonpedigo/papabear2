@@ -15,8 +15,6 @@ const stealthController = require('../controllers/Game/stealth')()
 const travelController = require('../controllers/Game/travel')()
 const warController = require('../controllers/Game/war')()
 
-
-
 const User = require('../models/user')
 const setUserInfo = require('../helpers').setUserInfo;
 
@@ -44,21 +42,25 @@ const getPlayer = (req, res, next) => {
 }
 
 const socketEvents =  (io) =>{
-  io.socketsById = {}
   io.on('connection', (socket) => {
-    socket.on('join game', (characterId, gameId, kingdomId, locationId) => {
-      io.socketsById[characterId] = socket
-      socket.join(gameId)
-      socket.join(kingdomId)
-      socket.join(locationId)
+    socket.on('join game', () => {
+      socket.join(socket.user.game)
+      socket.join(socket.user.currentCharacter)
+      socket.join(socket.user.family)
+      let game = gameController.getGame(socket.user.game)
+      let player = game.getById(socket.user.currentCharacter)
+      socket.player = player
+      socket.join(player.currentLocation._id)
+      socket.join(player.kingdom._id)
       socket.emit('joined game', gameId)
     })
-    socket.on('leave game', (characterId, gameId, kingdomId, locationId) => {
-      io.socketsById[characterId] = null
-      socket.leave(gameId)
-      socket.leave(kingdomId)
-      socket.leave(locationId)
-      socket.emit('left game', gameId)
+    socket.on('leave game', () => {
+      socket.leave(socket.user.game)
+      socket.leave(socket.user.currentCharacter)
+      socket.leave(socket.user.family)
+      socket.leave(socket.player.currentLocation._id)
+      socket.leave(socket.player.kingdom._id)
+      socket.emit('left game', socket.user.game)
     })
   })
 } 

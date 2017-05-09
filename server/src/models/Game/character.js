@@ -77,7 +77,6 @@ CharacterSchema.methods.update = function(props, cb){
 }
 
 CharacterSchema.methods.initialize = function (state, cb) {
-
   // tools.populateWithState('currentLocation', 'currentAction', ).bind(this)
   // function populatewithState(){
   //  arguments.forEach( (arg) => {

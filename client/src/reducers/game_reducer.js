@@ -16,15 +16,10 @@ export default function (state = INITIAL_STATE, action) {
     case SET_KINGDOM: 
     	return {...state, kingdom: action.payload.user.kingdom }
     case SET_FAMILY: 
-    console.log("SETING FAMILY", action.payload.user.family)
     	return {...state, family: action.payload.user.family }
     case SET_PLAYER: 
-        console.log("SETINGplayer", action.payload.user.currentCharacter)
-
     	return {...state, player: action.payload.user.currentCharacter }
     case SET_GAME: 
-        console.log("SETING GAME", action.payload.user.game)
-
     	return {...state, game: action.payload.user.game }
   }
 

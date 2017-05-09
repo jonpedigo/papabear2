@@ -32,10 +32,19 @@ if (process.env.NODE_ENV != config.test_env) {
   server = app.listen(config.test_port)
 }
 
-
 const io = require('socket.io').listen(server)
 
-// var game = require('./controllers/Game/game')(io)
+//socket authentication
+const jwt_decode = require('jwt-decode')
+io.sockets.on('connection', function(socket){
+  socket.on('authenticate', (token) => {
+    let user = jwt_decode(token)
+    if(user && user._id) {
+      socket.user = user
+      socket.emit('authenticated')
+    } else socket.emit('unauthorized')
+  })
+})
 
 //just testing syntax of models
 require('./models/Game/action')

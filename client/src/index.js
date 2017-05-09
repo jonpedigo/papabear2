@@ -29,17 +29,25 @@ const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
 
 //update the store when we recieve a game state update from the server
-socket.on('update game', (game) => {
-	store.dispatch({ type: UPDATE_GAME, game: game })
-})
 
 const token = cookie.load('token');
 const user = cookie.load('user');
 if (token && user) {
   // Update application state. User has token and is probably authenticated
-  console.log("RESUMING GAME")
   store.dispatch({ type: AUTH_USER });
   store.dispatch(resumeGame())
+
+  socket.emit('authenticate', token) 
+    .on('authenticated', function () {
+      console.log('socket authorized, joining game')
+      socket.emit('join game')
+      socket.on('update game', (playerState, metaState) => {
+        store.dispatch({ type: UPDATE_GAME, playerState, metaState})
+      })
+    })
+    .on('unauthorized', function() {
+      console.log('token not authorized via socket')
+    })
 }
 
 ReactDOM.render(

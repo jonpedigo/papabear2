@@ -3,8 +3,10 @@ import { browserHistory } from 'react-router';
 import cookie from 'react-cookie';
 import { postData, API_URL, CLIENT_ROOT_URL, errorHandler } from './index';
 import { AUTH_USER, AUTH_ERROR, UNAUTH_USER, FORGOT_PASSWORD_REQUEST, RESET_PASSWORD_REQUEST, PROTECTED_TEST, EVENT_SUCCESS, GAME_ERROR, SET_FAMILY, SET_KINGDOM, SET_GAME, SET_PLAYER, EVENT_RESULT } from './types';
+import socket from './socket'
 import {id} from '../../../shared/design/game'
 let gameId = id
+
 
 //= ===============================
 // Authentication actions
@@ -84,7 +86,11 @@ export function selectCharacter({ characterId }) {
   const data = {characterId}
   const url = `/character/${characterId}/select`
   return (dispatch) => {
-    return postData(SET_PLAYER, GAME_ERROR, true, url, dispatch, data);
+    return postData(SET_PLAYER, GAME_ERROR, true, url, dispatch, data).then((game) => {
+      let user = cookie.load('user')
+      console.log("select character")
+      // socket.emit('join game')
+    });
   };
 }
 
@@ -108,7 +114,7 @@ export function selectGame() {
   const data = {}
   const url = `/game/${gameId}/select`
   return (dispatch) => {
-    return postData(SET_GAME, GAME_ERROR, true, url, dispatch, data);
+    return postData(SET_GAME, GAME_ERROR, true, url, dispatch, data)
   };
 }
 
@@ -117,7 +123,6 @@ export function logoutUser(error) {
     dispatch({ type: UNAUTH_USER, payload: error || '' });
     cookie.remove('token', { path: '/' });
     cookie.remove('user', { path: '/' });
-
     window.location.href = `${CLIENT_ROOT_URL}/login`;
   };
 }
