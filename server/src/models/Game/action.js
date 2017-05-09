@@ -23,6 +23,12 @@ const ActionSchema = new Schema({
   timestamps: true
 })
 
+// ADDS: Character
+ActionSchema.methods.initialize = function (state, cb) {
+  this.location = state[this.location]
+  this.character = state['Character'].find((character) => character.family._id == this._id || character.family == this._id)
+}
+
 const Action = mongoose.model('Action', ActionSchema)
 
 // //= ===============================

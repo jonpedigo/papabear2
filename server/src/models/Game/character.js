@@ -8,7 +8,6 @@ const Schema = mongoose.Schema
 // Character Schema
 // = ===============================
 
-//levels and such
 const CharacterSchema = new Schema({
   name: { type: String },
   family: {
@@ -17,6 +16,9 @@ const CharacterSchema = new Schema({
   },
   primary: {
     type: Boolean
+  },
+  description: {
+    type: String
   },
   // pb3:  need a boolean to tell if this character is the OWNER of that kingdom or just a resident
   kingdom: {
@@ -32,7 +34,7 @@ const CharacterSchema = new Schema({
     ref: 'Location'
   },
   slots: {
-    charms:[{
+    charms: [{
       type: Schema.Types.ObjectId,
       ref: 'Item'
     }],
@@ -54,7 +56,7 @@ const CharacterSchema = new Schema({
     type: Boolean,
     default: false
   },
-  options : {},
+  options: {},
   removed: {
     type: Boolean,
     default: false
@@ -76,17 +78,20 @@ CharacterSchema.methods.update = function(props, cb){
   cb(null, this)
 }
 
+//make this.levels a virtual and have it pull from design?? same w family
 CharacterSchema.methods.initialize = function (state, cb) {
-  // tools.populateWithState('currentLocation', 'currentAction', ).bind(this)
-  // function populatewithState(){
-  //  arguments.forEach( (arg) => {
-  //   if (this[arg]) this[arg] = state[this[arg]]
-  // })
-  // }
-  // if (this.currentAction) this.currentAction = state[this.currentAction]
-  // if (this.currentLocation) this.currentLocation = state.locations.find(l => this.currentLocation === l._id)
-  // if (this.currentAction) this.currentAction = state.locations.find(l => this.currentAction === l._id)
-
+  this.kingdom = state[this.kingdom]
+  this.currentLocation = state[this.currentLocation]
+  this.currentAction = state[this.currentAction]
+  this.family = state[this.family]
+  this.slots.weapon = state[this.slots.weapon]
+  this.slots.charms = this.slots.charms.map((charms) => {
+    return state[charms]
+  })
+  this.slots.bugs = this.slots.bugs.map((bug) => {
+    return state[bug]
+  })
 }
+
 
 module.exports = mongoose.model('Character', CharacterSchema)

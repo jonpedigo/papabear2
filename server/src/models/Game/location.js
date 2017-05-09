@@ -1,5 +1,6 @@
 // Importing Node packages required for schema
 const mongoose = require('mongoose')
+const LOCATIONS = require('../../../../shared/design').LOCATIONS
 
 const Schema = mongoose.Schema
 
@@ -7,8 +8,6 @@ const Schema = mongoose.Schema
 // Location Schema
 // = ===============================
 
-//capacity, actionsavailable, description, private
-//characters
 const LocationSchema = new Schema({
   name: { type: String },
   coordinates: {
@@ -23,17 +22,22 @@ const LocationSchema = new Schema({
     enum: ['mine', 'field', 'lumberyard', 'barracks', 'sewers', 'tower', 'gate', 'supplyDepot', 'royalChambers', 'townCenter'],
     type: String
   },
-  bugs: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Item'
-  }],
+  slots: {
+    bugs: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Item'
+    }]
+  },
   conversation: {
     type: Schema.Types.ObjectId,
     ref: 'Conversation'
   },
   // only on supplyDepots
   supply: {
-    type: []
+    type: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Item'
+    }]
   },
   // only on private kingdom locations
   compromised: {
@@ -59,6 +63,27 @@ const LocationSchema = new Schema({
 
 LocationSchema.methods.allowAccess = function (candidate, cb) {
 
+}
+
+// ADDS: characters
+// capacity, actionsavailable, description, private
+LocationSchema.methods.initialize = function (state, cb) {
+  this.capacity = LOCATIONS[this.name].CAPACITY
+  this.actionsAvailable = LOCATIONS[this.name].ACTIONS_AVAILABLE
+  this.private = LOCATIONS[this.name].PRIVATE
+  this.description = LOCATIONS[this.name].DESCRIPTION
+
+  this.slots.bugs = this.slots.bugs.map((bug) => {
+    return state[bug]
+  })
+
+  this.supply = this.supply.map((item) => {
+    return state[item]
+  })
+
+  this.kingdom = state[this.kingdom]
+
+  this.characters = state['Character'].filter((character) => character.currentLocation._id == this._id || character.currentLocation == this._id )
 }
 
 // get a ...static property where its determined by how many people are currently in there

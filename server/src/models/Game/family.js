@@ -15,6 +15,9 @@ const FamilySchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Kingdom'
   },
+  description: {
+    type: String
+  },
   // this is THE MOST important data to keep thats the only real part that is going to MATTER LONG TERM is the skills, and perhaps some rare items? anywyas..this is the only thing that needs to be backwards compatible
   experience: SKILLS_LIST.reduce((obj, skill) => obj[skill] = {type: Number, default: 0}, {}),
   removed: {
@@ -34,9 +37,10 @@ FamilySchema.methods.update = function(props, cb){
   cb(null, this)
 }
 
+// ADDS: characters
 FamilySchema.methods.initialize = function(state, cb){
-  this.characters = []
-
+  this.kingdom = state[this.kingdom]
+  this.characters = state['Character'].filter((character) => character.family._id == this._id || character.family == this._id )
 }
 
 module.exports = mongoose.model('Family', FamilySchema)

@@ -1,5 +1,6 @@
 // Importing Node packages required for schema
 const mongoose = require('mongoose')
+const ITEMS = require('../../../../shared/design').ITEMS
 
 const Schema = mongoose.Schema
 
@@ -7,7 +8,6 @@ const Schema = mongoose.Schema
 // Item Schema
 // = ===============================
 
-//flavor, slot
 const ItemSchema = new Schema({
   name: { type: String },
   category: {
@@ -21,6 +21,14 @@ const ItemSchema = new Schema({
 }, {
   timestamps: true
 })
+
+// ADDS: flavor, slot
+ItemSchema.methods.initialize = function (state, cb) {
+  this.flavor = ITEMS[this.name].FLAVOR
+  this.description = ITEMS[this.name].DESCRIPTION
+
+  if (this.owner) this.owner = state[this.owner]
+}
 
 const Item = mongoose.model('Item', ItemSchema)
 

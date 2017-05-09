@@ -27,7 +27,7 @@ const KingdomSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Action'
   },
-  // im not sure a kingdom needs access to its locations?
+  // if i decide to store locations in db sometime
   // locations: DEFAULT_KINGDOM_LOCATIONS.reduce((obj, skill) => obj[skill] = {type: Schema.Types.ObjectId, ref: 'Locaton'}, {}),
   dead: {
     type: Boolean,
@@ -49,8 +49,21 @@ KingdomSchema.methods.destroy = function (cb) {
 
 }
 
+// ADDS : Locations, Character
 KingdomSchema.methods.initialize = function (state, cb) {
-  this.characters = []
+  // find locations (not stored in db)
+  this.locations = DEFAULT_KINGDOM_LOCATIONS.reduce((obj, category) => {
+    let location = state['Location'].find((loc) => loc.category = category && !loc.removed && (loc.kingdom._id == this._id || loc.kingdom == this._id))
+    if (!location) console.log(`No ${category} location found for Kingdom ${this.name} .....BAD!`)
+    obj[category] = location
+    return obj
+  }, {})
+  // find characters (not stored in db)
+  this.characters = state['Character'].filter((character) => character.kingdom._id == this._id || character.kingdom == this._id )
+
+  this.king.charm = state[this.king.charm]
+  this.king.charm2 = state[this.king.charm2]
+  this.idleAction = state[this.idleAction]
 }
 
 module.exports = mongoose.model('Kingdom', KingdomSchema)

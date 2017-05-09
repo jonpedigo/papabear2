@@ -63,7 +63,7 @@ const socketEvents =  (io) =>{
       socket.emit('left game', socket.user.game)
     })
   })
-} 
+}
 
 let popState = {
   event: "",
@@ -127,7 +127,7 @@ module.exports = function (app, io) {
     if (!props.family) props.family = familyId
     else if (props.family != familyId) return next('You cannot create a character that isnt in your family')
     if (family.characters.length && !familyController.canAddCharacter(req.game, family)) return next('You cannot add a character to this family right now')
-    
+
     props.kingdom = family.kingdom
     props.family = family._id
     characterController.add(req.game, props, (err, character) => {
@@ -193,27 +193,27 @@ module.exports = function (app, io) {
   //pop
   //ensure player lvl can sense charm
   characterRoutes.post('/:characterId/sense/charm', (req, res, next) => {
-    
+
   })
 
   //pop
   //ensure player lvl can sense skill
   characterRoutes.post('/:characterId/sense/skill', (req, res, next) => {
-    
+
   })
 
   //pop
   //ensure player lvl can sense bug
   characterRoutes.post('/:characterId/sense/bug', (req, res, next) => {
-    
+
   })
 
   characterRoutes.post('/:characterId/log', (req, res, next) => {
-    
+
   })
 
   characterRoutes.post('/:characterId/message', (req, res, next) => {
-    
+
   })
 
 
@@ -222,30 +222,30 @@ module.exports = function (app, io) {
   })
 
   locationRoutes.post('/:locationId/go', (req, res, next) => {
-    
+
   })
 
 ////all of these here need to ensure that player is in same location
   //pop
   locationRoutes.post('/:locationId/invade', (req, res, next) => {
-    
+
   })
 
   //pop
   //correct level to sneak
   locationRoutes.post('/:locationId/sneak', (req, res, next) => {
-    
+
   })
 
   //pop
   //make sure player has correct level to steal
   //make sure items in there
   locationRoutes.post('/:locationId/steal/:itemId', (req, res, next) => {
-    
+
   })
 
   locationRoutes.post('/:locationId/message', (req, res, next) => {
-    
+
   })
 
   itemRoutes.param('/:itemId', (req, res, next) => {
@@ -255,31 +255,31 @@ module.exports = function (app, io) {
   //pop
   //ensure is bug, ensure target is in same location, ensure player has access to this bug
   itemRoutes.post('bug/:bugId/plant', (req, res, next) => {
-    
+
   })
 
   //pop
   //ensure is bug, ensure player is in same location as bugged players
   itemRoutes.post('bug/:bugId/remove', (req, res, next) => {
-    
+
   })
 
   //ensure item has resources BY THE TEAM WHOM IS MAKING IT to make given item
   //ensure character is in supplyDepot OF THEIR TEAM
   itemRoutes.post('/', (req, res, next) => {
-    
+
   })
 
   //ensure player is in location of supply depot of their OWN team
   //ensure this item is actually in the supply depot
   itemRoutes.post('/:itemId/remove', (req, res, next) => {
-    
+
   })
 
   //ensure player is in location of supply depot of their OWN team
   //ensure this item is actually in the supply depot
   itemRoutes.post('/:itemId/equip', (req, res, next) => {
-    
+
   })
 
 
@@ -290,13 +290,13 @@ module.exports = function (app, io) {
   //user created a new action
   //be sure to deactivate old
   actionRoutes.post('/', (req, res, next) => {
-    
+
   })
 
   //you must own this action
   //it must not be the IdleAction of the kingdom
   actionRoutes.post('/:actionId/end', (req, res, next) => {
-    
+
   })
 
 
@@ -306,19 +306,19 @@ module.exports = function (app, io) {
   })
 
   gameRoutes.post('/:gameId/start', (req, res, next) => {
-    
+
   })
 
   gameRoutes.post('/:gameId/suspend', (req, res, next) => {
-    
+
   })
 
   gameRoutes.post('/:gameId/end', (req, res, next) => {
-    
+
   })
 
   gameRoutes.post('/', (req, res, next) => {
-    
+
   })
 
 
