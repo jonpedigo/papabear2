@@ -7,7 +7,6 @@ const express = require('express'),
   gameRouter = require('./routes/game'),
   mongoose = require('mongoose'),
   session = require('express-session'),
-  extend = require('mongoose-schema-extend'),
   socketEvents = require('./socketEvents'),
   passport = require('passport'),
   cookieParser = require('cookie-parser')

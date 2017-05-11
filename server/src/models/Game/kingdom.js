@@ -28,7 +28,10 @@ const KingdomSchema = new Schema({
     ref: 'Action'
   },
   // if i decide to store locations in db sometime
-  // locations: DEFAULT_KINGDOM_LOCATIONS.reduce((obj, skill) => obj[skill] = {type: Schema.Types.ObjectId, ref: 'Locaton'}, {}),
+  locations: DEFAULT_KINGDOM_LOCATIONS.reduce((obj, locCategory) => {
+    obj[locCategory] = {type: Schema.Types.ObjectId, ref: 'Locaton'}
+    return obj
+  }, {}),
   dead: {
     type: Boolean,
     default: false

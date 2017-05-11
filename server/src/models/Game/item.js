@@ -1,5 +1,7 @@
 // Importing Node packages required for schema
 const mongoose = require('mongoose')
+const extend = require('mongoose-schema-extend')
+
 const ITEMS = require('../../../../shared/design').ITEMS
 
 const Schema = mongoose.Schema
