@@ -6,9 +6,7 @@ module.exports = function () {
 	//just init into game.saveState and let the game save it for you
 	const add = (game, props, cb) => {
 		props.currentLocation = game.getById(props.kingdom).locations.townCenter._id
-		gameController.getStartLocation(game.getById(props.kingdom))
 		characterModel.create(props).then((character) => {
-			character.setStartLocation(character)
 			game.add(character)
 			cb(null, character)
 		}).catch(cb)

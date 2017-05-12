@@ -14,10 +14,10 @@ const LocationSchema = new Schema({
     x: { type: Number },
     y: { type: Number }
   },
-  kingdom: {
-    type: Schema.Types.ObjectId,
-    ref: 'Kingdom'
-  },
+  // kingdom: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Kingdom'
+  // },
   category: {
     enum: ['mine', 'field', 'lumberyard', 'barracks', 'sewers', 'tower', 'gate', 'supplyDepot', 'royalChambers', 'townCenter'],
     type: String
@@ -54,24 +54,25 @@ const LocationSchema = new Schema({
     default: false
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  strict:false
 })
 
 // = ===============================
 // Location ORM Methods
 // = ===============================
 
-LocationSchema.methods.allowAccess = function (candidate, cb) {
-
+LocationSchema.methods.getCharacters = function (game, cb) {
+  return game.state['Character'].filter((character) => character.currentLocation && character.currentLocation._id == this._id )
 }
 
 // ADDS: characters
 // capacity, actionsavailable, description, private
 LocationSchema.methods.initialize = function (state, cb) {
-  this.capacity = LOCATIONS[this.name].CAPACITY
-  this.actionsAvailable = LOCATIONS[this.name].ACTIONS_AVAILABLE
-  this.private = LOCATIONS[this.name].PRIVATE
-  this.description = LOCATIONS[this.name].DESCRIPTION
+  this.set('capacity', LOCATIONS[this.category].CAPACITY)
+  this.set('actionsAvailable', LOCATIONS[this.category].ACTIONS_AVAILABLE)
+  this.set('private', LOCATIONS[this.category].PRIVATE)
+  this.set('description', LOCATIONS[this.category].DESCRIPTION)
 
   this.slots.bugs = this.slots.bugs.map((bug) => {
     return state[bug]
@@ -83,9 +84,10 @@ LocationSchema.methods.initialize = function (state, cb) {
 
   this.kingdom = state[this.kingdom]
 
-  this.characters = state['Character'].filter((character) => character.currentLocation._id == this._id || character.currentLocation == this._id )
+  // console.log(state['Character'][0].currentLocation, this._id)
+  // this.set('characters', state['Character'].filter((character) => character.currentLocaton && (character.currentLocation._id == this._id) || character.currentLocation == this._id.toString() ))
 }
 
-// get a ...static property where its determined by how many people are currently in there
+// get a ...virtual property where its determined by how many people are currently in there
 
 module.exports = mongoose.model('Location', LocationSchema)

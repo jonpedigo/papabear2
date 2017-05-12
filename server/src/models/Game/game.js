@@ -27,7 +27,8 @@ const GameSchema = new Schema({
     default: false
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  strict:false
 })
 
 // = ===============================
@@ -68,7 +69,7 @@ GameSchema.methods.end = function (cb) {
 
 // ADDS: saveIntervals, gameLoopInterval
 GameSchema.methods.start = function (cb) {
-  this.saveInterval = setInterval(this.saveAll.bind(this), 60000)
+  this.saveInterval = setInterval(this.saveAll.bind(this), 60000/10)
   this.gameLoopInterval = setInterval(this.loop.bind(this), 1000)
 }
 
@@ -125,7 +126,7 @@ GameSchema.methods.saveAll = function (cb) {
       if (err) console.log(err)
       console.log(`Game ${game.name}, ${game._id} saved`)
     })
-  })
+  }).catch(console.log)
 }
 
 GameSchema.methods.loop = function (cb) {

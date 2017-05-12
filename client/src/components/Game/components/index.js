@@ -21,8 +21,9 @@ function mapStateToProps(state) {
     kingdom: state.kingdom,
     player: state.game.player,
     game: state.game.game,
-    famimy: state.game.family,
+    family: state.game.family,
     playerState: state.game.playerState,
+    metaState: state.game.metaState
   };
 }
 

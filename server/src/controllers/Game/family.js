@@ -13,11 +13,11 @@ module.exports = function () {
 	}
 
 	const canAddCharacter = (game, family) => {
-		let characterCount = family.kingdom.characters.length
+		let characterCount = family.kingdom.getCharacters(game).length
 		let familyKingdom = family.kingdom
 
 		let otherKingdoms = game.getCollecton('Kingdom').filter((kingdom) => { !kingdom.dead && kingdom._id !== familyKingdom._id })	
-		let withMoreCharacters = otherKingdoms.filter((kingdom) => kingdom.characters.length >= characterCount ).length
+		let withMoreCharacters = otherKingdoms.filter((kingdom) => kingdom.getCharacters(game).length >= characterCount ).length
 
 		//has to be one of the kingdoms w the least population /bottom 50%
 		if(withMoreCharacters >= (otherKingdoms.length/2) ) return true
@@ -27,13 +27,15 @@ module.exports = function () {
 		let kingdoms = game.getCollection('Kingdom')
 		
 		let averagePopulation = kingdoms.reduce((prev, kingdom) => {
-			return prev+ kingdom.characters.length
+			return prev+ kingdom.getCharacters(game).length
 		}, 0)/kingdoms.length
 
-		let possibleKingdoms = kingdoms.filter((kingdom) => !kingdom.dead && kingdom.characters.length <= averagePopulation)
+		averagePopulation = Math.ceil(averagePopulation)
+
+		let possibleKingdoms = kingdoms.filter((kingdom) => !kingdom.dead && kingdom.getCharacters(game).length <= averagePopulation)
 
 		let randomIndex =  Math.floor(Math.random() * possibleKingdoms.length)
-		
+
 		return possibleKingdoms[randomIndex]
 	}
 

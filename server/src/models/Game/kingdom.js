@@ -29,7 +29,7 @@ const KingdomSchema = new Schema({
   },
   // if i decide to store locations in db sometime
   locations: DEFAULT_KINGDOM_LOCATIONS.reduce((obj, locCategory) => {
-    obj[locCategory] = {type: Schema.Types.ObjectId, ref: 'Locaton'}
+    obj[locCategory] = {type: Schema.Types.ObjectId, ref: 'Location'}
     return obj
   }, {}),
   dead: {
@@ -41,28 +41,31 @@ const KingdomSchema = new Schema({
     default: false
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  strict:false
 })
 
 // = ===============================
 // Kingdom ORM Methods
 // = ===============================
 
-KingdomSchema.methods.destroy = function (cb) {
-
+KingdomSchema.methods.getCharacters = function (game, cb) {
+  return game.state['Character'].filter((character) => character.kingdom && character.kingdom._id == this._id )
 }
 
 // ADDS : Locations, Character
 KingdomSchema.methods.initialize = function (state, cb) {
   // find locations (not stored in db)
-  this.locations = DEFAULT_KINGDOM_LOCATIONS.reduce((obj, category) => {
-    let location = state['Location'].find((loc) => loc.category = category && !loc.removed && (loc.kingdom._id == this._id || loc.kingdom == this._id))
-    if (!location) console.log(`No ${category} location found for Kingdom ${this.name} .....BAD!`)
-    obj[category] = location
-    return obj
-  }, {})
-  // find characters (not stored in db)
-  this.characters = state['Character'].filter((character) => character.kingdom._id == this._id || character.kingdom == this._id )
+
+  this.locations.townCenter = state[this.locations.townCenter]
+
+  // this.locations = locations;
+  // console.log(locations)
+  // this.populate('locations.townCenter king.charm king.charm2 idleAction', (err, result) => {
+  //   console.log(err, result)
+  // })
+
+    // find characters (not stored in db)
 
   this.king.charm = state[this.king.charm]
   this.king.charm2 = state[this.king.charm2]

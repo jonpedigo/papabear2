@@ -25,12 +25,17 @@ const FamilySchema = new Schema({
     default: false
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  strict:false
 })
 
 // = ===============================
 // Family ORM Methods
 // = ===============================
+
+FamilySchema.methods.getCharacters = function (game, cb) {
+  return game.state['Character'].filter((character) => character.family && character.family._id == this._id )
+}
 
 FamilySchema.methods.update = function(props, cb){
   Object.assign(this, props, {updated: true})
@@ -40,7 +45,7 @@ FamilySchema.methods.update = function(props, cb){
 // ADDS: characters
 FamilySchema.methods.initialize = function(state, cb){
   this.kingdom = state[this.kingdom]
-  this.characters = state['Character'].filter((character) => character.family._id == this._id || character.family == this._id )
+  // this.characters = state['Character'].filter((character) => (character.family && character.family._id == this._id) || character.family == this._id )
 }
 
 module.exports = mongoose.model('Family', FamilySchema)

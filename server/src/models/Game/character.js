@@ -62,6 +62,7 @@ const CharacterSchema = new Schema({
     default: false
   }
 }, {
+  strict:false,
   timestamps: true
 })
 

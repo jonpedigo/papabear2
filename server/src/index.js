@@ -34,14 +34,18 @@ if (process.env.NODE_ENV != config.test_env) {
 const io = require('socket.io').listen(server)
 
 //socket authentication
-const jwt_decode = require('jwt-decode')
+const jwt = require('jsonwebtoken')
 io.sockets.on('connection', function(socket){
   socket.on('authenticate', (token) => {
-    let user = jwt_decode(token)
-    if(user && user._id) {
-      socket.user = user
-      socket.emit('authenticated')
-    } else socket.emit('unauthorized')
+    //this damn boiler plate dick head put a JWT_ in front of my tokens...
+    token = token.substr(4)
+    jwt.verify(token, config.secret, (err, user) => {
+      if(err) console.log(err)
+      if(user && user._id) {
+        socket.user = user
+        socket.emit('authenticated')
+      } else socket.emit('unauthorized')
+    })   
   })
 })
 

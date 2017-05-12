@@ -37,6 +37,7 @@ if (token && user) {
   store.dispatch({ type: AUTH_USER });
   store.dispatch(resumeGame())
 
+  console.log(user)
   socket.emit('authenticate', token) 
     .on('authenticated', function () {
       console.log('socket authorized, joining game')

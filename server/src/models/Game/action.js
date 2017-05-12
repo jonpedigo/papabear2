@@ -20,13 +20,14 @@ const ActionSchema = new Schema({
     default: false
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  strict:false
 })
 
 // ADDS: Character
 ActionSchema.methods.initialize = function (state, cb) {
   this.location = state[this.location]
-  this.character = state['Character'].find((character) => character.family._id == this._id || character.family == this._id)
+  // this.owner = state['Character'].find((character) => (character.family && character.family._id == this._id) || character.family == this._id)
 }
 
 const Action = mongoose.model('Action', ActionSchema)

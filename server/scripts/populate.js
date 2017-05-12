@@ -80,13 +80,18 @@ mongoose.connect(config.database).then(() => {
 	let character1 = {
 		name: "FIRST NAME", 
 		kingdom: family.kingdom,
-		currentLocaton: docsMap[family.kingdom].townCenter
+		currentLocation: docsMap[family.kingdom].locations.townCenter
 	}
+	// console.log(character1)
+	// console.log(docsMap)
 
 	console.log('populatng characters')
 	return Character.create(character1)
 }).then((character) => {
 	docsMap[character._id] = character
 	game.add(character)
+
+	return game.save()
+}).then(() => {
 	process.exit()
 }).catch(console.log)

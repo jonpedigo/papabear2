@@ -44,15 +44,19 @@ const getPlayer = (req, res, next) => {
 const socketEvents =  (io) =>{
   io.on('connection', (socket) => {
     socket.on('join game', () => {
-      socket.join(socket.user.game)
-      socket.join(socket.user.currentCharacter)
-      socket.join(socket.user.family)
-      let game = gameController.getGame(socket.user.game)
-      let player = game.getById(socket.user.currentCharacter)
-      socket.player = player
-      socket.join(player.currentLocation._id)
-      socket.join(player.kingdom._id)
-      socket.emit('joined game', gameId)
+      console.log(socket.user)
+      User.findById(socket.user._id).then((user) => {
+        socket.join(user.game)
+        socket.join(user.currentCharacter)
+        socket.join(user.family)
+        let game = gameController.getGame(user.game)
+        let player = game.getById(user.currentCharacter)
+        socket.game = game
+        socket.player = player
+        socket.join(player.currentLocation._id)
+        socket.join(player.kingdom._id)
+        socket.emit('joined game', game._id)
+      })
     })
     socket.on('leave game', () => {
       socket.leave(socket.user.game)
@@ -111,7 +115,6 @@ module.exports = function (app, io) {
     if (req.user && req.user.family) return next('You already have a family')
     familyController.add(req.game, req.body, (err, family) => {
       if (err) next(err)
-      familyController.findKingdom(req.game, family)
       req.user.family = family._id
       req.user.save().then((user) => {
         res.json({user: setUserInfo(user)})
@@ -126,10 +129,9 @@ module.exports = function (app, io) {
     let family = req.game.getById(familyId)
     if (!props.family) props.family = familyId
     else if (props.family != familyId) return next('You cannot create a character that isnt in your family')
-    if (family.characters.length && !familyController.canAddCharacter(req.game, family)) return next('You cannot add a character to this family right now')
+    if (family.getCharacters(req.game).length && !familyController.canAddCharacter(req.game, family)) return next('You cannot add a character to this family right now')
 
-    props.kingdom = family.kingdom
-    props.family = family._id
+    props.kingdom = family.kingdom._id
     characterController.add(req.game, props, (err, character) => {
       if(err) return next(err)
       req.user.currentCharacter = character._id
