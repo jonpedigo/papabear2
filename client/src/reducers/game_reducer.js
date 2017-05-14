@@ -1,12 +1,22 @@
 import { UPDATE_GAME, GAME_ERROR, EVENT_RESULT, SET_KINGDOM, SET_FAMILY, SET_PLAYER, SET_GAME, EVENT_SUCCESS } from '../actions/types';
-import design from '../../../shared/design/game';
+import game from '../../../shared/design/game';
+import items from '../../../shared/design/items';
+import skills from '../../../shared/design/skills';
+import locations from '../../../shared/design/locations';
+
+const design = {
+  game,
+  items,
+  skills,
+  locations
+}
 
 const INITIAL_STATE = { message: '', success: true, playerState : {}, metaState: {}, popState: {}, design };
 
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case UPDATE_GAME:
-      return { ...state, playerState: action.payload.playerState, metaState: action.payload.metaState }
+      return { ...state, playerState: action.playerState, metaState: action.metaState }
     case GAME_ERROR:
       return { ...state, success: false, error: action.payload }
     case EVENT_RESULT:

@@ -17,14 +17,15 @@ module.exports = function () {
 		return games[id]
 	}
 
-	const populateGames = (cb) => {
+	const populateGames = (loopCallback) => {
 
 		//this will need some serious re-work when the game actually is real...
 		Game.find({}).then((allGames) =>{
 			allGames.forEach((game) => {
 				games[game._id] = game
 				game.initialize((err)=> {
-					game.start()
+					if(err) console.log(err)
+					game.start(loopCallback)
 				})
 			})
 		})

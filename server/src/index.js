@@ -49,7 +49,7 @@ io.sockets.on('connection', function(socket){
   })
 })
 
-//just testing syntax of models
+////.. fukin bullshit here
 require('./models/Game/action')
 require('./models/Game/character')
 require('./models/Game/family')
@@ -58,8 +58,13 @@ require('./models/Game/location')
 require('./models/Game/kingdom')
 require('./models/Game/game')
 
+const DESIGN = require('../../shared/design')
 gameController = require('./controllers/Game/game')()
-gameController.populateGames()
+gameController.populateGames((game) => {
+  game.state['Character'].forEach((character) => {
+    io.in(character._id).emit('update game', DESIGN.CLIENT.PLAYER_STATE(game, character), {})
+  })
+})
 // Set static file location for production
 // app.use(express.static(__dirname + '/public'))
 

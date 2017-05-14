@@ -16,6 +16,7 @@ const Conversation = require('../src/models/conversation')
 
 var game
 var docsMap = {}
+var locationsMap = {}
 mongoose.connect(config.database).then(() => {
 	let game1 = {
 		name: 'this crazy game!'
@@ -39,7 +40,7 @@ mongoose.connect(config.database).then(() => {
 	}))
 
 }).then((locations) => {
-	let locationsMap = locations.reduce((map, loc) => {
+	locationsMap = locations.reduce((map, loc) => {
 		docsMap[loc._id] = loc
 		game.add(loc)
 		map[loc.category] = loc._id
@@ -48,7 +49,7 @@ mongoose.connect(config.database).then(() => {
 
 	let kingdom1 = {
 		name: "Da killa chicks",
-		locations: locationsMap
+		// locations: locationsMap
 	}
 
 	console.log('populatng kingdoms')
@@ -80,8 +81,10 @@ mongoose.connect(config.database).then(() => {
 	let character1 = {
 		name: "FIRST NAME", 
 		kingdom: family.kingdom,
-		currentLocation: docsMap[family.kingdom].locations.townCenter
+		currentLocation: locationsMap['townCenter'],
+		family: family._id
 	}
+
 	// console.log(character1)
 	// console.log(docsMap)
 

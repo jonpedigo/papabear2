@@ -1,6 +1,6 @@
 //WARFARE active level includes possible equipment
 
-const SKILLS = {
+var SKILLS = {
 	//other stealth names - secrecy, silence, camoflauge, covert, spycraft, theivery, asassination, padfoot??? 
 	LIST: ['mining', 'woodcutting', 'herding', 'spycraft', 'sorcery', 'warfare'],
 	SORCERY: {

@@ -2,8 +2,6 @@ const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-console.log(path.resolve(__dirname, "../shared/**/*.js"))
-
 const config = {
   context: __dirname,
   entry: './src/index.js',

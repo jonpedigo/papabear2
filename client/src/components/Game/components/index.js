@@ -5,12 +5,9 @@ import cookie from 'react-cookie';
 
 class Game extends Component {
   render() {
-    console.log("COOKIE!", cookie.load('user'), this.props)
     return (
-      <div>
-        <div className="Game">
-        	<GameCard></GameCard>
-        </div>
+      <div className="Game">
+      	<GameCard {...this.props}></GameCard>
       </div>
     );
   }

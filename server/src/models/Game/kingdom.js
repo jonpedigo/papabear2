@@ -53,6 +53,16 @@ KingdomSchema.methods.getCharacters = function (game, cb) {
   return game.state['Character'].filter((character) => character.kingdom && character.kingdom._id == this._id )
 }
 
+KingdomSchema.methods.getLocations = function (game, cb) {
+  return game.state['Location'].reduce((map, loc) => {
+    if(loc.kingdom && loc.kingdom._id == this._id){
+      if(map[loc.category]) console.log("there was already a location for category: ${loc.category}")
+      else map[loc.category] = loc
+    }
+    return map
+  }, {})
+}
+
 // ADDS : Locations, Character
 KingdomSchema.methods.initialize = function (state, cb) {
   // find locations (not stored in db)

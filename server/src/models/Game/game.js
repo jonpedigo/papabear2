@@ -68,9 +68,9 @@ GameSchema.methods.end = function (cb) {
 }
 
 // ADDS: saveIntervals, gameLoopInterval
-GameSchema.methods.start = function (cb) {
+GameSchema.methods.start = function (loopCallback) {
   this.saveInterval = setInterval(this.saveAll.bind(this), 60000/10)
-  this.gameLoopInterval = setInterval(this.loop.bind(this), 1000)
+  this.gameLoopInterval = setInterval(this.loop.bind(this, loopCallback), 1000)
 }
 
 
@@ -109,7 +109,6 @@ GameSchema.methods.initialize = function (cb) {
   })
 }
 
-// this model should not actually send socket information out - this should only be responsible for updating the state of the game or its childrens state. move this to game schema
 GameSchema.methods.update = function (cb) {
 
 }
@@ -130,7 +129,7 @@ GameSchema.methods.saveAll = function (cb) {
 }
 
 GameSchema.methods.loop = function (cb) {
-
+  cb(this)
 }
 
 module.exports = mongoose.model('Game', GameSchema)

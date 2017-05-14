@@ -51,7 +51,10 @@ const CharacterSchema = new Schema({
     type: Number,
     default: 0
   },
-  experience: SKILLS_LIST.reduce((obj, skill) => obj[skill] = {type: Number, default: 0}, {}),
+  experience: SKILLS_LIST.reduce((obj, skill) => {
+    obj[skill] = {type: Number, default: 0}
+    return obj
+  }, {}),
   dead: {
     type: Boolean,
     default: false

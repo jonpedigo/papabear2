@@ -44,11 +44,11 @@ const getPlayer = (req, res, next) => {
 const socketEvents =  (io) =>{
   io.on('connection', (socket) => {
     socket.on('join game', () => {
-      console.log(socket.user)
       User.findById(socket.user._id).then((user) => {
         socket.join(user.game)
         socket.join(user.currentCharacter)
         socket.join(user.family)
+        console.log("SOCKET", user)
         let game = gameController.getGame(user.game)
         let player = game.getById(user.currentCharacter)
         socket.game = game

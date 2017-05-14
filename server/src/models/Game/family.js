@@ -19,7 +19,10 @@ const FamilySchema = new Schema({
     type: String
   },
   // this is THE MOST important data to keep thats the only real part that is going to MATTER LONG TERM is the skills, and perhaps some rare items? anywyas..this is the only thing that needs to be backwards compatible
-  experience: SKILLS_LIST.reduce((obj, skill) => obj[skill] = {type: Number, default: 0}, {}),
+  experience: SKILLS_LIST.reduce((obj, skill) => {
+    obj[skill] = {type: Number, default: 0}
+    return obj
+  }, {}),
   removed: {
     type: Boolean,
     default: false

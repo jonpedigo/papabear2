@@ -86,11 +86,7 @@ export function selectCharacter({ characterId }) {
   const data = {characterId}
   const url = `/character/${characterId}/select`
   return (dispatch) => {
-    return postData(SET_PLAYER, GAME_ERROR, true, url, dispatch, data).then((game) => {
-      let user = cookie.load('user')
-      console.log("select character")
-      // socket.emit('join game')
-    });
+    return postData(SET_PLAYER, GAME_ERROR, true, url, dispatch, data)
   };
 }
 

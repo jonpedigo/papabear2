@@ -3,17 +3,19 @@
 // EXCEPTIONS EXCEPTIONS EXCEPTIONS ARE WHAT MAKE THIS GAME GREAT AND INTERESTING
 // THE MYSTERY
 
-const SKILLS = require('./skills').SKILLS
+// import SKILLS from './skills'
 
-const ITEMS = {}
+// var SKILLS = require('./skills').SKILLS
+
+var ITEMS = {}
 
 ITEMS['fire wizard staff'] = {
-	CRAFT_CHECK: (player, supply) => {
-		if(SKILLS.SORCERY.ACTIVE_LEVEL(player.experience) < 20) return false
-		if(supply.filter(item => item.name === 'fire logs').length < 20)  return false
+	CRAFT_CHECK: function(player, supply){
+		if(player.activeLevels().sorcery < 20) return false
+		if(supply.filter(function(item){item.name === 'fire logs'}).length < 20)  return false
 		return true
 	},
-	MODIFIER: (attacker, defender) => {
+	MODIFIER: function(attacker, defender){
 
 	}
 }

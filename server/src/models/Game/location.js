@@ -14,10 +14,10 @@ const LocationSchema = new Schema({
     x: { type: Number },
     y: { type: Number }
   },
-  // kingdom: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Kingdom'
-  // },
+  kingdom: {
+    type: Schema.Types.ObjectId,
+    ref: 'Kingdom'
+  },
   category: {
     enum: ['mine', 'field', 'lumberyard', 'barracks', 'sewers', 'tower', 'gate', 'supplyDepot', 'royalChambers', 'townCenter'],
     type: String
