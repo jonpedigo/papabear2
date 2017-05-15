@@ -1,8 +1,6 @@
 // Importing Node packages required for schema
 const mongoose = require('mongoose')
 const bluebird = require('bluebird')
-const Character = require('./character')
-const Kingdom = require('./kingdom')
 
 const Schema = mongoose.Schema
 
@@ -69,7 +67,7 @@ GameSchema.methods.end = function (cb) {
 
 // ADDS: saveIntervals, gameLoopInterval
 GameSchema.methods.start = function (loopCallback) {
-  this.saveInterval = setInterval(this.saveAll.bind(this), 60000/10)
+  this.saveInterval = setInterval(this.saveAll.bind(this), 60000)
   this.gameLoopInterval = setInterval(this.loop.bind(this, loopCallback), 1000)
 }
 

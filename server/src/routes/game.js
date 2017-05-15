@@ -48,7 +48,6 @@ const socketEvents =  (io) =>{
         socket.join(user.game)
         socket.join(user.currentCharacter)
         socket.join(user.family)
-        console.log("SOCKET", user)
         let game = gameController.getGame(user.game)
         let player = game.getById(user.currentCharacter)
         socket.game = game
@@ -210,7 +209,7 @@ module.exports = function (app, io) {
 
   })
 
-  characterRoutes.post('/:characterId/log', (req, res, next) => {
+  characterRoutes.post('/:characterId/record', (req, res, next) => {
 
   })
 
@@ -290,8 +289,13 @@ module.exports = function (app, io) {
   })
 
   //user created a new action
-  //be sure to deactivate old
   actionRoutes.post('/', (req, res, next) => {
+
+  })
+
+  //start action
+  //be sure to deactivate old
+  actionRoutes.post('/:actionId/start', (req, res, next) => {
 
   })
 

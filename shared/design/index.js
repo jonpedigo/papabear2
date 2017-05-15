@@ -12,8 +12,6 @@ const LOCATIONS = require('./locations')
 
 const DEFAULT_KINGDOM_LOCATIONS = ['mine', 'field', 'lumberyard', 'barracks', 'sewers', 'tower', 'gate', 'supplyDepot', 'royalChambers', 'townCenter']
 
-
-console.log(CLIENT)
 module.exports = {
   SKILLS: SKILLS,
   DEFAULT_KINGDOM_LOCATIONS: DEFAULT_KINGDOM_LOCATIONS,

@@ -11,7 +11,7 @@ const design = {
   locations
 }
 
-const INITIAL_STATE = { message: '', success: true, playerState : {}, metaState: {}, popState: {}, design };
+const INITIAL_STATE = { message: '', success: true, playerState : null, metaState: null, popState: null, design };
 
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {

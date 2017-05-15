@@ -2,13 +2,9 @@ import React, { Component } from 'react';
 
 class Game extends Component {
   render() {
-  		console.log(this.props)
-
     return (
-      <div>
-        <div className="Game">
-          {"WASSUP LETS PLAY"}
-        </div>
+      <div onClick={this.props.goToSummary} className="CharacterListItem">
+        {this.props.character.name + " " + this.props.character.family.name}
       </div>
     );
   }

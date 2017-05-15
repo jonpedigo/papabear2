@@ -1,21 +1,40 @@
 import { reset } from 'redux-form';
-import { browserHistory } from 'react-router';
 import { getData, postData, putData, deleteData } from '../index';
-import socket from '../socket'
-// Connect to socket.io server
+import { EVENT_RESULT, GAME_ERROR, EVENT_SUCCESS } from '../types'
 
 //= ===============================
-// Game actions
+// Character actions
 //= ===============================
 
-export function createCharacter(props) {
+export function attackCharacter(props) {
   const data = props;
-  const url = `/character`;
+  const url = `/character/{props.characterId}/attack`;
   return (dispatch) => {
-    postData('create_character', 'GAME_ERROR', true, url, dispatch, data);
-    // Clear form after message is sent
-    // dispatch(reset('composeMessage'));
-    //
-    // browserHistory.push(`/dashboard/conversation/view/${response.data.conversationId}`);
+    postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data);
+  };
+}
+
+export function senseCharacter(props) {
+  const data = props;
+  const url = `/character/${props.characterId}/sense/${props.category}`;
+  return (dispatch) => {
+    postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data);
+  };
+}
+
+export function recordCharacter(props) {
+  const data = props;
+  const url = `/character/${props.characterId}/record`;
+  return (dispatch) => {
+    postData(EVENT_SUCCESS, GAME_ERROR, true, url, dispatch, data);
+  };
+}
+
+export function messageCharacter(props) {
+  const data = props;
+  const url = `/character/${props.characterId}/message`;
+  return (dispatch) => {
+    postData(EVENT_SUCCESS, GAME_ERROR, true, url, dispatch, data);
+    dispatch(reset('chatField'));
   };
 }

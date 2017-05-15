@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 
 class Game extends Component {
   render() {
-  		console.log(this.props)
+    if(!this.props.location) return (<div>{'Loading...'}</div>)
 
+    let location = this.props.location
     return (
-      <div>
-        <div className="Game">
-          {"WASSUP LETS PLAY"}
-        </div>
+      <div className="LocationSummary">
+        {location.name}
       </div>
     );
   }

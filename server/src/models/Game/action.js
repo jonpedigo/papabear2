@@ -18,6 +18,10 @@ const ActionSchema = new Schema({
   removed: {
     type: Boolean,
     default: false
+  },
+  idle: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true,

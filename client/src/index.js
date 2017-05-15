@@ -36,8 +36,6 @@ if (token && user) {
   // Update application state. User has token and is probably authenticated
   store.dispatch({ type: AUTH_USER });
   store.dispatch(resumeGame())
-
-  console.log(user)
   socket.emit('authenticate', token) 
     .on('authenticated', function () {
       console.log('socket authorized, joining game')
