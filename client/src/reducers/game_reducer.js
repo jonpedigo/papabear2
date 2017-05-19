@@ -3,12 +3,14 @@ import GAME from '../../../shared/design/game';
 import ITEMS from '../../../shared/design/items';
 import SKILLS from '../../../shared/design/skills';
 import LOCATIONS from '../../../shared/design/locations';
+import CHARACTERS from '../../../shared/design/characters';
 
 const design = {
   GAME,
   ITEMS,
   SKILLS,
-  LOCATIONS
+  LOCATIONS,
+  CHARACTERS
 }
 
 const INITIAL_STATE = { message: '', success: true, playerState : null, metaState: null, eventState: { open: false }, design };

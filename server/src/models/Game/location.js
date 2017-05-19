@@ -67,10 +67,10 @@ LocationSchema.methods.getCharacters = function (game, cb) {
 }
 
 // ADDS: characters
-// capacity, actionsavailable, description, private
+// capacity, events, description, private
 LocationSchema.methods.initialize = function (state, cb) {
   this.set('capacity', LOCATIONS[this.category].CAPACITY)
-  this.set('actionsAvailable', LOCATIONS[this.category].ACTIONS_AVAILABLE)
+  this.set('events', LOCATIONS[this.category].EVENTS)
   this.set('private', LOCATIONS[this.category].PRIVATE)
   this.set('description', LOCATIONS[this.category].DESCRIPTION)
 

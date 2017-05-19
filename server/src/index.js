@@ -50,7 +50,7 @@ io.sockets.on('connection', function(socket){
 })
 
 ////.. fukin bullshit here
-require('./models/Game/action')
+require('./models/Game/routine')
 require('./models/Game/character')
 require('./models/Game/family')
 require('./models/Game/item')

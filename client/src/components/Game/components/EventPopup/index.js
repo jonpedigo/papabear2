@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { createAction, startAction, endAction } from '../../../../actions/Game/action'
+import { createRoutine, startRoutine, endRoutine } from '../../../../actions/Game/routine'
 import { openEventPopup, closeEventPopup } from '../../../../actions/Game/eventPopup'
 import { craftItem, plantBug, removeBug, equipItem, unequipItem } from '../../../../actions/Game/item'
 import { sneakIntoLocation, stealFromLocation, invadeLocation, goToLocaton, messageLocation } from '../../../../actions/Game/location'

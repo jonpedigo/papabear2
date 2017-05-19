@@ -11,7 +11,7 @@ import RecordListItem from '../ListItems/record'
 import SkillListItem from '../ListItems/skill'
 import ChatListItem from '../ListItems/chat'
 
-import ActionButton from '../ActionButton'
+import EventButton from '../EventButton'
 
 import EventPopup from '../EventPopup'
 
@@ -23,7 +23,8 @@ class Game extends Component {
 			summaryView: 'location',
 			listView: 'characters',
 			selectedCharacter: null,
-      selectedItem: null
+      selectedItem: null,
+      selectedLocation
     }
 	}
 
@@ -44,6 +45,7 @@ class Game extends Component {
   	let currentLocation = this.props.playerState.currentLocation
   	let selectedCharacter = this.state.selectedCharacter
     let selectedItem = this.state.selectedItem
+    let selectedLocation = this.state.selectedLocation
 
   	let summary
   	if(this.state.summaryView === 'location'){
@@ -52,7 +54,7 @@ class Game extends Component {
   		summary = <CharacterSummary character={selectedCharacter}/>
   	}
 
-  	let list
+  	let list = []
   	if(this.state.listView === 'characters'){
   		list = currentLocation.characters.map((character) => {
   			return (
@@ -61,18 +63,42 @@ class Game extends Component {
   		})
   	}
 
-    let actions
-    if(this.state.summaryView === 'location'){
-      console.log(this.props.design.LOCATIONS[currentLocation.category])
-      actions = this.props.design.LOCATIONS[currentLocation.category].ACTIONS_AVAILABLE.map((action) => {
-        switch(action){
+    let events = []
+    if(this.state.summaryView === 'world' && selectedLocation){
+      events.push( <EventButton Event='goToLocation' locationId={selectedLocation._id}></EventButton> )
+    }
+
+    if(this.state.summaryView === 'location' && currentLocation){
+      events = this.props.design.LOCATIONS[currentLocation.category].EVENTS.map((event) => {
+        if(event.constructor == Function) event = event(this.props.playerState, currentLocation)
+        switch(Event){
           case 'sneak':
-              return <ActionButton action='sneakIntoLocation' locationId={currentLocation._id}></ActionButton>
+              return <EventButton event='sneakThroughLocation' locationId={currentLocation._id}></EventButton>
             break;
           case 'steal':
-              return <ActionButton action='stealFromLocation' locationId={currentLocation._id} itemId={selectedItem._id}></ActionButton>
+              return <EventButton event='stealFromLocation' locationId={currentLocation._id} itemId={selectedItem ? selectedItem._id : null}></EventButton>
             break;
+          case 'invade':
+              return <EventButton event='invadeLocation' locationId={currentLocation._id}></EventButton>
+            break;      
         }
+      })
+    }
+
+    if(this.state.summaryView === 'character' && selectedCharacter){
+      events = this.props.design.CHARACTERS.EVENTS.map((event) => {
+        if(event.constructor == Function) event = event(this.props.playerState, selectedCharacter)
+        switch(event){
+          case 'steal':
+              return <EventButton event='stealFromLocation' locationId={currentLocation._id} itemId={selectedItem ? selectedItem._id : null}></EventButton>
+            break;
+          case 'invade':
+              return <EventButton event='stealFromLocation' locationId={currentLocation._id}></EventButton>
+            break;
+          case 'bug':
+              return <EventButton event='stealFromLocation' locationId={currentLocation._id}></EventButton>
+            break;        
+          }
       })
     }
 

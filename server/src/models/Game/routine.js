@@ -6,7 +6,7 @@ const Schema = mongoose.Schema
 // = ===============================
 // Action Schema
 // = ===============================
-const ActionSchema = new Schema({
+const RoutineSchema = new Schema({
   category: {
     enum: ['woodcutting', 'mining', 'herding', 'training', 'guarding'],
     type: String
@@ -18,10 +18,6 @@ const ActionSchema = new Schema({
   removed: {
     type: Boolean,
     default: false
-  },
-  idle: {
-    type: Boolean,
-    default: false
   }
 }, {
   timestamps: true,
@@ -29,12 +25,12 @@ const ActionSchema = new Schema({
 })
 
 // ADDS: Character
-ActionSchema.methods.initialize = function (state, cb) {
+RoutineSchema.methods.initialize = function (state, cb) {
   this.location = state[this.location]
   // this.owner = state['Character'].find((character) => (character.family && character.family._id == this._id) || character.family == this._id)
 }
 
-const Action = mongoose.model('Action', ActionSchema)
+const Routine = mongoose.model('Routine', RoutineSchema)
 
 // //= ===============================
 // // Woodcutting Schema
@@ -133,4 +129,4 @@ const Action = mongoose.model('Action', ActionSchema)
 //   Guarding
 // }
 
-module.exports = Action
+module.exports = Routine

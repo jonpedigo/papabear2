@@ -3,7 +3,7 @@ const passport = require('passport')
 
 // all the controllers also need the game.....which we get from the route
 const gameController = require('../controllers/Game/game')()
-const actionController = require('../controllers/Game/action')()
+const routineController = require('../controllers/Game/routine')()
 const characterController = require('../controllers/Game/character')()
 const combatController = require('../controllers/Game/combat')()
 const craftingController = require('../controllers/Game/crafting')()
@@ -81,7 +81,7 @@ module.exports = function (app, io) {
   // Initializing route groups
   const gameRoutes = express.Router()
   const characterRoutes = express.Router()
-  const actionRoutes = express.Router()
+  const routineRoutes = express.Router()
   const familyRoutes = express.Router()
   const locationRoutes = express.Router()
   const itemRoutes = express.Router()
@@ -95,7 +95,7 @@ module.exports = function (app, io) {
   apiRoutes.use('/game', gameRoutes)
   apiRoutes.use('/character', characterRoutes)
   apiRoutes.use('/family', familyRoutes)
-  apiRoutes.use('/action', actionRoutes)
+  apiRoutes.use('/routine', routineRoutes)
   apiRoutes.use('/item', itemRoutes)
   apiRoutes.use('/location', locationRoutes)
 
@@ -284,24 +284,24 @@ module.exports = function (app, io) {
   })
 
 
-  actionRoutes.param('/:actionId', (req, res, next) => {
+  routineRoutes.param('/:routineId', (req, res, next) => {
 
   })
 
-  //user created a new action
-  actionRoutes.post('/', (req, res, next) => {
+  //user created a new routine
+  routineRoutes.post('/', (req, res, next) => {
 
   })
 
-  //start action
+  //start routine
   //be sure to deactivate old
-  actionRoutes.post('/:actionId/start', (req, res, next) => {
+  routineRoutes.post('/:routineId/start', (req, res, next) => {
 
   })
 
-  //you must own this action
-  //it must not be the IdleAction of the kingdom (just duplicate the idle action?)
-  actionRoutes.post('/:actionId/end', (req, res, next) => {
+  //you must own this routine
+  //it must not be the Idleroutine of the kingdom (just duplicate the idle routine?)
+  routineRoutes.post('/:routineId/end', (req, res, next) => {
 
   })
 

@@ -23,9 +23,9 @@ const KingdomSchema = new Schema({
       }
     }
   },
-  idleAction: {
+  routine: {
     type: Schema.Types.ObjectId,
-    ref: 'Action'
+    ref: 'Routine'
   },
   // if i decide to store locations in db sometime
   locations: DEFAULT_KINGDOM_LOCATIONS.reduce((obj, locCategory) => {
@@ -79,7 +79,7 @@ KingdomSchema.methods.initialize = function (state, cb) {
 
   this.king.charm = state[this.king.charm]
   this.king.charm2 = state[this.king.charm2]
-  this.idleAction = state[this.idleAction]
+  this.routine = state[this.routine]
 }
 
 module.exports = mongoose.model('Kingdom', KingdomSchema)

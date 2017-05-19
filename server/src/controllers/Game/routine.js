@@ -1,14 +1,14 @@
 const SPEED = require('../../../../shared/design/game').SPEED
 
-const actionModel = require('../../models/Game/action')
+const routineModel = require('../../models/Game/routine')
 
 module.exports = function () {
 
 	//honestly shouldnt do async here, should just set as updated
 	const add = (game, props, cb) =>{
-		actionModel.create(props).exec().then((action) => {
-			game.add(action)
-			cb(null, action)
+		routineModel.create(props).exec().then((routine) => {
+			game.add(routine)
+			cb(null, routine)
 		}).catch(cb)
 	}
 

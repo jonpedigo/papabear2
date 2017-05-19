@@ -25,9 +25,9 @@ const CharacterSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Kingdom'
   },
-  currentAction: {
+  currentRoutine: {
     type: Schema.Types.ObjectId,
-    ref: 'Action'
+    ref: 'Routine'
   },
   currentLocation: {
     type: Schema.Types.ObjectId,
@@ -86,7 +86,7 @@ CharacterSchema.methods.update = function(props, cb){
 CharacterSchema.methods.initialize = function (state, cb) {
   this.kingdom = state[this.kingdom]
   this.currentLocation = state[this.currentLocation]
-  this.currentAction = state[this.currentAction]
+  this.currentRoutine = state[this.currentRoutine]
   this.family = state[this.family]
   this.slots.weapon = state[this.slots.weapon]
   this.slots.charms = this.slots.charms.map((charms) => {

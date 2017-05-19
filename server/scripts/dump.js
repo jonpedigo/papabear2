@@ -3,7 +3,7 @@ const config = require('../src/config/main');
 mongoose.Promise = require('bluebird');
 const bluebird = require('bluebird')
 
-const Action = require('../src/models/Game/action')
+const Routine = require('../src/models/Game/routine')
 const Character = require('../src/models/Game/character')
 const Family = require('../src/models/Game/family')
 const Item = require('../src/models/Game/item').Item
@@ -16,7 +16,7 @@ const Message = require('../src/models/message')
 
 
 mongoose.connect(config.database).then(() => {
-	Action.remove({}, function(err) { 
+	Routine.remove({}, function(err) { 
 	   console.log('collection removed') 
 	})
 	Character.remove({}, function(err) { 
