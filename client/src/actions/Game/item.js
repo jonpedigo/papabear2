@@ -1,21 +1,51 @@
 import { reset } from 'redux-form';
-import { browserHistory } from 'react-router';
 import { getData, postData, putData, deleteData } from '../index';
-import socket from '../socket'
-// Connect to socket.io server
+import { EVENT_RESULT, GAME_ERROR, GAME_SUCCESS } from '../types'
+import { openEventPopup } from './eventPopup'
 
 //= ===============================
-// Game actions
+// Item actions
 //= ===============================
 
-export function createCharacter({ props,  }) {
-  const data = { composedMessage };
-  const url = `/character/`;
+export function craftItem(props) {
+  const data = props;
+  const url = `/item`;
   return (dispatch) => {
-    postData('create_character', CHAT_ERROR, true, url, dispatch, data);
+    postData(GAME_SUCCESS, GAME_ERROR, true, url, dispatch, data);
+  };
+}
 
-    // Clear form after message is sent
-    dispatch(reset('composeMessage'));
-    browserHistory.push(`/dashboard/conversation/view/${response.data.conversationId}`);
+export function plantBug(props, analysis = true) {
+  const data = props;
+  const url = `/item/bug/${props.itemId}/plant`;
+  return (dispatch) => {
+  	if(analysis) return dispatch(openEventPopup(props))
+    postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data);
+  };
+}
+
+//needs character that the bug was on
+export function removeBug(props, analysis = true) {
+  const data = props;
+  const url = `/item/bug/${props.itemId}/remove`;
+  return (dispatch) => {
+  	if(analysis) return dispatch(openEventPopup(props))
+    postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data);
+  };
+}
+
+export function equipItem(props) {
+  const data = props;
+  const url = `/item/${props.itemId}/equip`;
+  return (dispatch) => {
+    postData(GAME_SUCCESS, GAME_ERROR, true, url, dispatch, data);
+  };
+}
+
+export function unequipItem(props) {
+  const data = props;
+  const url = `/item/${props.itemId}/unequip`;
+  return (dispatch) => {
+    postData(GAME_SUCCESS, GAME_ERROR, true, url, dispatch, data);
   };
 }

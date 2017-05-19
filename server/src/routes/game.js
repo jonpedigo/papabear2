@@ -273,7 +273,7 @@ module.exports = function (app, io) {
 
   //ensure player is in location of supply depot of their OWN team
   //ensure this item is actually in the supply depot
-  itemRoutes.post('/:itemId/remove', (req, res, next) => {
+  itemRoutes.post('/:itemId/unequip', (req, res, next) => {
 
   })
 
@@ -300,7 +300,7 @@ module.exports = function (app, io) {
   })
 
   //you must own this action
-  //it must not be the IdleAction of the kingdom
+  //it must not be the IdleAction of the kingdom (just duplicate the idle action?)
   actionRoutes.post('/:actionId/end', (req, res, next) => {
 
   })
@@ -326,10 +326,5 @@ module.exports = function (app, io) {
   gameRoutes.post('/', (req, res, next) => {
 
   })
-
-
-
-    // game/:id/start is an admin only route that starts the game, callback to update. Then creates packets and sends out to game
-    // send out to all player sockets a custom packet
 
 }

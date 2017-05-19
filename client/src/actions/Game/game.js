@@ -1,21 +1,39 @@
 import { reset } from 'redux-form';
-import { browserHistory } from 'react-router';
 import { getData, postData, putData, deleteData } from '../index';
-import socket from '../socket'
-// Connect to socket.io server
+import { EVENT_RESULT, GAME_ERROR, GAME_SUCCESS } from '../types'
 
 //= ===============================
-// Game actions
+// Character actions
 //= ===============================
 
-export function createCharacter({ props,  }) {
-  const data = { composedMessage };
-  const url = `/character/`;
+export function createGame(props) {
+  const data = props;
+  const url = `/game`;
   return (dispatch) => {
-    postData('create_character', CHAT_ERROR, true, url, dispatch, data);
+    postData(GAME_SUCCESS, GAME_ERROR, true, url, dispatch, data);
+  };
+}
 
-    // Clear form after message is sent
-    dispatch(reset('composeMessage'));
-    browserHistory.push(`/dashboard/conversation/view/${response.data.conversationId}`);
+export function startGame(props) {
+  const data = props;
+  const url = `/game/${props.GameId}/start`;
+  return (dispatch) => {
+    postData(GAME_SUCCESS, GAME_ERROR, true, url, dispatch, data);
+  };
+}
+
+export function suspendGame(props) {
+  const data = props;
+  const url = `/game/${props.GameId}/suspend`;
+  return (dispatch) => {
+    postData(GAME_SUCCESS, GAME_ERROR, true, url, dispatch, data);
+  };
+}
+
+export function endGame(props) {
+  const data = props;
+  const url = `/game/${props.GameId}/end`;
+  return (dispatch) => {
+    postData(GAME_SUCCESS, GAME_ERROR, true, url, dispatch, data);
   };
 }

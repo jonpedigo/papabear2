@@ -10,8 +10,6 @@ const form = reduxForm({
 
 class Login extends Component {
   handleFormSubmit(formProps) {
-    console.log(formProps)
-    debugger;
     this.props.login(formProps);
   }
 

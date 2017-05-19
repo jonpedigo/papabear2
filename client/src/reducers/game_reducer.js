@@ -1,17 +1,17 @@
-import { UPDATE_GAME, GAME_ERROR, EVENT_RESULT, SET_KINGDOM, SET_FAMILY, SET_PLAYER, SET_GAME, EVENT_SUCCESS } from '../actions/types';
-import game from '../../../shared/design/game';
-import items from '../../../shared/design/items';
-import skills from '../../../shared/design/skills';
-import locations from '../../../shared/design/locations';
+import { UPDATE_GAME, GAME_ERROR, EVENT_RESULT, EVENT_ANALYZE, EVENT_CLOSE, SET_KINGDOM, SET_FAMILY, SET_PLAYER, SET_GAME, GAME_SUCCESS } from '../actions/types';
+import GAME from '../../../shared/design/game';
+import ITEMS from '../../../shared/design/items';
+import SKILLS from '../../../shared/design/skills';
+import LOCATIONS from '../../../shared/design/locations';
 
 const design = {
-  game,
-  items,
-  skills,
-  locations
+  GAME,
+  ITEMS,
+  SKILLS,
+  LOCATIONS
 }
 
-const INITIAL_STATE = { message: '', success: true, playerState : null, metaState: null, popState: null, design };
+const INITIAL_STATE = { message: '', success: true, playerState : null, metaState: null, eventState: { open: false }, design };
 
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -19,10 +19,14 @@ export default function (state = INITIAL_STATE, action) {
       return { ...state, playerState: action.playerState, metaState: action.metaState }
     case GAME_ERROR:
       return { ...state, success: false, error: action.payload }
+    case GAME_SUCCESS: 
+      return { ...state, message: action.payload.message }
+    case EVENT_CLOSE:
+      return { ...state, eventState: { open: false } }
+    case EVENT_ANALYZE:
+      return { ...state, eventState: action.eventState }
     case EVENT_RESULT:
-    	return { ...state, popState: action.payload.popState }
-    case EVENT_SUCCESS: 
-    	return { ...state, message: action.payload.message }
+    	return { ...state, open : true, eventState: action.payload.eventState }
     case SET_KINGDOM: 
     	return {...state, kingdom: action.payload.user.kingdom }
     case SET_FAMILY: 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import CharacterSummary from '../CharacterSummary'
 import LocationSummary from '../LocationSummary'
 
@@ -10,6 +11,11 @@ import RecordListItem from '../ListItems/record'
 import SkillListItem from '../ListItems/skill'
 import ChatListItem from '../ListItems/chat'
 
+import ActionButton from '../ActionButton'
+
+import EventPopup from '../EventPopup'
+
+
 class Game extends Component {
 	constructor(){
 		super()
@@ -17,8 +23,8 @@ class Game extends Component {
 			summaryView: 'location',
 			listView: 'characters',
 			selectedCharacter: null,
-			listData: []
-		}
+      selectedItem: null
+    }
 	}
 
 	goToCharacterSummary(character) {
@@ -37,6 +43,7 @@ class Game extends Component {
 
   	let currentLocation = this.props.playerState.currentLocation
   	let selectedCharacter = this.state.selectedCharacter
+    let selectedItem = this.state.selectedItem
 
   	let summary
   	if(this.state.summaryView === 'location'){
@@ -53,6 +60,21 @@ class Game extends Component {
   			)
   		})
   	}
+
+    let actions
+    if(this.state.summaryView === 'location'){
+      console.log(this.props.design.LOCATIONS[currentLocation.category])
+      actions = this.props.design.LOCATIONS[currentLocation.category].ACTIONS_AVAILABLE.map((action) => {
+        switch(action){
+          case 'sneak':
+              return <ActionButton action='sneakIntoLocation' locationId={currentLocation._id}></ActionButton>
+            break;
+          case 'steal':
+              return <ActionButton action='stealFromLocation' locationId={currentLocation._id} itemId={selectedItem._id}></ActionButton>
+            break;
+        }
+      })
+    }
 
     return (
       <div className="GameCard">

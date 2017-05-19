@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import GameCard from './GameCard'
 import { connect } from 'react-redux';
-import cookie from 'react-cookie';
 
 class Game extends Component {
   render() {
@@ -20,7 +19,8 @@ function mapStateToProps(state) {
     game: state.game.game,
     family: state.game.family,
     playerState: state.game.playerState,
-    metaState: state.game.metaState
+    metaState: state.game.metaState,
+    design: state.game.design
   };
 }
 

@@ -7,47 +7,44 @@ import { craftItem, plantBug, removeBug, equipItem, unequipItem } from '../../..
 import { sneakIntoLocation, stealFromLocation, invadeLocation, goToLocaton, messageLocation } from '../../../../actions/Game/location'
 import { attackCharacter, senseCharacter, recordCharacter, messageCharacter } from '../../../../actions/Game/character'
 
-class ActionButton extends Component {
-  handleClick() {
-    //basically whatever the action passed in is called, thats the one we call with the analysis tag set to true
-    this.props[this.props.event](this.props, true)
-  }
+class EventPopup extends Component {
+
+	confirm(){
+		this.props[this.props.event](this.props, false)
+	}
+
+	exit(){
+		this.props.closeEventPopup()
+	}
 
   render() {
     return (
-      <div onClick={this.handleClick.bind(this)}>
-        {this.props.action}
+      <div className="EventPopup-container">
+        <div className="EventPopup">
+      
+      	</div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {...ownProps}
-}
-
 const mapDispatchToProps = {
-  createAction,
-  startAction,
-  endAction,
   openEventPopup,
   closeEventPopup,
-  craftItem,
   plantBug,
   removeBug,
-  equipItem,
-  unequipItem,
   sneakIntoLocation,
   stealFromLocation,
-  goToLocaton,
   invadeLocation, 
-  messageLocation,
   attackCharacter,
-  senseCharacter,
-  recordCharacter,
-  messageCharacter
+  senseCharacter
 }
 
-//this is where you pass itemId, characterId, location+itemId...all of that which is needed by the post request
+const mapStateToProps = (state, ownProps) => {
+  return {
+  	eventState: state.eventState,
+  	...ownProps
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActionButton);
+export default connect(mapStateToProps, mapDispatchToProps)(EventPopup);

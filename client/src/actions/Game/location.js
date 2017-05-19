@@ -1,21 +1,51 @@
 import { reset } from 'redux-form';
-import { browserHistory } from 'react-router';
 import { getData, postData, putData, deleteData } from '../index';
-import socket from '../socket'
-// Connect to socket.io server
-
+import { EVENT_RESULT, GAME_ERROR, GAME_SUCCESS } from '../types'
+import { openEventPopup } from './eventPopup'
 //= ===============================
-// Game actions
+// Location actions
 //= ===============================
 
-export function createCharacter({ props,  }) {
-  const data = { composedMessage };
-  const url = `/character/`;
+export function sneakIntoLocation(props) {
+  const data = props;
+  const url = `/location/${props.locationId}/sneak}`;
   return (dispatch) => {
-    postData('create_character', CHAT_ERROR, true, url, dispatch, data);
+    postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data);
+  };
+}
+	
+//item and location id
+export function stealFromLocation(props, analysis = true) {
+  const data = props;
+  const url = `/location/${props.locationId}/steal/${props.itemId}`;
+  return (dispatch) => {
+  	if(analysis) return dispatch(openEventPopup(props))
+    postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data);
+  };
+}
 
-    // Clear form after message is sent
-    dispatch(reset('composeMessage'));
-    browserHistory.push(`/dashboard/conversation/view/${response.data.conversationId}`);
+export function invadeLocation(props, analysis = true) {
+  const data = props;
+  const url = `/location/${props.locationId}/invade`;
+  return (dispatch) => {
+  	if(analysis) return dispatch(openEventPopup(prop))
+    postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data);
+  };
+}
+
+export function goToLocation(props) {
+  const data = props;
+  const url = `/location/${props.locationId}/go`;
+  return (dispatch) => {
+    postData(GAME_SUCCESS, GAME_ERROR, true, url, dispatch, data);
+  };
+}
+
+export function messageLocation(props) {
+  const data = props;
+  const url = `/location/${props.locationId}/message`;
+  return (dispatch) => {
+    postData(GAME_SUCCESS, GAME_ERROR, true, url, dispatch, data);
+    dispatch(reset('chatField'));
   };
 }

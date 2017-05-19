@@ -28,8 +28,6 @@ const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 
 const store = createStoreWithMiddleware(reducers);
 
-//update the store when we recieve a game state update from the server
-
 const token = cookie.load('token');
 const user = cookie.load('user');
 if (token && user) {
@@ -45,7 +43,7 @@ if (token && user) {
       })
     })
     .on('unauthorized', function() {
-      console.log('token not authorized via socket')
+      console.error('token not authorized via socket')
     })
 }
 
