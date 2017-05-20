@@ -80,9 +80,7 @@ class Game extends Component {
           case 'herd': 
           case 'woodcut': 
           case 'mine':
-            let category = event
-            if(event.indexOf('train') > -1) category = event.substr(5).toLowerCase()
-            return <EventButton event='createRoutine' category={category} location={currentLocation}></EventButton>
+            return <EventButton event='createRoutine' category={event} location={currentLocation}></EventButton>
           break;
           case 'sneak':
             return <EventButton event='sneakThroughLocation' location={currentLocation}></EventButton>
@@ -113,7 +111,7 @@ class Game extends Component {
           case 'senseBug':
           case 'senseSkill':
           case 'senseCharm':
-            let category = event.substr(5).toLowerCase()
+            category = event.substr(5).toLowerCase()
             return <EventButton event='senseCharacter' category={category} character={selectedCharacter}></EventButton>
           break;
           case 'attack':

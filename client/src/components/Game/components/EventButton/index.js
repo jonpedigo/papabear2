@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { createEvent, startEvent, endEvent } from '../../../../actions/Game/routine'
+import { createRoutine, startRoutine, endRoutine } from '../../../../actions/Game/routine'
 import { openEventPopup, closeEventPopup } from '../../../../actions/Game/eventPopup'
 import { craftItem, plantBug, removeBug, equipItem, unequipItem } from '../../../../actions/Game/item'
 import { sneakThroughLocation, stealFromLocation, invadeLocation, goToLocaton, messageLocation } from '../../../../actions/Game/location'
@@ -23,21 +23,26 @@ class EventButton extends Component {
       case 'senseCharacter': 
         text = 'Sense ' + this.props.category
       break; 
-      case 'createRoutine': 
-        text = 'Train ' + this.props.category
+      case 'createRoutine':
+        switch(this.props.category){
+          case 'guard':
+            text = 'Guard'
+          break;
+          case 'herd': 
+            text = 'Herd animals'
+          break;
+          case 'woodcut': 
+            text = 'Cut wood'
+          break;
+          case 'mine':
+            text = 'Mine ore'
+          break;
+          default:
+            skill = event.substr(5).toLowerCase()
+            text = 'Train ' + skill
+          break;
+        }
       break; 
-      case 'guard':
-        text = 'Guard'
-      break;
-      case 'herd': 
-        text = 'Herd animals'
-      break;
-      case 'woodcut': 
-        text = 'Cut wood'
-      break;
-      case 'mine':
-        text = 'Mine ore'
-      break;
     }
     return (
       <div onClick={this.handleClick.bind(this)}>
@@ -52,9 +57,9 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = {
-  createEvent,
-  startEvent,
-  endEvent,
+  createRoutine,
+  startRoutine,
+  endRoutine,
   openEventPopup,
   closeEventPopup,
   craftItem,

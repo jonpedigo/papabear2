@@ -5,7 +5,7 @@ module.exports = function () {
 
 	//honestly shouldnt do async here, should just set as updated
 	const add = (game, props, cb) => {
-		itemModel.create(props).exec().then((item) => {
+		itemModel.create(props).then((item) => {
 			game.add(item)
 			cb(null, item)
 		}).catch(cb)

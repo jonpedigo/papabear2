@@ -26,9 +26,9 @@ export default function (state = INITIAL_STATE, action) {
     case EVENT_CLOSE:
       return { ...state, eventState: { open: false } }
     case EVENT_ANALYZE:
-      return { ...state, eventState: action.eventState }
+      return { ...state, eventState: { open: true, ...action.eventState } }
     case EVENT_RESULT:
-    	return { ...state, open : true, eventState: action.payload.eventState }
+    	return { ...state, eventState: { open: true, ...action.payload.eventState } }
     case SET_KINGDOM: 
     	return {...state, kingdom: action.payload.user.kingdom }
     case SET_FAMILY: 

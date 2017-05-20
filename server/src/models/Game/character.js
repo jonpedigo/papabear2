@@ -77,9 +77,8 @@ CharacterSchema.methods.loop = function(game){
 
 }
 
-CharacterSchema.methods.update = function(props, cb){
+CharacterSchema.methods.update = function(props){
   Object.assign(this, props, {updated: true})
-  cb(null, this)
 }
 
 //make this.levels a virtual and have it pull from design?? same w family

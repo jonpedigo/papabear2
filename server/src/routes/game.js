@@ -288,9 +288,15 @@ module.exports = function (app, io) {
 
   })
 
-  //user created a new routine
-  routineRoutes.post('/', (req, res, next) => {
-
+  //player created a new routine
+  //assume its only created by the player that wants to start it, not for idle kingdom...
+  //thats can be a whole nother function no need to mess these parts up
+  routineRoutes.post('/', requireAuth, getGame, getPlayer, (req, res, next) => {
+    routineController.add(req.game, req.body, (err, routine) => {
+      if(err) return next(err)
+      req.player.update({currentRoutine: routine})
+      res.send('Success')
+    })
   })
 
   //start routine
