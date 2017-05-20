@@ -8,7 +8,7 @@ const Schema = mongoose.Schema
 // = ===============================
 const RoutineSchema = new Schema({
   category: {
-    enum: ['woodcutting', 'mining', 'herding', 'training', 'guarding'],
+    enum: ['woodcut', 'mine', 'herd', 'trainWarfare', 'trainMagic', 'trainStealth', 'guard'],
     type: String
   },
   location: {

@@ -19,9 +19,9 @@ function mapStateToProps(state) {
     game: state.game.game,
     family: state.game.family,
     playerState: state.game.playerState,
-    metaState: state.game.metaState,
+    worldState: state.game.worldState,
     design: state.game.design
-  };
+  }
 }
 
 export default connect(mapStateToProps)(Game);

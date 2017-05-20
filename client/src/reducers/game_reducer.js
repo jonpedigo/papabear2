@@ -13,12 +13,12 @@ const design = {
   CHARACTERS
 }
 
-const INITIAL_STATE = { message: '', success: true, playerState : null, metaState: null, eventState: { open: false }, design };
+const INITIAL_STATE = { message: '', success: true, playerState : null, worldState: null, eventState: { open: false }, design };
 
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case UPDATE_GAME:
-      return { ...state, playerState: action.playerState, metaState: action.metaState }
+      return { ...state, playerState: action.playerState, worldState: action.worldState }
     case GAME_ERROR:
       return { ...state, success: false, error: action.payload }
     case GAME_SUCCESS: 

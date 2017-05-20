@@ -24,7 +24,7 @@ class Game extends Component {
 			listView: 'characters',
 			selectedCharacter: null,
       selectedItem: null,
-      selectedLocation
+      selectedLocation: null
     }
 	}
 
@@ -46,6 +46,7 @@ class Game extends Component {
   	let selectedCharacter = this.state.selectedCharacter
     let selectedItem = this.state.selectedItem
     let selectedLocation = this.state.selectedLocation
+    let player = this.props.playerState
 
   	let summary
   	if(this.state.summaryView === 'location'){
@@ -65,40 +66,69 @@ class Game extends Component {
 
     let events = []
     if(this.state.summaryView === 'world' && selectedLocation){
-      events.push( <EventButton Event='goToLocation' locationId={selectedLocation._id}></EventButton> )
+      events.push( <EventButton event='goToLocation' location={selectedLocation}></EventButton> )
     }
 
     if(this.state.summaryView === 'location' && currentLocation){
       events = this.props.design.LOCATIONS[currentLocation.category].EVENTS.map((event) => {
-        if(event.constructor == Function) event = event(this.props.playerState, currentLocation)
-        switch(Event){
+        if(event.constructor == Function) event = event(player, currentLocation)
+        switch(event){
+          case 'trainWarfare': 
+          case 'trainStealth': 
+          case 'trainMagic': 
+          case 'guard':
+          case 'herd': 
+          case 'woodcut': 
+          case 'mine':
+            let category = event
+            if(event.indexOf('train') > -1) category = event.substr(5).toLowerCase()
+            return <EventButton event='createRoutine' category={category} location={currentLocation}></EventButton>
+          break;
           case 'sneak':
-              return <EventButton event='sneakThroughLocation' locationId={currentLocation._id}></EventButton>
-            break;
+            return <EventButton event='sneakThroughLocation' location={currentLocation}></EventButton>
+          break;
           case 'steal':
-              return <EventButton event='stealFromLocation' locationId={currentLocation._id} itemId={selectedItem ? selectedItem._id : null}></EventButton>
-            break;
+            return <EventButton event='stealFromLocation' location={currentLocation} item={selectedItem}></EventButton>
+          break;
           case 'invade':
-              return <EventButton event='invadeLocation' locationId={currentLocation._id}></EventButton>
-            break;      
+            return <EventButton event='invadeLocation' location={currentLocation}></EventButton>
+          break;
+          case 'equip':
+            return <EventButton event='equipItem' item={selectedItem}></EventButton>
+          break;  
+          case 'unequip':
+            return <EventButton event='unequipItem' item={selectedItem}></EventButton>
+          break;  
+          case 'craft':
+            return <EventButton event='craftItem' item={selectedItem}></EventButton>
+          break;  
         }
       })
     }
 
     if(this.state.summaryView === 'character' && selectedCharacter){
       events = this.props.design.CHARACTERS.EVENTS.map((event) => {
-        if(event.constructor == Function) event = event(this.props.playerState, selectedCharacter)
+        if(event.constructor == Function) event = event(player, selectedCharacter)
         switch(event){
-          case 'steal':
-              return <EventButton event='stealFromLocation' locationId={currentLocation._id} itemId={selectedItem ? selectedItem._id : null}></EventButton>
-            break;
-          case 'invade':
-              return <EventButton event='stealFromLocation' locationId={currentLocation._id}></EventButton>
-            break;
-          case 'bug':
-              return <EventButton event='stealFromLocation' locationId={currentLocation._id}></EventButton>
-            break;        
-          }
+          case 'senseBug':
+          case 'senseSkill':
+          case 'senseCharm':
+            let category = event.substr(5).toLowerCase()
+            return <EventButton event='senseCharacter' category={category} character={selectedCharacter}></EventButton>
+          break;
+          case 'attack':
+            return <EventButton event='attackCharacter' character={selectedCharacter}></EventButton>
+          break;
+          case 'record':
+            return <EventButton event='recordCharacter' character={selectedCharacter}></EventButton>
+          break;
+          case 'removeBug':
+            return <EventButton event='removeBug' character={selectedCharacter}></EventButton>
+          break; 
+          case 'plantBug':
+            return <EventButton event='plantBug' character={selectedCharacter}></EventButton>
+          break;     
+        }
       })
     }
 
@@ -106,6 +136,7 @@ class Game extends Component {
       <div className="GameCard">
       	{summary}
       	{list}
+        {events}
       </div>
     );
   }

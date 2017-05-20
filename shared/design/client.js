@@ -8,11 +8,11 @@ const PLAYER_STATE = function(game, player){
 		primary: player.primary,
 		options: player.options,
 		dead: player.dead,
-		currentAction: player.currentAction ? {
-			_id: player.currentAction._id,
-		  category: player.currentAction.category,
+		currentRoutine: player.currentRoutine ? {
+			_id: player.currentRoutine._id,
+		  category: player.currentRoutine.category,
 		  location: {
-		  	name : player.currentAction.location.name
+		  	name : player.currentRoutine.location.name
 		  } 
 		} : null,
 		currentLocation: {
@@ -30,7 +30,7 @@ const PLAYER_STATE = function(game, player){
 			}),
 			// end supply map--
 			kingdom: {
-				_id: player.currentLocation.kingdom.name._id,
+				_id: player.currentLocation.kingdom._id,
 				name: player.currentLocation.kingdom.name
 			},
 			// need to remove player character
@@ -54,8 +54,8 @@ const PLAYER_STATE = function(game, player){
 					},
 					dead: character.dead,
 					damage: character.damage,
-					currentAction: character.currentAction ? {
-				  	category: character.currentAction.category 
+					currentRoutine: character.currentRoutine ? {
+				  	category: character.currentRoutine.category 
 					} : null
 				}
 			}),
@@ -82,11 +82,11 @@ const PLAYER_STATE = function(game, player){
 		      } : null
 		    }
 		  },
-		  idleAction: player.kingdom.action ? {
-		  	_id: player.kingdom.action._id,
-		  	category: player.kingdom.action.category,
+		  routine: player.kingdom.routine ? {
+		  	_id: player.kingdom.routine._id,
+		  	category: player.kingdom.routine.category,
 		  	location: {
-		  		name : player.kingdom.action.location.name
+		  		name : player.kingdom.routine.location.name
 		  	}
 		  } : null
 		},
@@ -105,7 +105,7 @@ const PLAYER_STATE = function(game, player){
 	}
 }
 
-const META_STATE = function(game){
+const WORLD_STATE = function(game){
 	return {
 		locations: game['Locations'].map((loc) => {
 			return {
@@ -142,6 +142,6 @@ const META_STATE = function(game){
 
 CLIENT.PLAYER_STATE = PLAYER_STATE
 
-CLIENT.META_STATE = META_STATE
+CLIENT.WORLD_STATE = WORLD_STATE
 
 module.exports = CLIENT

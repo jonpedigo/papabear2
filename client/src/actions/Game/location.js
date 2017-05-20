@@ -6,7 +6,7 @@ import { openEventPopup } from './eventPopup'
 // Location actions
 //= ===============================
 
-export function sneakIntoLocation(props) {
+export function sneakThroughLocation(props) {
   const data = props;
   const url = `/location/${props.locationId}/sneak}`;
   return (dispatch) => {

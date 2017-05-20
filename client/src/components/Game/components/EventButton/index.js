@@ -4,19 +4,44 @@ import { connect } from 'react-redux';
 import { createEvent, startEvent, endEvent } from '../../../../actions/Game/routine'
 import { openEventPopup, closeEventPopup } from '../../../../actions/Game/eventPopup'
 import { craftItem, plantBug, removeBug, equipItem, unequipItem } from '../../../../actions/Game/item'
-import { sneakIntoLocation, stealFromLocation, invadeLocation, goToLocaton, messageLocation } from '../../../../actions/Game/location'
+import { sneakThroughLocation, stealFromLocation, invadeLocation, goToLocaton, messageLocation } from '../../../../actions/Game/location'
 import { attackCharacter, senseCharacter, recordCharacter, messageCharacter } from '../../../../actions/Game/character'
 
 class EventButton extends Component {
   handleClick() {
     //basically whatever the event passed in is called, thats the one we call with the analysis tag set to true
+    //some function wont even use an analysis tag, so im expressing that actions themselvs know if they will use a popup or not?
+    //actions themselves KNOW if they have two purposes (analysis / event)// shouldnt this component know if it has a pop or not? even shouldnt that be in the design?... its such a large change that it doesnt really matter, it will require a huge shift anyways
+    console.log("clickkkked", this.props)
     this.props[this.props.event](this.props, true)
   }
 
   render() {
+    let event = this.props.event
+    let text = event
+    switch(event){
+      case 'senseCharacter': 
+        text = 'Sense ' + this.props.category
+      break; 
+      case 'createRoutine': 
+        text = 'Train ' + this.props.category
+      break; 
+      case 'guard':
+        text = 'Guard'
+      break;
+      case 'herd': 
+        text = 'Herd animals'
+      break;
+      case 'woodcut': 
+        text = 'Cut wood'
+      break;
+      case 'mine':
+        text = 'Mine ore'
+      break;
+    }
     return (
       <div onClick={this.handleClick.bind(this)}>
-        {this.props.event}
+      {text}
       </div>
     );
   }
@@ -37,7 +62,7 @@ const mapDispatchToProps = {
   removeBug,
   equipItem,
   unequipItem,
-  sneakIntoLocation,
+  sneakThroughLocation,
   stealFromLocation,
   goToLocaton,
   invadeLocation, 
@@ -47,7 +72,5 @@ const mapDispatchToProps = {
   recordCharacter,
   messageCharacter
 }
-
-//this is where you pass itemId, characterId, location+itemId...all of that which is needed by the post request
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventButton);
