@@ -14,9 +14,51 @@ const User = require('../src/models/user')
 const Conversation = require('../src/models/conversation')
 
 
+//I should just have a file for 1) making a game 2) adding a kingdom, w character 3) adding items?
 var game
-var docsMap = {}
 var locationsMap = {}
+var locations = [
+	{
+		name: 'nice downtown!',
+		category: 'townCenter'
+	},
+	{
+		name: 'THE MINE',
+		category: 'quarry'
+	},
+	{
+		name: 'the forest',
+		category: 'forest'
+	},
+	{
+		name: 'the field',
+		category: 'field'
+	},
+	{
+		name: 'THE BLACK GATE',
+		category: 'gate'
+	},
+	{
+		name: 'Casterly Rock',
+		category: 'royalChambers'
+	},
+	{
+		name: 'Storage...space',
+		category: 'supplyDepot'
+	},
+	{
+		name: 'Wizards TOWER',
+		category: 'tower'
+	},
+	{
+		name: 'Poop zone',
+		category: 'sewers'
+	},
+	{
+		name: 'BADABUM BUMP',
+		category: 'barracks'
+	}
+]
 mongoose.connect(config.database).then(() => {
 	let game1 = {
 		name: 'this crazy game!'
@@ -24,36 +66,23 @@ mongoose.connect(config.database).then(() => {
 
 	return Game.create(game1)
 }).then((gameDB) => {
-	docsMap[gameDB._id] = gameDB
 	game = gameDB
 
-	let locations = [
-		{
-			name: 'nice downtown!',
-			category: 'townCenter'
-		}
-	]
-
-	console.log('populatng locations')
+	console.log('populatng locations for kingdom 1')
 	return Promise.all(locations.map((loc) => {
 		return Location.create(loc)
 	}))
 
 }).then((locations) => {
-	locationsMap = locations.reduce((map, loc) => {
-		docsMap[loc._id] = loc
+	locations.forEach((loc) => {
 		game.add(loc)
-		map[loc.category] = loc._id
-		return map
-	}, {})
+	})
 
 	let kingdom1 = {
 		name: "Da killa chicks",
-		// locations: locationsMap
 	}
 
-	console.log('populatng kingdoms')
-
+	console.log('populatng kingdom 1')
 	return Kingdom.create(kingdom1).then((kingdom) => {
 		locations.forEach((loc) => {
 			loc.kingdom = kingdom._id
@@ -63,7 +92,34 @@ mongoose.connect(config.database).then(() => {
 		return kingdom
 	})
 }).then((kingdom) => {
-	docsMap[kingdom._id] = kingdom
+	game.add(kingdom)
+
+	console.log('populatng locations for kingdom 2')
+	return Promise.all(locations.map((loc) => {
+		return Location.create(loc)
+	}))
+
+}).then((locations) => {
+	locationsMap = locations.reduce((map, loc) => {
+		game.add(loc)
+		map[loc.category] = loc._id
+		return map
+	}, {})
+
+	let kingdom1 = {
+		name: "BOYZ RULE",
+	}
+
+	console.log('populatng kingdom 2')
+	return Kingdom.create(kingdom1).then((kingdom) => {
+		locations.forEach((loc) => {
+			loc.kingdom = kingdom._id
+			loc.save().catch(console.log)
+		})
+
+		return kingdom
+	})
+}).then((kingdom) => {
 	game.add(kingdom)
 
 	let family1 = {
@@ -71,11 +127,10 @@ mongoose.connect(config.database).then(() => {
 		kingdom: kingdom._id
 	}
 
-	console.log('populatng families')
+	console.log('populatng family in kingdom 2')
 
 	return Family.create(family1)
 }).then((family) => {
-	docsMap[family._id] = family
 	game.add(family)
 
 	let character1 = {
@@ -86,12 +141,10 @@ mongoose.connect(config.database).then(() => {
 	}
 
 	// console.log(character1)
-	// console.log(docsMap)
 
-	console.log('populatng characters')
+	console.log('populatng character in kingdom 2')
 	return Character.create(character1)
 }).then((character) => {
-	docsMap[character._id] = character
 	game.add(character)
 
 	return game.save()

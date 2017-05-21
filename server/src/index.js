@@ -62,7 +62,7 @@ const DESIGN = require('../../shared/design')
 gameController = require('./controllers/Game/game')()
 gameController.populateGames((game) => {
   game.state['Character'].forEach((character) => {
-    io.in(character._id).emit('update game', DESIGN.CLIENT.PLAYER_STATE(game, character), {})
+    io.in(character._id).emit('update game', DESIGN.CLIENT.PLAYER_STATE(game, character), DESIGN.CLIENT.WORLD_STATE(game))
   })
 })
 // Set static file location for production

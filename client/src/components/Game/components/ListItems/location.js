@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 
-class Game extends Component {
+class Location extends Component {
   render() {
-  		console.log(this.props)
-
     return (
       <div>
-        <div className="Game">
-          {"WASSUP LETS PLAY"}
+        <div className="Location">
+         
         </div>
       </div>
     );
   }
 }
 
-export default Game;
+export default Location;

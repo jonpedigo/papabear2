@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Game extends Component {
+class CharacterSummary extends Component {
   render() {
     return (
       <div className="CharacterSummary">
@@ -12,4 +12,4 @@ class Game extends Component {
   }
 }
 
-export default Game;
+export default CharacterSummary;

@@ -18,10 +18,15 @@ class EventButton extends Component {
 
   render() {
     let event = this.props.event
+    let category = this.props.category
     let text = event
     switch(event){
+      case 'goToLocation':
+        text = 'Go here'
+      break;
       case 'senseCharacter': 
-        text = 'Sense ' + this.props.category
+        let target = category.substr(5).toLowerCase()
+        text = 'Sense ' + target
       break; 
       case 'createRoutine':
         switch(this.props.category){
@@ -38,7 +43,7 @@ class EventButton extends Component {
             text = 'Mine ore'
           break;
           default:
-            skill = event.substr(5).toLowerCase()
+            let skill = category.substr(5).toLowerCase()
             text = 'Train ' + skill
           break;
         }

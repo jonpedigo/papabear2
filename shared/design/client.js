@@ -107,7 +107,7 @@ const PLAYER_STATE = function(game, player){
 
 const WORLD_STATE = function(game){
 	return {
-		locations: game['Locations'].map((loc) => {
+		locations: game.state['Location'].map((loc) => {
 			return {
 				_id: loc._id,
 				coordinates: loc.coordinates,
@@ -119,17 +119,20 @@ const WORLD_STATE = function(game){
 
 					//if this is the last element in the array
 					if(index === array.length -1){
-						for(var prop of map){
-							//turn into a percent
-							map[prop] = map[prop]/map.total
+						for(var prop in map){
+							if(map.hasOwnProperty(prop)){
+								//turn into a percent
+								map[prop] = map[prop]/map.total	
+							}
 						}
 					}
 
+					return map
 					//if I just sorted everything into different arrays based on teams and then used the lengths
 				}, { total: 0})
 			}
 		}),
-		kingdoms: game['Kingdoms'].map((kingdom) => {
+		kingdoms: game.state['Kingdom'].map((kingdom) => {
 			return {
 				_id: kingdom._id,
 				name: kingdom.name,

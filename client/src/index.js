@@ -42,8 +42,8 @@ if (token && user) {
     .on('authenticated', function () {
       console.log('socket authorized, joining game')
       socket.emit('join game')
-      socket.on('update game', (playerState, metaState) => {
-        store.dispatch({ type: UPDATE_GAME, playerState, metaState})
+      socket.on('update game', (playerState, worldState) => {
+        store.dispatch({ type: UPDATE_GAME, playerState, worldState})
       })
     })
     .on('unauthorized', function() {

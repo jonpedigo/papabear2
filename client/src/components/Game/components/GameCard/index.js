@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import CharacterSummary from '../CharacterSummary'
 import LocationSummary from '../LocationSummary'
+import WorldSummary from '../WorldSummary'
 
 import AbilityListItem from '../ListItems/ability'
 import CharacterListItem from '../ListItems/character'
@@ -12,11 +13,9 @@ import SkillListItem from '../ListItems/skill'
 import ChatListItem from '../ListItems/chat'
 
 import EventButton from '../EventButton'
-
 import EventPopup from '../EventPopup'
 
-
-class Game extends Component {
+class GameCard extends Component {
 	constructor(){
 		super()
 		this.state = {
@@ -28,6 +27,10 @@ class Game extends Component {
     }
 	}
 
+  componentWillMount(){
+    this.goToWorldSummary()
+  }
+
 	goToCharacterSummary(character) {
 		let state = this.state
 		state.summaryView = 'character'
@@ -35,25 +38,36 @@ class Game extends Component {
 		this.setState(state)
 	}
 
+  goToWorldSummary(){
+    let state = this.state
+    state.summaryView = 'world'
+    state.listView = 'locations'
+    this.setState(state)
+  }
+
   render() {
-  	if(!this.props.playerState){
+  	if(!this.props.playerState && !this.props.worldState){
   		return (
   			<div>{'Loading...'}</div>
   		)
   	}
 
-  	let currentLocation = this.props.playerState.currentLocation
+    let player = this.props.playerState
+  	let currentLocation = player.currentLocation
   	let selectedCharacter = this.state.selectedCharacter
     let selectedItem = this.state.selectedItem
     let selectedLocation = this.state.selectedLocation
-    let player = this.props.playerState
+    let world = this.props.worldState
 
   	let summary
   	if(this.state.summaryView === 'location'){
   		summary = <LocationSummary location={currentLocation}/>
   	}else if (this.state.summaryView === 'character'){
   		summary = <CharacterSummary character={selectedCharacter}/>
-  	}
+  	}else if (this.state.summaryView === 'world'){
+      summary = <WorldSummary {...this.props.worldState} />
+    }
+
 
   	let list = []
   	if(this.state.listView === 'characters'){
@@ -63,6 +77,13 @@ class Game extends Component {
   			)
   		})
   	}
+    if(this.state.listView === 'locations'){
+      list = world.locations.map((location) => {
+        return (
+          <LocationListItem location={location}/>
+        )
+      })
+    }
 
     let events = []
     if(this.state.summaryView === 'world' && selectedLocation){
@@ -94,9 +115,6 @@ class Game extends Component {
           case 'equip':
             return <EventButton event='equipItem' item={selectedItem}></EventButton>
           break;  
-          case 'unequip':
-            return <EventButton event='unequipItem' item={selectedItem}></EventButton>
-          break;  
           case 'craft':
             return <EventButton event='craftItem' item={selectedItem}></EventButton>
           break;  
@@ -111,8 +129,7 @@ class Game extends Component {
           case 'senseBug':
           case 'senseSkill':
           case 'senseCharm':
-            category = event.substr(5).toLowerCase()
-            return <EventButton event='senseCharacter' category={category} character={selectedCharacter}></EventButton>
+            return <EventButton event='senseCharacter' category={event} character={selectedCharacter}></EventButton>
           break;
           case 'attack':
             return <EventButton event='attackCharacter' character={selectedCharacter}></EventButton>
@@ -120,12 +137,12 @@ class Game extends Component {
           case 'record':
             return <EventButton event='recordCharacter' character={selectedCharacter}></EventButton>
           break;
-          case 'removeBug':
-            return <EventButton event='removeBug' character={selectedCharacter}></EventButton>
-          break; 
           case 'plantBug':
             return <EventButton event='plantBug' character={selectedCharacter}></EventButton>
-          break;     
+          break;  
+          case 'unequip':
+            return <EventButton event='unequipItem' item={selectedItem}></EventButton>
+          break;  
         }
       })
     }
@@ -140,4 +157,4 @@ class Game extends Component {
   }
 }
 
-export default Game;
+export default GameCard;

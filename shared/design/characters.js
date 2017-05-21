@@ -11,7 +11,7 @@ function sameTeam(event, player, character){
 }
 
 function isPlayer(event, player, character){
-	if(player._id === characer._id) return event
+	if(player._id === character._id) return event
 	else return false
 }
 

@@ -193,21 +193,10 @@ module.exports = function (app, io) {
 
   //pop
   //ensure player lvl can sense charm
-  characterRoutes.post('/:characterId/sense/charm', (req, res, next) => {
+  characterRoutes.post('/:characterId/sense', (req, res, next) => {
 
   })
 
-  //pop
-  //ensure player lvl can sense skill
-  characterRoutes.post('/:characterId/sense/skill', (req, res, next) => {
-
-  })
-
-  //pop
-  //ensure player lvl can sense bug
-  characterRoutes.post('/:characterId/sense/bug', (req, res, next) => {
-
-  })
 
   characterRoutes.post('/:characterId/record', (req, res, next) => {
 
