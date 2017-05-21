@@ -25,11 +25,10 @@ export function plantBug(props, analysis = true) {
 }
 
 //needs character that the bug was on
-export function removeBug(props, analysis = true) {
+export function removeBug(props) {
   const data = props;
   const url = `/item/bug/${props.itemId}/remove`;
   return (dispatch) => {
-  	if(analysis) return dispatch(openEventPopup(props))
     postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data);
   };
 }

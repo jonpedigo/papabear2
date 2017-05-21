@@ -45,6 +45,25 @@ class GameCard extends Component {
     this.setState(state)
   }
 
+  goToLocationSummary(){
+    let state = this.state
+    state.summaryView = 'location'
+    this.setState(state)
+  }
+
+  selectLocation(location){
+    let state = this.state
+    state.selectedLocation = location
+    this.setState(state)
+  }
+
+  selectItem(item){
+    let state = this.state
+    state.selectedItem = item
+    this.setState(state)
+  }
+
+
   render() {
   	if(!this.props.playerState && !this.props.worldState){
   		return (
@@ -80,14 +99,14 @@ class GameCard extends Component {
     if(this.state.listView === 'locations'){
       list = world.locations.map((location) => {
         return (
-          <LocationListItem location={location}/>
+          <LocationListItem select={this.selectLocation.bind(this, location)} location={location}/>
         )
       })
     }
 
     let events = []
     if(this.state.summaryView === 'world' && selectedLocation){
-      events.push( <EventButton event='goToLocation' location={selectedLocation}></EventButton> )
+      events.push( <EventButton event='travelToLocation' location={selectedLocation}></EventButton> )
     }
 
     if(this.state.summaryView === 'location' && currentLocation){

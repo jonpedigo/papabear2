@@ -8,7 +8,7 @@ import { openEventPopup } from './eventPopup'
 
 export function sneakThroughLocation(props) {
   const data = props;
-  const url = `/location/${props.locationId}/sneak}`;
+  const url = `/location/${props.locationId}/sneak`;
   return (dispatch) => {
     postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data);
   };
@@ -33,9 +33,9 @@ export function invadeLocation(props, analysis = true) {
   };
 }
 
-export function goToLocation(props) {
-  const data = props;
-  const url = `/location/${props.locationId}/go`;
+export function travelToLocation({location: { _id: locationId } }) {
+  let data = {}
+  const url = `/location/${locationId}/travel`;
   return (dispatch) => {
     postData(GAME_SUCCESS, GAME_ERROR, true, url, dispatch, data);
   };

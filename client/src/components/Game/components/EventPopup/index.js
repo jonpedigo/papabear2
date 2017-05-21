@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createRoutine, startRoutine, endRoutine } from '../../../../actions/Game/routine'
 import { openEventPopup, closeEventPopup } from '../../../../actions/Game/eventPopup'
 import { craftItem, plantBug, removeBug, equipItem, unequipItem } from '../../../../actions/Game/item'
-import { sneakThroughLocation, stealFromLocation, invadeLocation, goToLocaton, messageLocation } from '../../../../actions/Game/location'
+import { sneakThroughLocation, stealFromLocation, invadeLocation, travelToLocaton, messageLocation } from '../../../../actions/Game/location'
 import { attackCharacter, senseCharacter, recordCharacter, messageCharacter } from '../../../../actions/Game/character'
 
 class EventPopup extends Component {
@@ -37,7 +37,6 @@ const mapDispatchToProps = {
   openEventPopup,
   closeEventPopup,
   plantBug,
-  removeBug,
   sneakThroughLocation,
   stealFromLocation,
   invadeLocation, 

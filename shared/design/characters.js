@@ -15,6 +15,6 @@ function isPlayer(event, player, character){
 	else return false
 }
 
-CHARACTERS.EVENTS = [isPlayer.bind(null, 'unequip'), enemyTeam.bind(null, 'attack'), enemyTeam.bind(null, 'senseSkill'), enemyTeam.bind(null, 'senseCharm'), 'removeBug', 'senseBug', enemyTeam.bind(null, 'plantBug'), 'record']
+CHARACTERS.EVENTS = [isPlayer.bind(null, 'unequip'), enemyTeam.bind(null, 'attack'), enemyTeam.bind(null, 'senseSkill'), enemyTeam.bind(null, 'senseCharm'), 'senseBug', enemyTeam.bind(null, 'plantBug'), 'record']
 
 module.exports = CHARACTERS

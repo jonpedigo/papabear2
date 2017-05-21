@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import { createRoutine, startRoutine, endRoutine } from '../../../../actions/Game/routine'
 import { openEventPopup, closeEventPopup } from '../../../../actions/Game/eventPopup'
-import { craftItem, plantBug, removeBug, equipItem, unequipItem } from '../../../../actions/Game/item'
-import { sneakThroughLocation, stealFromLocation, invadeLocation, goToLocaton, messageLocation } from '../../../../actions/Game/location'
+import { craftItem, plantBug, equipItem, unequipItem } from '../../../../actions/Game/item'
+import { sneakThroughLocation, stealFromLocation, invadeLocation, travelToLocation, messageLocation } from '../../../../actions/Game/location'
 import { attackCharacter, senseCharacter, recordCharacter, messageCharacter } from '../../../../actions/Game/character'
 
 class EventButton extends Component {
@@ -21,8 +21,8 @@ class EventButton extends Component {
     let category = this.props.category
     let text = event
     switch(event){
-      case 'goToLocation':
-        text = 'Go here'
+      case 'travelToLocation':
+        text = 'Travel here'
       break;
       case 'senseCharacter': 
         let target = category.substr(5).toLowerCase()
@@ -69,12 +69,11 @@ const mapDispatchToProps = {
   closeEventPopup,
   craftItem,
   plantBug,
-  removeBug,
   equipItem,
   unequipItem,
   sneakThroughLocation,
   stealFromLocation,
-  goToLocaton,
+  travelToLocation,
   invadeLocation, 
   messageLocation,
   attackCharacter,

@@ -186,12 +186,12 @@ module.exports = function (app, io) {
   // = ========================
 
 ////all these routes need to ensure that the characterId is in the same location as the playerId
-  //pop
+  //event
   characterRoutes.post('/:characterId/attack', (req, res, next) => {
 
   })
 
-  //pop
+  //event
   //ensure player lvl can sense charm
   characterRoutes.post('/:characterId/sense', (req, res, next) => {
 
@@ -211,23 +211,23 @@ module.exports = function (app, io) {
 
   })
 
-  locationRoutes.post('/:locationId/go', (req, res, next) => {
+  locationRoutes.post('/:locationId/travel', (req, res, next) => {
 
   })
 
 ////all of these here need to ensure that player is in same location
-  //pop
+  //event
   locationRoutes.post('/:locationId/invade', (req, res, next) => {
 
   })
 
-  //pop
+  //event
   //correct level to sneak
   locationRoutes.post('/:locationId/sneak', (req, res, next) => {
 
   })
 
-  //pop
+  //event
   //make sure player has correct level to steal
   //make sure items in there
   locationRoutes.post('/:locationId/steal/:itemId', (req, res, next) => {
@@ -242,13 +242,12 @@ module.exports = function (app, io) {
 
   })
 
-  //pop
+  //event
   //ensure is bug, ensure target is in same location, ensure player has access to this bug
   itemRoutes.post('bug/:bugId/plant', (req, res, next) => {
 
   })
 
-  //pop
   //ensure is bug, ensure player is in same location as bugged players
   itemRoutes.post('bug/:bugId/remove', (req, res, next) => {
 
