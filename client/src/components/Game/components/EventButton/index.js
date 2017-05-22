@@ -12,7 +12,6 @@ class EventButton extends Component {
     //basically whatever the event passed in is called, thats the one we call with the analysis tag set to true
     //some function wont even use an analysis tag, so im expressing that actions themselvs know if they will use a popup or not?
     //actions themselves KNOW if they have two purposes (analysis / event)// shouldnt this component know if it has a pop or not? even shouldnt that be in the design?... its such a large change that it doesnt really matter, it will require a huge shift anyways
-    console.log("clickkkked", this.props)
     this.props[this.props.event](this.props, true)
   }
 

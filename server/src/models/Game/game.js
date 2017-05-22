@@ -74,6 +74,15 @@ GameSchema.methods.start = function (loopCallback) {
 
 // ADDS: nodes, state
 GameSchema.methods.initialize = function (cb) {
+  this.state = {
+    Character: [],
+    Kingdom: [],
+    Location: [],
+    Family: [],
+    Routine: [],
+    Item: []
+  }
+
   // restore state from db
   this.populate('saveState.value', (err, game) => {
     if (err) console.log(err)
@@ -90,9 +99,7 @@ GameSchema.methods.initialize = function (cb) {
       map[doc.value._id] = doc.value
 
       return map
-    }, {})
-
-    this.state = state
+    }, this.state)
 
     this.nodes = []
     // now that we have a very organized state, we can self populate all of the docs in the state so that all references match

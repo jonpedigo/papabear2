@@ -5,10 +5,12 @@ module.exports = function () {
 
 	//honestly shouldnt do async here, should just set as updated
 	const add = (game, props, cb) => {
-		props.kingdom = findKingdom(game)._id
-		familyModel.create(props).then((family) => {
+		if(!props.kingdom) props.kingdom = findKingdom(game)._id
+		return familyModel.create(props).then((family) => {
+			console.log("AFTER CREATED", family.kingdom)
 			game.add(family)
-			cb(null, family)
+			if(cb) cb(null, family)
+			return family
 		}).catch(cb)
 	}
 

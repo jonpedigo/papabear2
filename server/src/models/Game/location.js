@@ -19,7 +19,7 @@ const LocationSchema = new Schema({
     ref: 'Kingdom'
   },
   category: {
-    enum: ['quarry', 'field', 'forest', 'barracks', 'sewers', 'tower', 'gate', 'supplyDepot', 'royalChambers', 'townCenter'],
+    enum: ['quarry', 'field', 'woods', 'barracks', 'sewers', 'tower', 'gate', 'supplyDepot', 'royalChambers', 'townCenter'],
     type: String
   },
   slots: {

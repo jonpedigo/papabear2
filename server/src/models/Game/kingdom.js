@@ -23,15 +23,25 @@ const KingdomSchema = new Schema({
       }
     }
   },
+  //later put this on town center??? or remove all together...?
+  orientation: {
+    x: String,
+    y: String
+  },
+  coordinates: {
+    x: Number,
+    y: Number
+  },
+  // ^^^ def remove if you want to make kingdoms more advanced...
   routine: {
     type: Schema.Types.ObjectId,
     ref: 'Routine'
   },
   // if i decide to store locations in db sometime
-  locations: DEFAULT_KINGDOM_LOCATIONS.reduce((obj, locCategory) => {
-    obj[locCategory] = {type: Schema.Types.ObjectId, ref: 'Location'}
-    return obj
-  }, {}),
+  // locations: DEFAULT_KINGDOM_LOCATIONS.reduce((obj, locCategory) => {
+  //   obj[locCategory] = {type: Schema.Types.ObjectId, ref: 'Location'}
+  //   return obj
+  // }, {}),
   dead: {
     type: Boolean,
     default: false
@@ -67,7 +77,7 @@ KingdomSchema.methods.getLocations = function (game, cb) {
 KingdomSchema.methods.initialize = function (state, cb) {
   // find locations (not stored in db)
 
-  this.locations.townCenter = state[this.locations.townCenter]
+  // this.locations.townCenter = state[this.locations.townCenter]
 
   // this.locations = locations;
   // console.log(locations)

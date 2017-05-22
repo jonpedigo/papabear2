@@ -91,7 +91,7 @@ export function selectCharacter({ characterId }) {
 }
 
 export function registerCharacter({primary, firstName, familyId}) {
-  const data = {name:firstName, family: familyId}
+  const data = {name: firstName, family: familyId}
   const url = `/character`
   return (dispatch) => {
     return postData(SET_PLAYER, GAME_ERROR, true, url, dispatch, data);

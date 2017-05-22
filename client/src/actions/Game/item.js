@@ -29,7 +29,7 @@ export function removeBug(props) {
   const data = props;
   const url = `/item/bug/${props.itemId}/remove`;
   return (dispatch) => {
-    postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data);
+    postData(GAME_SUCCESS, GAME_ERROR, true, url, dispatch, data);
   };
 }
 

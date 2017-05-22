@@ -25,6 +25,7 @@ module.exports = function () {
 				games[game._id] = game
 				game.initialize((err)=> {
 					if(err) console.log(err)
+					//need to put this in start route
 					game.start(loopCallback)
 				})
 			})

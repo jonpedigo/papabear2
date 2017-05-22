@@ -13,6 +13,13 @@ const Game = require('../src/models/Game/game')
 const User = require('../src/models/user')
 const Conversation = require('../src/models/conversation')
 
+const RoutineController = require("../src/controllers/Game/routine")()
+const CharacterController = require("../src/controllers/Game/character")()
+const LocationController = require("../src/controllers/Game/location")()
+const FamilyController = require("../src/controllers/Game/family")()
+const GameController = require("../src/controllers/Game/game")()
+const ItemController = require("../src/controllers/Game/item")()
+
 
 //I should just have a file for 1) making a game 2) adding a kingdom, w character 3) adding items?
 var game
@@ -28,7 +35,7 @@ var locations = [
 	},
 	{
 		name: 'the forest',
-		category: 'forest'
+		category: 'woods'
 	},
 	{
 		name: 'the field',
@@ -59,95 +66,92 @@ var locations = [
 		category: 'barracks'
 	}
 ]
+
+//kingdoms are 8,8 in size
+var kingdomSize = 8
+var kingdoms = [
+	{
+		name: "top right",
+		coordinates: {
+			x: 3,
+			y: 3
+		},
+		orientation: {
+			x: 'normal',
+			y: 'normal'
+		}
+	},
+	{
+		name: "under top right",
+		coordinates: {
+			x: 3,
+			y: 3 + kingdomSize + 2
+		},
+		orientation: {
+			x: 'normal',
+			y: 'reverse'
+		}
+	},
+	{
+		name: "next to top right",
+		coordinates: {
+			x: 3 + kingdomSize + 2,
+			y: 3
+		},
+		orientation: {
+			x: 'reverse',
+			y: 'normal'
+		}
+	}
+]
+
+function createKingdomAndCharacters(game, kingdomData){
+	var kingdom
+	return Kingdom.create(kingdomData).then((kingdomCreated)=> {
+		kingdom = kingdomCreated
+		game.add(kingdom)
+		return Promise.all(locations.map((loc) => {
+			loc.kingdom = kingdom._id
+			return LocationController.add(game, loc)
+		}))
+	}).then((locations) => {
+
+		let family = {
+			name: `LAST NAME ${kingdom.name}`,
+			kingdom: kingdom._id
+		}
+
+		return FamilyController.add(game, family)
+	}).then((family) => {
+		let character = {
+			name: `FIRST NAME ${kingdom.name}`, 
+			kingdom: family.kingdom._id,
+			family: family._id
+		}
+
+		return CharacterController.add(game, character)
+	})
+}
+
+
 mongoose.connect(config.database).then(() => {
-	let game1 = {
+	var game = {
 		name: 'this crazy game!'
 	}
-
-	return Game.create(game1)
-}).then((gameDB) => {
-	game = gameDB
-
-	console.log('populatng locations for kingdom 1')
-	return Promise.all(locations.map((loc) => {
-		return Location.create(loc)
-	}))
-
-}).then((locations) => {
-	locations.forEach((loc) => {
-		game.add(loc)
+	return Game.create(game)
+}).then((gameCreated) => {
+	game = gameCreated
+	game.initialize(() => {
+		let promises = []
+		for(var i = 0; i < kingdoms.length; i++){
+			let kingdom = kingdoms[i]
+			promises.push(createKingdomAndCharacters(game, kingdom))
+		}
+		Promise.all(promises).then(() => {
+			return game.save()
+		}).then(() => {
+			process.exit()
+		}).catch(console.log)
 	})
+})
 
-	let kingdom1 = {
-		name: "Da killa chicks",
-	}
-
-	console.log('populatng kingdom 1')
-	return Kingdom.create(kingdom1).then((kingdom) => {
-		locations.forEach((loc) => {
-			loc.kingdom = kingdom._id
-			loc.save().catch(console.log)
-		})
-
-		return kingdom
-	})
-}).then((kingdom) => {
-	game.add(kingdom)
-
-	console.log('populatng locations for kingdom 2')
-	return Promise.all(locations.map((loc) => {
-		return Location.create(loc)
-	}))
-
-}).then((locations) => {
-	locationsMap = locations.reduce((map, loc) => {
-		game.add(loc)
-		map[loc.category] = loc._id
-		return map
-	}, {})
-
-	let kingdom1 = {
-		name: "BOYZ RULE",
-	}
-
-	console.log('populatng kingdom 2')
-	return Kingdom.create(kingdom1).then((kingdom) => {
-		locations.forEach((loc) => {
-			loc.kingdom = kingdom._id
-			loc.save().catch(console.log)
-		})
-
-		return kingdom
-	})
-}).then((kingdom) => {
-	game.add(kingdom)
-
-	let family1 = {
-		name: "LAST NAME",
-		kingdom: kingdom._id
-	}
-
-	console.log('populatng family in kingdom 2')
-
-	return Family.create(family1)
-}).then((family) => {
-	game.add(family)
-
-	let character1 = {
-		name: "FIRST NAME", 
-		kingdom: family.kingdom,
-		currentLocation: locationsMap['townCenter'],
-		family: family._id
-	}
-
-	// console.log(character1)
-
-	console.log('populatng character in kingdom 2')
-	return Character.create(character1)
-}).then((character) => {
-	game.add(character)
-
-	return game.save()
-}).then(() => {
-	process.exit()
-}).catch(console.log)

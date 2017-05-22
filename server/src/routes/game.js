@@ -21,12 +21,6 @@ const setUserInfo = require('../helpers').setUserInfo;
 // Middleware to require login/auth
 const requireAuth = passport.authenticate('jwt', { session: false })
 
-const userAccountReady = (req, res, next) => {
-  if (!req.user.family) return next('User needs to create their family before playing')
-  if (!req.user.game) return next('User needs to create their family before playing')
-  next()
-}
-
 const getGame = (req, res, next) => {
   let game = gameController.getGame(req.user.game)
   if (!game) return next('No game!')
