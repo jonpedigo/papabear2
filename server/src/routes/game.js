@@ -10,6 +10,7 @@ const craftingController = require('../controllers/Game/crafting')()
 const familyController = require('../controllers/Game/family')()
 const notificationController = require('../controllers/Game/notification')()
 const itemController = require('../controllers/Game/item')()
+const locationController = require('../controllers/Game/location')()
 const recordController = require('../controllers/Game/record')()
 const stealthController = require('../controllers/Game/stealth')()
 const travelController = require('../controllers/Game/travel')()
@@ -32,6 +33,13 @@ const getPlayer = (req, res, next) => {
   let player = req.game.getById(req.user.currentCharacter)
   if (!player) return next('No selected player!')
   req.player = player
+  next()
+}
+
+const getLocation = (req, res, next) => {
+  let location = req.game.getById(req.params.locationId)
+  if (!location) return next('No location!')
+  req.location = location
   next()
 }
 
@@ -134,7 +142,6 @@ module.exports = function (app, io) {
     })
   })
 
-
   characterRoutes.param('/:characterId', requireAuth, getGame, (req, res, next) => {
     req.character = req.game.getById(req.params.characterId)
     if(!req.character) return next('No character with that Id')
@@ -143,6 +150,7 @@ module.exports = function (app, io) {
 
   //set character on the session by selecting it
   characterRoutes.post('/:characterId/select', requireAuth, getGame, (req, res, next) => {
+    //why do I have to do this when...characters.param
     let characterId = req.params.characterId
     let character = req.game.getById(characterId)
     req.user.currentCharacter = character._id
@@ -150,7 +158,6 @@ module.exports = function (app, io) {
       res.json({user: setUserInfo(user)})
     }).catch(next)
   })
-
 
   characterRoutes.put('/:characterId', requireAuth, getGame, getPlayer, (req, res, next) => {
     if (!req.character.family._id !== req.player.family._id) return next('You cannot update a character that isnt in your family')
@@ -200,13 +207,16 @@ module.exports = function (app, io) {
 
   })
 
+  // locationRoutes.use('/:locationId', requireAuth, getGame, (req, res, next) => {
+  //   console.log("hits")
+  //   req.location = req.game.getById(req.params.locationId)
+  //   if(!req.location) return next('No location with that Id')
+  //   next()
+  // })
 
-  locationRoutes.param('/:locationId', (req, res, next) => {
-
-  })
-
-  locationRoutes.post('/:locationId/travel', (req, res, next) => {
-
+  locationRoutes.post('/:locationId/travel', requireAuth, getGame, getPlayer, getLocation, (req, res, next) => {
+    locationController.travelTo(req.location, req.player)
+    res.send("Success")
   })
 
 ////all of these here need to ensure that player is in same location

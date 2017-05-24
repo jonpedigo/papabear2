@@ -32,7 +32,32 @@ module.exports = function () {
 		return coordinates
 	}
 
+	const travelTo = (location, character) => {
+		function reachDestination(){
+			console.log(`Character ${character.name} ${character.family.name} arrived at ${location.name}:${location.coordinates.x},${location.coordinates.y} from ${character.currentLocation.name}:${character.currentLocation.coordinates.x},${character.currentLocation.coordinates.y}`)
+			character.update({currentLocation: location})
+		}
+
+		let spg = LOCATIONS.SECONDS_PER_GRID
+		let start = character.currentLocation.coordinates
+		let end = location.coordinates
+
+		let dif = {
+			x: start.x - end.x,
+			y: start.y - end.y
+		}
+
+		let distance = Math.sqrt( (dif.x * dif.x) + (dif.y * dif.y) )
+		let totalTravelTime = (spg * 1000) * distance
+		let gridTotal = 0
+
+		console.log(`Character ${character.name} ${character.family.name} traveling to ${location.name}:${location.coordinates.x},${location.coordinates.y} from ${character.currentLocation.name}:${character.currentLocation.coordinates.x},${character.currentLocation.coordinates.y} will take ${totalTravelTime/1000} seconds`)
+
+		setTimeout(reachDestination.bind(this), totalTravelTime)
+	}
+
   return {
-  	add
+  	add,
+  	travelTo
   }
 }

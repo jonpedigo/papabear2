@@ -1,5 +1,7 @@
 var LOCATIONS = {}
 
+LOCATIONS.SECONDS_PER_GRID = 10
+
 function enemyTeam(event, player, location){
 	if(player.kingdom._id === location.kingdom._id && !location.compromised) return event
 	else return false
