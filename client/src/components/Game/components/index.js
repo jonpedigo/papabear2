@@ -22,7 +22,7 @@ function mapStateToProps(state) {
     family: state.game.family,
     playerState: state.game.playerState,
     worldState: state.game.worldState,
-    eventState: state.game.eventState,
+    eventState: state.eventState,
     design: state.game.design
   }
 }

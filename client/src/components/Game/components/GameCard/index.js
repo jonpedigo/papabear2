@@ -15,6 +15,8 @@ import ChatListItem from '../ListItems/chat'
 import EventButton from '../EventButton'
 import EventPopup from '../EventPopup'
 
+import socket from '../../../../actions/socket'
+
 class GameCard extends Component {
 	constructor(){
 		super()
@@ -87,7 +89,6 @@ class GameCard extends Component {
       summary = <WorldSummary {...this.props.worldState} />
     }
 
-
   	let list = []
   	if(this.state.listView === 'characters'){
   		list = currentLocation.characters.map((character) => {
@@ -106,7 +107,7 @@ class GameCard extends Component {
 
     let events = []
     if(this.state.summaryView === 'world' && selectedLocation){
-      events.push( <EventButton event='travelToLocation' location={selectedLocation}></EventButton> )
+      events.push( <EventButton event='travelToLocation' onClick={this.goToLocationSummary} location={selectedLocation}></EventButton> )
     }
 
     if(this.state.summaryView === 'location' && currentLocation){
@@ -161,7 +162,7 @@ class GameCard extends Component {
           break;  
           case 'unequip':
             return <EventButton event='unequipItem' item={selectedItem}></EventButton>
-          break;  
+          break;
         }
       })
     }

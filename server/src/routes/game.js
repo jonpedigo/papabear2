@@ -16,6 +16,8 @@ const stealthController = require('../controllers/Game/stealth')()
 const travelController = require('../controllers/Game/travel')()
 const warController = require('../controllers/Game/war')()
 
+const DESIGN = require('../../../shared/design')
+
 const User = require('../models/user')
 const setUserInfo = require('../helpers').setUserInfo;
 
@@ -79,6 +81,10 @@ let popState = {
 
 module.exports = function (app, io) {
   socketEvents(io)
+
+  const updateCharacter = (game, character) => {
+    io.in(character._id).emit('update game', DESIGN.CLIENT.PLAYER_STATE(game, character), DESIGN.CLIENT.WORLD_STATE(game))
+  }
 
   // Initializing route groups
   const gameRoutes = express.Router()
@@ -215,8 +221,11 @@ module.exports = function (app, io) {
   // })
 
   locationRoutes.post('/:locationId/travel', requireAuth, getGame, getPlayer, getLocation, (req, res, next) => {
-    locationController.travelTo(req.location, req.player)
-    res.send("Success")
+
+    locationController.travelTo(req.location, req.player, (err, travelTime, travelStart) => {
+      if(err) next(err)
+      res.json({eventState: { travelTime, travelStart }})
+    })
   })
 
 ////all of these here need to ensure that player is in same location

@@ -11,6 +11,25 @@ class EventPopup extends Component {
   constructor(props){
     super(props)
     this.state = {}
+    if(props.eventState.event === 'travelToLocation'){
+      this.state.secondsRemaining = Math.ceil((props.eventState.travelTime - (Date.now() - props.eventState.travelStart))/1000)
+    }
+  }
+
+  tick() {
+    this.setState({secondsRemaining: this.state.secondsRemaining - 1});
+    if (this.state.secondsRemaining <= 0) {
+      clearInterval(this.interval)
+      this.props.closeEventPopup()
+    }
+  }
+
+  componentDidMount() {
+    if(this.props.eventState.event === 'travelToLocation') this.interval = setInterval(this.tick.bind(this), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
 	confirm(){
@@ -22,11 +41,19 @@ class EventPopup extends Component {
 		this.props.closeEventPopup()
 	}
 
+  render_travelToLocation(){
+    return (
+      <div className='TravelToLocation'>
+        {`Time Left: ${this.state.secondsRemaining} Seconds`}
+      </div>
+    )
+  }
+
   render() {
     return (
-      <div className="EventPopup-container">
-        <div className="EventPopup">
-      
+      <div className='EventPopup-container'>
+        <div className='EventPopup'>
+          {this['render_' + this.props.eventState.event]()}
       	</div>
       </div>
     );
@@ -46,8 +73,8 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-  	eventState: state.eventState,
-  	...ownProps
+    ...ownProps,
+  	eventState: { ...state.eventState, ...ownProps.eventState }
   }
 }
 

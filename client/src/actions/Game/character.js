@@ -1,7 +1,7 @@
 import { reset } from 'redux-form';
 import { getData, postData, putData, deleteData } from '../index';
 import { EVENT_RESULT, GAME_ERROR, GAME_SUCCESS } from '../types'
-import { openEventPopup } from './eventPopup'
+import { analyzeEvent } from './eventPopup'
 
 //= ===============================
 // Character actions
@@ -11,7 +11,7 @@ export function attackCharacter({category, character: { _id: characterId }}, ana
   const data = props;
   const url = `/character/{props.characterId}/attack`;
   return (dispatch) => {
-  	if(analysis) return dispatch(openEventPopup(props))
+  	if(analysis) return dispatch(analyzeEvent(props))
     postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data);
   };
 }
@@ -20,7 +20,7 @@ export function senseCharacter({category, character: { _id: characterId }}, anal
   const data = props;
   const url = `/character/${props.characterId}/sense/${props.category}`;
   return (dispatch) => {
-  	if(analysis && category !== 'bug') return dispatch(openEventPopup(props))
+  	if(analysis && category !== 'bug') return dispatch(analyzeEvent(props))
     postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data);
   };
 }

@@ -2,16 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { createRoutine, startRoutine, endRoutine } from '../../../../actions/Game/routine'
-import { openEventPopup, closeEventPopup } from '../../../../actions/Game/eventPopup'
+import { openEventPopup, closeEventPopup, giveEventLocalProps } from '../../../../actions/Game/eventPopup'
 import { craftItem, plantBug, equipItem, unequipItem } from '../../../../actions/Game/item'
 import { sneakThroughLocation, stealFromLocation, invadeLocation, travelToLocation, messageLocation } from '../../../../actions/Game/location'
 import { attackCharacter, senseCharacter, recordCharacter, messageCharacter } from '../../../../actions/Game/character'
 
 class EventButton extends Component {
   handleClick() {
+    if(this.props.onClick) this.props.onClick()
+
     //basically whatever the event passed in is called, thats the one we call with the analysis tag set to true
     //some function wont even use an analysis tag, so im expressing that actions themselvs know if they will use a popup or not?
     //actions themselves KNOW if they have two purposes (analysis / event)// shouldnt this component know if it has a pop or not? even shouldnt that be in the design?... its such a large change that it doesnt really matter, it will require a huge shift anyways
+    // if(this.props.event === 'travelToLocation'){
+    this.props.giveEventLocalProps(this.props)
     this.props[this.props.event](this.props, true)
   }
 
@@ -66,6 +70,7 @@ const mapDispatchToProps = {
   endRoutine,
   openEventPopup,
   closeEventPopup,
+  giveEventLocalProps,
   craftItem,
   plantBug,
   equipItem,

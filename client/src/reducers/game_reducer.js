@@ -1,4 +1,4 @@
-import { UPDATE_GAME, GAME_ERROR, EVENT_RESULT, EVENT_ANALYZE, EVENT_CLOSE, SET_KINGDOM, SET_FAMILY, SET_PLAYER, SET_GAME, GAME_SUCCESS } from '../actions/types';
+import { UPDATE_GAME, GAME_ERROR, SET_KINGDOM, SET_FAMILY, SET_PLAYER, SET_GAME, GAME_SUCCESS } from '../actions/types';
 import GAME from '../../../shared/design/game';
 import ITEMS from '../../../shared/design/items';
 import SKILLS from '../../../shared/design/skills';
@@ -13,7 +13,7 @@ const design = {
   CHARACTERS
 }
 
-const INITIAL_STATE = { message: '', success: true, playerState : null, worldState: null, eventState: { open: false }, design };
+const INITIAL_STATE = { message: '', success: true, playerState : null, worldState: null, design };
 
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -23,12 +23,6 @@ export default function (state = INITIAL_STATE, action) {
       return { ...state, success: false, error: action.payload }
     case GAME_SUCCESS: 
       return { ...state, message: action.payload.message }
-    case EVENT_CLOSE:
-      return { ...state, eventState: { open: false } }
-    case EVENT_ANALYZE:
-      return { ...state, eventState: { open: true, ...action.eventState } }
-    case EVENT_RESULT:
-    	return { ...state, eventState: { open: true, ...action.payload.eventState } }
     case SET_KINGDOM: 
     	return {...state, kingdom: action.payload.user.kingdom }
     case SET_FAMILY: 

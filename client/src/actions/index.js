@@ -56,7 +56,7 @@ export function postData(action, errorType, isAuthReq, url, dispatch, data) {
     if(response.data.user) cookie.save('user', response.data.user, { path: '/' });
     dispatch({
       type: action,
-      payload: response.data,
+      payload: response.data
     });
   })
   .catch((error) => {

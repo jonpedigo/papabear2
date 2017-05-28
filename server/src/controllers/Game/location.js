@@ -1,5 +1,6 @@
 const locationModel = require('../../models/Game/location')
 const LOCATIONS = require('../../../../shared/design').LOCATIONS
+const GAME = require('../../../../shared/design').GAME
 
 module.exports = function () {
 
@@ -32,7 +33,7 @@ module.exports = function () {
 		return coordinates
 	}
 
-	const travelTo = (location, character) => {
+	const travelTo = (location, character, cb, cb2) => {
 		function reachDestination(){
 			console.log(`Character ${character.name} ${character.family.name} arrived at ${location.name}:${location.coordinates.x},${location.coordinates.y} from ${character.currentLocation.name}:${character.currentLocation.coordinates.x},${character.currentLocation.coordinates.y}`)
 			character.update({currentLocation: location})
@@ -48,12 +49,14 @@ module.exports = function () {
 		}
 
 		let distance = Math.sqrt( (dif.x * dif.x) + (dif.y * dif.y) )
-		let totalTravelTime = (spg * 1000) * distance
+		let travelTime = (spg * 1000) * distance * GAME.SPEED
 		let gridTotal = 0
 
-		console.log(`Character ${character.name} ${character.family.name} traveling to ${location.name}:${location.coordinates.x},${location.coordinates.y} from ${character.currentLocation.name}:${character.currentLocation.coordinates.x},${character.currentLocation.coordinates.y} will take ${totalTravelTime/1000} seconds`)
+		console.log(`Character ${character.name} ${character.family.name} traveling to ${location.name}:${location.coordinates.x},${location.coordinates.y} from ${character.currentLocation.name}:${character.currentLocation.coordinates.x},${character.currentLocation.coordinates.y} will take ${travelTime/1000} seconds`)
 
-		setTimeout(reachDestination.bind(this), totalTravelTime)
+		setTimeout(reachDestination.bind(this), travelTime)
+
+		cb(null, travelTime, Date.now())
 	}
 
   return {

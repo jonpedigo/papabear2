@@ -1,7 +1,7 @@
 import { reset } from 'redux-form';
 import { getData, postData, putData, deleteData } from '../index';
 import { EVENT_RESULT, GAME_ERROR, GAME_SUCCESS } from '../types'
-import { openEventPopup } from './eventPopup'
+import { analyzeEvent } from './eventPopup'
 //= ===============================
 // Location actions
 //= ===============================
@@ -19,7 +19,7 @@ export function stealFromLocation(props, analysis = true) {
   const data = props;
   const url = `/location/${props.locationId}/steal/${props.itemId}`;
   return (dispatch) => {
-  	if(analysis) return dispatch(openEventPopup(props))
+  	if(analysis) return dispatch(analyzeEvent(props))
     postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data);
   };
 }
@@ -28,7 +28,7 @@ export function invadeLocation(props, analysis = true) {
   const data = props;
   const url = `/location/${props.locationId}/invade`;
   return (dispatch) => {
-  	if(analysis) return dispatch(openEventPopup(prop))
+  	if(analysis) return dispatch(analyzeEvent(prop))
     postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data);
   };
 }
@@ -37,7 +37,7 @@ export function travelToLocation({location: { _id: locationId } }) {
   let data = {}
   const url = `/location/${locationId}/travel`;
   return (dispatch) => {
-    postData(GAME_SUCCESS, GAME_ERROR, true, url, dispatch, data);
+    postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data);
   };
 }
 
