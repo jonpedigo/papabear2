@@ -7,7 +7,6 @@ module.exports = function () {
 	const add = (game, props, cb) => {
 		if(!props.kingdom) props.kingdom = findKingdom(game)._id
 		return familyModel.create(props).then((family) => {
-			console.log("AFTER CREATED", family.kingdom)
 			game.add(family)
 			if(cb) cb(null, family)
 			return family

@@ -12,7 +12,8 @@ class EventPopup extends Component {
     super(props)
     this.state = {}
     if(props.eventState.event === 'travelToLocation'){
-      this.state.secondsRemaining = Math.ceil((props.eventState.travelTime - (Date.now() - props.eventState.travelStart))/1000)
+      let TT = Date.now() - props.eventState.travelStart
+      this.state.secondsRemaining = Math.ceil((props.eventState.travelTime - TT)/1000) + 1
     }
   }
 
@@ -44,7 +45,7 @@ class EventPopup extends Component {
   render_travelToLocation(){
     return (
       <div className='TravelToLocation'>
-        {`Time Left: ${this.state.secondsRemaining} Seconds`}
+        {`You will arrive @ ${this.props.eventState.location.name} in ${this.state.secondsRemaining} seconds`}
       </div>
     )
   }

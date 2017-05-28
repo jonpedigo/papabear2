@@ -1,5 +1,5 @@
 module.exports = {
-  SPEED: 1,
+  SPEED: 100,
   //temporary for when I have only one game
-  id: "59224a94ab64702f299408e5"
+  id: "592b58b835311d12479d8d7d"
 }

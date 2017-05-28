@@ -33,6 +33,10 @@ const KingdomSchema = new Schema({
     y: Number
   },
   // ^^^ def remove if you want to make kingdoms more advanced...
+
+  color:{
+    type: String
+  },
   routine: {
     type: Schema.Types.ObjectId,
     ref: 'Routine'

@@ -79,7 +79,8 @@ var kingdoms = [
 		orientation: {
 			x: 'normal',
 			y: 'normal'
-		}
+		},
+		color: 'blue'
 	},
 	{
 		name: "under top right",
@@ -90,7 +91,8 @@ var kingdoms = [
 		orientation: {
 			x: 'normal',
 			y: 'reverse'
-		}
+		},
+		color: 'red'
 	},
 	{
 		name: "next to top right",
@@ -101,7 +103,9 @@ var kingdoms = [
 		orientation: {
 			x: 'reverse',
 			y: 'normal'
-		}
+		},
+		color: 'green'
+
 	}
 ]
 

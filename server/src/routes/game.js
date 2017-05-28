@@ -221,9 +221,9 @@ module.exports = function (app, io) {
   // })
 
   locationRoutes.post('/:locationId/travel', requireAuth, getGame, getPlayer, getLocation, (req, res, next) => {
-
     locationController.travelTo(req.location, req.player, (err, travelTime, travelStart) => {
       if(err) next(err)
+      req.player.update({currentRoutine: null})
       res.json({eventState: { travelTime, travelStart }})
     })
   })

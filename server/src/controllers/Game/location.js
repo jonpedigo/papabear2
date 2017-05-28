@@ -33,7 +33,7 @@ module.exports = function () {
 		return coordinates
 	}
 
-	const travelTo = (location, character, cb, cb2) => {
+	const travelTo = (location, character, cb) => {
 		function reachDestination(){
 			console.log(`Character ${character.name} ${character.family.name} arrived at ${location.name}:${location.coordinates.x},${location.coordinates.y} from ${character.currentLocation.name}:${character.currentLocation.coordinates.x},${character.currentLocation.coordinates.y}`)
 			character.update({currentLocation: location})
@@ -49,7 +49,7 @@ module.exports = function () {
 		}
 
 		let distance = Math.sqrt( (dif.x * dif.x) + (dif.y * dif.y) )
-		let travelTime = (spg * 1000) * distance * GAME.SPEED
+		let travelTime = ((spg * 1000) * distance)/ GAME.SPEED
 		let gridTotal = 0
 
 		console.log(`Character ${character.name} ${character.family.name} traveling to ${location.name}:${location.coordinates.x},${location.coordinates.y} from ${character.currentLocation.name}:${character.currentLocation.coordinates.x},${character.currentLocation.coordinates.y} will take ${travelTime/1000} seconds`)

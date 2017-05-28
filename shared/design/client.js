@@ -115,7 +115,8 @@ const WORLD_STATE = function(game){
 				name: loc.name,
 				kingdom: {
 					_id: loc.kingdom._id,
-					name: loc.kingdom.name
+					name: loc.kingdom.name,
+					color: loc.kingdom.color
 				},
 				distribution: loc.getCharacters(game)
 				.reduce((map, character, index, array) => {

@@ -36,6 +36,7 @@ class GameCard extends Component {
 	goToCharacterSummary(character) {
 		let state = this.state
 		state.summaryView = 'character'
+    state.listView = 'records'
 		state.selectedCharacter = character
 		this.setState(state)
 	}
@@ -50,6 +51,7 @@ class GameCard extends Component {
   goToLocationSummary(){
     let state = this.state
     state.summaryView = 'location'
+    state.listView = 'characters'
     this.setState(state)
   }
 
@@ -81,12 +83,16 @@ class GameCard extends Component {
     let world = this.props.worldState
 
   	let summary
+    let back
   	if(this.state.summaryView === 'location'){
   		summary = <LocationSummary location={currentLocation}/>
+      back = this.goToWorldSummary
   	}else if (this.state.summaryView === 'character'){
   		summary = <CharacterSummary character={selectedCharacter}/>
+      back = this.goToLocationSummary
   	}else if (this.state.summaryView === 'world'){
       summary = <WorldSummary {...this.props.worldState} />
+      back = this.goToLocationSummary
     }
 
   	let list = []
@@ -107,7 +113,7 @@ class GameCard extends Component {
 
     let events = []
     if(this.state.summaryView === 'world' && selectedLocation){
-      events.push( <EventButton event='travelToLocation' onClick={this.goToLocationSummary} location={selectedLocation}></EventButton> )
+      events.push( <EventButton event='travelToLocation' onClick={this.goToLocationSummary.bind(this)} location={selectedLocation}></EventButton> )
     }
 
     if(this.state.summaryView === 'location' && currentLocation){
@@ -169,6 +175,7 @@ class GameCard extends Component {
 
     return (
       <div className="GameCard">
+        <div onClick={back.bind(this)}> {'< Go Back'}</div>
       	{summary}
       	{list}
         {events}
