@@ -72,6 +72,7 @@ const PLAYER_STATE = function(game, player){
 		kingdom: {
 			_id: player.kingdom._id,
 			name: player.kingdom.name,
+			color: player.kingdom.color,
 		  king: {
 		    slots: {
 		      charm: player.kingdom.king.slots.charm ? {

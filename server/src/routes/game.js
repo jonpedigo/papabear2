@@ -45,6 +45,33 @@ const getLocation = (req, res, next) => {
   next()
 }
 
+const getRoutine = (req, res, next) => {
+  let routine = req.game.getById(req.params.routineId)
+  if (!routine) return next('No routine!')
+  req.routine = routine
+  next()
+}
+
+const getItem = (req, res, next) => {
+  let item = req.game.getById(req.params.itemId)
+  if (!item) return next('No item!')
+  req.item = item
+  next()
+}
+
+const getFamily = (req, res, next) => {
+  req.family = req.game.getById(req.params.familyId)
+  if(!req.family) return next('No family with that Id')
+  next()
+}
+
+const getCharacter = (req, res, next) => {
+  req.character = req.game.getById(req.params.characterId)
+  if(!req.character) return next('No character with that Id')
+  next()
+}
+
+
 const socketEvents =  (io) =>{
   io.on('connection', (socket) => {
     socket.on('join game', () => {
@@ -148,24 +175,15 @@ module.exports = function (app, io) {
     })
   })
 
-  characterRoutes.param('/:characterId', requireAuth, getGame, (req, res, next) => {
-    req.character = req.game.getById(req.params.characterId)
-    if(!req.character) return next('No character with that Id')
-    next()
-  })
-
   //set character on the session by selecting it
-  characterRoutes.post('/:characterId/select', requireAuth, getGame, (req, res, next) => {
-    //why do I have to do this when...characters.param
-    let characterId = req.params.characterId
-    let character = req.game.getById(characterId)
-    req.user.currentCharacter = character._id
+  characterRoutes.post('/:characterId/select', requireAuth, getGame, getCharacter, (req, res, next) => {
+    req.user.currentCharacter = req.character._id
     req.user.save().then((user) => {
       res.json({user: setUserInfo(user)})
     }).catch(next)
   })
 
-  characterRoutes.put('/:characterId', requireAuth, getGame, getPlayer, (req, res, next) => {
+  characterRoutes.put('/:characterId', requireAuth, getGame, getPlayer, getCharacter, (req, res, next) => {
     if (!req.character.family._id !== req.player.family._id) return next('You cannot update a character that isnt in your family')
     req.character.update(req.body, (err, character) => {
       if(err) return next(err)
@@ -173,14 +191,9 @@ module.exports = function (app, io) {
     })
   })
 
-  familyRoutes.param('/:familyId', requireAuth, getGame, getPlayer, (req, res, next) => {
-    req.family = req.game.getById(req.params.familyId)
-    if(!req.family) return next('No family with that Id')
-    next()
-  })
 
   //updates a family
-  familyRoutes.put('/:familyId', requireAuth, getGame, getPlayer, (req, res, next) => {
+  familyRoutes.put('/:familyId', requireAuth, getGame, getPlayer, getFamily, (req, res, next) => {
     if (!req.family._id !== req.player.family._id) return next('You cannot update a family that isnt yours')
     req.family.update(req.body, (err, family) => {
       if(err) return next(err)
@@ -194,31 +207,24 @@ module.exports = function (app, io) {
 
 ////all these routes need to ensure that the characterId is in the same location as the playerId
   //event
-  characterRoutes.post('/:characterId/attack', (req, res, next) => {
+  characterRoutes.post('/:characterId/attack', requireAuth, getGame, getPlayer, getCharacter, (req, res, next) => {
 
   })
 
   //event
   //ensure player lvl can sense charm
-  characterRoutes.post('/:characterId/sense', (req, res, next) => {
+  characterRoutes.post('/:characterId/sense', requireAuth, getGame, getPlayer, getCharacter, (req, res, next) => {
 
   })
 
 
-  characterRoutes.post('/:characterId/record', (req, res, next) => {
+  characterRoutes.post('/:characterId/record', requireAuth, getGame, getPlayer, getCharacter, (req, res, next) => {
 
   })
 
-  characterRoutes.post('/:characterId/message', (req, res, next) => {
+  characterRoutes.post('/:characterId/message', requireAuth, getGame, getPlayer, getCharacter, (req, res, next) => {
 
   })
-
-  // locationRoutes.use('/:locationId', requireAuth, getGame, (req, res, next) => {
-  //   console.log("hits")
-  //   req.location = req.game.getById(req.params.locationId)
-  //   if(!req.location) return next('No location with that Id')
-  //   next()
-  // })
 
   locationRoutes.post('/:locationId/travel', requireAuth, getGame, getPlayer, getLocation, (req, res, next) => {
     locationController.travelTo(req.location, req.player, (err, travelTime, travelStart) => {
@@ -230,64 +236,56 @@ module.exports = function (app, io) {
 
 ////all of these here need to ensure that player is in same location
   //event
-  locationRoutes.post('/:locationId/invade', (req, res, next) => {
+  locationRoutes.post('/:locationId/invade', requireAuth, getGame, getPlayer, getLocation, (req, res, next) => {
 
   })
 
   //event
   //correct level to sneak
-  locationRoutes.post('/:locationId/sneak', (req, res, next) => {
+  locationRoutes.post('/:locationId/sneak', requireAuth, getGame, getPlayer, getLocation, (req, res, next) => {
 
   })
 
   //event
   //make sure player has correct level to steal
   //make sure items in there
-  locationRoutes.post('/:locationId/steal/:itemId', (req, res, next) => {
+  locationRoutes.post('/:locationId/steal/:itemId', requireAuth, getGame, getPlayer, getLocation, (req, res, next) => {
 
   })
 
-  locationRoutes.post('/:locationId/message', (req, res, next) => {
-
-  })
-
-  itemRoutes.param('/:itemId', (req, res, next) => {
+  locationRoutes.post('/:locationId/message', requireAuth, getGame, getPlayer, getLocation, (req, res, next) => {
 
   })
 
   //event
   //ensure is bug, ensure target is in same location, ensure player has access to this bug
-  itemRoutes.post('bug/:bugId/plant', (req, res, next) => {
+  itemRoutes.post('bug/:itemId/plant', requireAuth, getGame, getPlayer, getItem, (req, res, next) => {
 
   })
 
   //ensure is bug, ensure player is in same location as bugged players
-  itemRoutes.post('bug/:bugId/remove', (req, res, next) => {
+  itemRoutes.post('bug/:itemId/remove', requireAuth, getGame, getPlayer, getItem, (req, res, next) => {
 
   })
 
   //ensure item has resources BY THE TEAM WHOM IS MAKING IT to make given item
   //ensure character is in supplyDepot OF THEIR TEAM
-  itemRoutes.post('/', (req, res, next) => {
+  itemRoutes.post('/', requireAuth, getGame, getPlayer, (req, res, next) => {
 
   })
 
   //ensure player is in location of supply depot of their OWN team
   //ensure this item is actually in the supply depot
-  itemRoutes.post('/:itemId/unequip', (req, res, next) => {
+  itemRoutes.post('/:itemId/unequip', requireAuth, getGame, getPlayer, getItem, (req, res, next) => {
 
   })
 
   //ensure player is in location of supply depot of their OWN team
   //ensure this item is actually in the supply depot
-  itemRoutes.post('/:itemId/equip', (req, res, next) => {
+  itemRoutes.post('/:itemId/equip', requireAuth, getGame, getPlayer, getItem, (req, res, next) => {
 
   })
 
-
-  routineRoutes.param('/:routineId', (req, res, next) => {
-
-  })
 
   //player created a new routine
   //assume its only created by the player that wants to start it, not for idle kingdom...
@@ -302,22 +300,18 @@ module.exports = function (app, io) {
 
   //start routine
   //be sure to deactivate old
-  routineRoutes.post('/:routineId/start', (req, res, next) => {
+  routineRoutes.post('/:routineId/start', requireAuth, getGame, getPlayer, getRoutine, (req, res, next) => {
 
   })
 
   //you must own this routine
   //it must not be the Idleroutine of the kingdom (just duplicate the idle routine?)
-  routineRoutes.post('/:routineId/end', (req, res, next) => {
+  routineRoutes.post('/:routineId/end', requireAuth, getGame, getPlayer, getRoutine, (req, res, next) => {
 
   })
 
 
 //ensure super admin
-  gameRoutes.param('/:gameId', (req, res, next) => {
-
-  })
-
   gameRoutes.post('/:gameId/start', (req, res, next) => {
 
   })
