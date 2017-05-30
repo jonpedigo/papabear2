@@ -105,11 +105,16 @@ class GameCard extends Component {
   	}
     if(this.state.listView === 'locations'){
       list = world.locations.map((location) => {
-        return (
-          <LocationListItem select={this.selectLocation.bind(this, location)} location={location}/>
-        )
+        if(this.props.design.LOCATIONS[location.category].PRIVATE && !this.props.design.LOCATIONS[location.category].ACCESSIBLE(this.props.playerState, location)){
+          return null
+        } else {
+          return (
+            <LocationListItem select={this.selectLocation.bind(this, location)} location={location}/>
+          )
+        }
       })
     }
+    
 
     let events = []
     if(this.state.summaryView === 'world' && selectedLocation){

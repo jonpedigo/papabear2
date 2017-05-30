@@ -21,6 +21,7 @@ const PLAYER_STATE = function(game, player){
 			category: player.currentLocation.category,
 			//only has a supply if its a supply depot
 			//  -- supply map
+			compromised: player.currentLocation.compromised,
 			supply: player.currentLocation.category !== 'supplyDepot' ? null : player.currentLocation.supply
 			.map((item) => {
 					return {
@@ -114,6 +115,7 @@ const WORLD_STATE = function(game){
 				coordinates: loc.coordinates,
 				category: loc.category,
 				name: loc.name,
+				compromised: loc.compromised,
 				kingdom: {
 					_id: loc.kingdom._id,
 					name: loc.kingdom.name,
@@ -146,6 +148,12 @@ const WORLD_STATE = function(game){
 				name: kingdom.name,
 				characterCount: kingdom.getCharacters(game).length,
 				dead: kingdom.dead
+				// locations: kingdom.getLocations().map((loc) => {
+				// 	return {
+				// 		name: loc.name,
+				// 		compromised: loc.compromised
+				// 	}
+				// })
 			}
 		})
 	}

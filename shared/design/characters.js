@@ -1,7 +1,7 @@
 var CHARACTERS = {}
 
 function enemyTeam(event, player, character){
-	if(player.kingdom._id === character.kingdom._id && !character.dead) return event
+	if(player.kingdom._id !== character.kingdom._id && !character.dead) return event
 	else return false
 }
 

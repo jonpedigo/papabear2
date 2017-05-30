@@ -227,6 +227,7 @@ module.exports = function (app, io) {
   })
 
   locationRoutes.post('/:locationId/travel', requireAuth, getGame, getPlayer, getLocation, (req, res, next) => {
+    if(DESIGN.LOCATIONS[req.location.category].PRIVATE && !DESIGN.LOCATIONS[req.location.category].ACCESSIBLE(req.player, req.location)) return next('You dont have access to this location')
     locationController.travelTo(req.location, req.player, (err, travelTime, travelStart) => {
       if(err) next(err)
       req.player.update({currentRoutine: null})

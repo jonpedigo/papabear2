@@ -2,13 +2,13 @@ var LOCATIONS = {}
 
 LOCATIONS.SECONDS_PER_GRID = 10
 
-function enemyTeam(event, player, location){
-	if(player.kingdom._id === location.kingdom._id && !location.compromised) return event
+function enemyTeam(r_value, player, location){
+	if(player.kingdom._id !== location.kingdom._id && !location.compromised) return r_value
 	else return false
 }
 
-function sameTeam(event, player, location){
-	if(player.kingdom._id === location.kingdom._id) return event
+function sameTeam(r_value, player, location){
+	if(player.kingdom._id === location.kingdom._id || location.compromised) return r_value
 	else return false
 }
 
@@ -16,18 +16,20 @@ LOCATIONS['townCenter'] = {
 	DESCRIPTION: 'A good place to chill and talk w ur team (look out for spies!)',
 	FLAVOR: 'some say papa bear was here a long time ago',
 	CAPACITY: 100,
-	EVENTS: [sameTeam.bind(null, 'guard'), sameTeam.bind(null, 'craft'), sameTeam.bind(null, 'equip'), enemyTeam.bind(null, 'invade'), enemyTeam.bind(null, 'sneak'), enemyTeam.bind(null, 'steal')],
+	EVENTS: [sameTeam.bind(null, 'guard'), enemyTeam.bind(null, 'invade'), enemyTeam.bind(null, 'sneak')],
 	PRIVATE: true,
+	ACCESSIBLE: sameTeam.bind(null, true),
 	X_FROM_CENTER: 0,
-	Y_FROM_CENTER: 0
+	Y_FROM_CENTER: 0,
 }
 
 LOCATIONS['supplyDepot'] = {
 	DESCRIPTION: 'All the shit is here, craft items, get equipment',
 	FLAVOR: 'papa bear smells something cooking!',
 	CAPACITY: 100,
-	EVENTS: [sameTeam.bind(null, 'guard'), enemyTeam.bind(null, 'invade'), enemyTeam.bind(null, 'sneak')],
+	EVENTS: [sameTeam.bind(null, 'guard'), enemyTeam.bind(null, 'invade'),  sameTeam.bind(null, 'craft'), sameTeam.bind(null, 'equip'), enemyTeam.bind(null, 'sneak'), , enemyTeam.bind(null, 'steal')],
 	PRIVATE: true,
+	ACCESSIBLE: sameTeam.bind(null, true),
 	X_FROM_CENTER: 1,
 	Y_FROM_CENTER: 1
 }
@@ -48,6 +50,7 @@ LOCATIONS['royalChambers'] = {
 	CAPACITY: 100,
 	EVENTS: [sameTeam.bind(null, 'guard')],
 	PRIVATE: true,
+	ACCESSIBLE: sameTeam.bind(null, true),
 	X_FROM_CENTER: -1,
 	Y_FROM_CENTER: -1
 }
@@ -87,7 +90,8 @@ LOCATIONS['barracks'] = {
 	FLAVOR: 'some say papa bear wants to destroy this place',
 	CAPACITY: 100,
 	EVENTS: ['trainWarfare'],
-	PRIVATE: false,
+	PRIVATE: true,
+	ACCESSIBLE: sameTeam.bind(null, true),
 	X_FROM_CENTER: 0,
 	Y_FROM_CENTER: 2
 }
@@ -97,7 +101,8 @@ LOCATIONS['sewers'] = {
 	FLAVOR: 'some say papa bear has never seen this place',
 	CAPACITY: 100,
 	EVENTS: ['trainStealth'],
-	PRIVATE: false,
+	PRIVATE: true,
+	ACCESSIBLE: sameTeam.bind(null, true),
 	X_FROM_CENTER: 1,
 	Y_FROM_CENTER: 0
 }
@@ -107,7 +112,8 @@ LOCATIONS['tower'] = {
 	FLAVOR: 'some say you can see papa bear staring up here',
 	CAPACITY: 100,
 	EVENTS: ['trainMagic'],
-	PRIVATE: false,
+	ACCESSIBLE: sameTeam.bind(null, true),
+	PRIVATE: true,
 	X_FROM_CENTER: 1,
 	Y_FROM_CENTER: -1
 }
