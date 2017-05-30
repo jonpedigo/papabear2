@@ -1,4 +1,4 @@
 import io from 'socket.io-client';
-let socket = io.connect('http://localhost:3000');
+let socket = io.connect(`http://${window.location.hostname}:3000`);
 
 export default socket
