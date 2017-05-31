@@ -33,8 +33,9 @@ module.exports = function () {
 		return coordinates
 	}
 
-	const travelTo = (location, character, cb) => {
+	const travelTo = (location, character, cb, cb2) => {
 		function reachDestination(){
+			cb2(null, character.currentLocation, location)
 			console.log(`Character ${character.name} ${character.family.name} arrived at ${location.name}:${location.coordinates.x},${location.coordinates.y} from ${character.currentLocation.name}:${character.currentLocation.coordinates.x},${character.currentLocation.coordinates.y}`)
 			character.update({currentLocation: location})
 		}

@@ -73,7 +73,8 @@ const getCharacter = (req, res, next) => {
 }
 
 
-const socketEvents =  (io) =>{
+const socketEvents = (io) => {
+  io.playerSockets = {}
   io.on('connection', (socket) => {
     socket.on('join game', () => {
       User.findById(socket.user._id).then((user) => {
@@ -82,6 +83,7 @@ const socketEvents =  (io) =>{
         socket.join(user.family)
         let game = gameController.getGame(user.game)
         let player = game.getById(user.currentCharacter)
+        io.playerSockets[player._id] = socket
         socket.game = game
         socket.player = player
         socket.join(player.currentLocation._id)
@@ -90,6 +92,7 @@ const socketEvents =  (io) =>{
       })
     })
     socket.on('leave game', () => {
+      io.playerSockets[socket.player._id] = null
       socket.leave(socket.user.game)
       socket.leave(socket.user.currentCharacter)
       socket.leave(socket.user.family)
@@ -233,6 +236,11 @@ module.exports = function (app, io) {
       if(err) next(err)
       req.player.update({currentRoutine: null})
       res.json({eventState: { travelTime, travelStart }})
+    }, (err, departure, arrival) => {
+      let socket = io.playerSockets[req.player._id]
+      socket.leave(departure._id)
+      socket.join(arrival._id)
+      socket.emit('arrived', arrival)
     })
   })
 
@@ -256,7 +264,14 @@ module.exports = function (app, io) {
   })
 
   locationRoutes.post('/:locationId/message', requireAuth, getGame, getPlayer, getLocation, (req, res, next) => {
-
+    let props = req.body
+    props.author = req.player
+    messageController.create(props, (err, message) => {
+      if(err) return next(err)
+      message.initialize(req.game.state)
+      io.in(req.location._id).emit('add message', DESIGN.CLIENT.MESSAGE(message))
+      res.send('Success')
+    })
   })
 
   //event

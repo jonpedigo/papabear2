@@ -43,9 +43,11 @@ const PLAYER_STATE = function(game, player){
 					name: character.name,
 					primary: character.primary,
 					family: {
+						_id: character.family._id,
 						name: character.family.name
 					},
 					kingdom: {
+						_id: character.kingdom._id,
 						name: character.kingdom.name
 					},
 					slots: {
@@ -158,6 +160,60 @@ const WORLD_STATE = function(game){
 		})
 	}
 }
+
+const MESSAGE = function(message){
+	return {
+		body: message.body,
+		location: message.location ? {
+			_id: message.location.id,
+			coordinates: message.location.coordinates,
+			category: message.location.category,
+			compromised: message.location.compromised,
+			name : message.location.name,
+			kingdom: {
+				_id: message.location.kingdom._id,
+				name: message.location.kingdom.name,
+				color: message.location.kingdom.color
+			}
+		} : null,
+		recipient: message.recipient ? {
+			_id: message.recipient._id,
+			name: message.recipient.name,
+			primary: message.recipient.primary,
+			family: {
+				name: message.recipient.family.name
+			},
+			kingdom: {
+				name: message.recipient.kingdom.name,
+				color: message.location.kingdom.color
+			},
+			dead: message.recipient.dead,
+			currentRoutine: message.recipient.currentRoutine ? {
+		  	category: message.recipient.currentRoutine.category 
+			} : null
+		} : null,
+		author: {
+			_id: message.author._id,
+			name: message.author.name,
+			primary: message.author.primary,
+			family: {
+				_id: message.author.family._id,
+				name: message.author.family.name
+			},
+			kingdom: {
+				_id: message.author.family._id,
+				name: message.author.kingdom.name,
+				color: message.location.kingdom.color
+			},
+			dead: message.author.dead,
+			currentRoutine: message.author.currentRoutine ? {
+		  	category: message.author.currentRoutine.category 
+			} : null
+		}
+	}
+}
+
+CLIENT.MESSAGE = MESSAGE
 
 CLIENT.PLAYER_STATE = PLAYER_STATE
 

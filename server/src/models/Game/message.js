@@ -22,4 +22,11 @@ const MessageSchema = new Schema({
   timestamps: true // Saves createdAt and updatedAt as dates. createdAt will be our timestamp.
 })
 
+
+MessageSchema.methods.initialize = function(state){
+  if(this.location && !this.location._id) this.location = state[this.location]
+  if(this.recipient && !this.recipient._id) this.recipient = state[this.recipient]
+  if(!this.author._id) this.author = state[this.author]
+}
+
 module.exports = mongoose.model('Message', MessageSchema)

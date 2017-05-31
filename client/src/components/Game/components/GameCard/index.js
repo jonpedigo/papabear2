@@ -16,6 +16,8 @@ import ChatListItem from '../ListItems/chat'
 import EventButton from '../EventButton'
 import EventPopup from '../EventPopup'
 
+import ChatInput from '../ChatInput'
+
 import socket from '../../../../actions/socket'
 
 class GameCard extends Component {
@@ -23,18 +25,38 @@ class GameCard extends Component {
 		super()
 		this.state = {
 			summaryView: 'location',
-			listView: 'characters',
+			listView: 'messages',
 			selectedCharacter: null,
       selectedItem: null,
-      selectedLocation: null
+      selectedLocation: null,
+      locationMessages: [],
+      characterMessages: []
     }
 	}
+
+  componentWillMount(){
+    socket.on('add message', (message) => {
+      let state = this.state
+      if(message.location){
+        state.locationMessages.push(message)
+      }else if(message.recipient){
+        state.characterMessages.push(message)
+      }
+      this.setState(state)
+    })
+    socket.on('arrived', (message) => {
+      let state = this.state
+      state.locationMessages = []
+      this.setState(state)
+    })
+  }
 
 	goToCharacterSummary(character) {
 		let state = this.state
 		state.summaryView = 'character'
     state.listView = 'records'
 		state.selectedCharacter = character
+    state.characterMessages = []
 		this.setState(state)
 	}
 
@@ -48,7 +70,7 @@ class GameCard extends Component {
   goToLocationSummary(){
     let state = this.state
     state.summaryView = 'location'
-    state.listView = 'characters'
+    state.listView = 'messages'
     this.setState(state)
   }
 
@@ -64,7 +86,6 @@ class GameCard extends Component {
     this.setState(state)
   }
 
-
   render() {
   	if(!this.props.playerState && !this.props.worldState){
   		return (
@@ -78,6 +99,8 @@ class GameCard extends Component {
     let selectedItem = this.state.selectedItem
     let selectedLocation = this.state.selectedLocation
     let world = this.props.worldState
+    let locationMessages = this.state.locationMessages
+    let characterMessages = this.state.characterMessages
 
   	let summary
     let back
@@ -112,19 +135,29 @@ class GameCard extends Component {
       })
     }
     if(this.state.listView === 'messages'){
-      list = currentLocation.messages.map((message) => {
-        return (
-          <MessageListItem></MessageListItem>
-        )
-      })
-      list.push(currentLocation.records.map((record) => {
-        return (
-          <RecordListItem></RecordListItem>
-        )
-      }))
-      list.sort()
+      if(this.state.summaryView ==='location'){
+        console.log(this.state)
+        list = locationMessages.map((message) => {
+          return (
+            <MessageListItem message={message}></MessageListItem>
+          )
+        })
+      }else{
+        list = characterMessages.map((message) => {
+          return (
+            <MessageListItem message={message}></MessageListItem>
+          )
+        })
+      }
+
     }
 
+    let chat
+    if(this.state.summaryView === 'location'){
+      chat = <ChatInput recipientModel='location' location={currentLocation}/>
+    }else if(this.state.summaryView === 'character'){
+      chat = <ChatInput recipientModel='character' location={selectedCharacter}/>
+    }
 
     let events = []
     if(this.state.summaryView === 'world' && selectedLocation){
@@ -198,6 +231,9 @@ class GameCard extends Component {
       	 {list}
         </div>
         <div className='EventsContainer'>
+          <div className='ChatInputContainer'>
+            {chat}
+          </div>
           {events}
         </div>
       </div>
