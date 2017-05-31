@@ -46,6 +46,10 @@ const KingdomSchema = new Schema({
   //   obj[locCategory] = {type: Schema.Types.ObjectId, ref: 'Location'}
   //   return obj
   // }, {}),
+  savedRecords: {
+    type: Schema.Types.ObjectId,
+    ref: 'Record'
+  },
   dead: {
     type: Boolean,
     default: false

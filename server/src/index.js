@@ -57,6 +57,8 @@ require('./models/Game/item')
 require('./models/Game/location')
 require('./models/Game/kingdom')
 require('./models/Game/game')
+require('./models/Game/record')
+require('./models/Game/message')
 
 const DESIGN = require('../../shared/design')
 gameController = require('./controllers/Game/game')()

@@ -1,6 +1,6 @@
-const Conversation = require('../models/conversation'),
-  Message = require('../models/message'),
-  User = require('../models/user');
+// const Conversation = require('../models/conversation'),
+//   Message = require('../models/message'),
+//   User = require('../models/user');
 
 exports.getConversations = function (req, res, next) {
   // Only return one message from each conversation to display as snippet

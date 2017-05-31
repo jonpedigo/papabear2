@@ -9,6 +9,7 @@ module.exports = function () {
 		return routineModel.create(props).then((routine) => {
 			game.add(routine)
 			if(cb) cb(null, routine)
+			return routine
 		}).catch(cb)
 	}
 

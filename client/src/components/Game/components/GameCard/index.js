@@ -9,6 +9,7 @@ import CharacterListItem from '../ListItems/character'
 import ItemListItem from '../ListItems/item'
 import LocationListItem from '../ListItems/location'
 import RecordListItem from '../ListItems/record'
+import MessageListItem from '../ListItems/message'
 import SkillListItem from '../ListItems/skill'
 import ChatListItem from '../ListItems/chat'
 
@@ -28,10 +29,6 @@ class GameCard extends Component {
       selectedLocation: null
     }
 	}
-
-  componentWillMount(){
-    this.goToWorldSummary()
-  }
 
 	goToCharacterSummary(character) {
 		let state = this.state
@@ -114,7 +111,20 @@ class GameCard extends Component {
         }
       })
     }
-    
+    if(this.state.listView === 'messages'){
+      list = currentLocation.messages.map((message) => {
+        return (
+          <MessageListItem></MessageListItem>
+        )
+      })
+      list.push(currentLocation.records.map((record) => {
+        return (
+          <RecordListItem></RecordListItem>
+        )
+      }))
+      list.sort()
+    }
+
 
     let events = []
     if(this.state.summaryView === 'world' && selectedLocation){
@@ -181,9 +191,15 @@ class GameCard extends Component {
     return (
       <div className="GameCard">
         <div onClick={back.bind(this)}> {'< Go Back'}</div>
-      	{summary}
-      	{list}
-        {events}
+        <div className='SummaryContainer'>
+          {summary}
+        </div>
+        <div className='ListContainer'>
+      	 {list}
+        </div>
+        <div className='EventsContainer'>
+          {events}
+        </div>
       </div>
     );
   }
