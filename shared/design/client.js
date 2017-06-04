@@ -162,8 +162,10 @@ const WORLD_STATE = function(game){
 }
 
 const MESSAGE = function(message){
+	console.log("...did we fuk up?")
 	return {
 		body: message.body,
+		category: 'message',
 		location: message.location ? {
 			_id: message.location.id,
 			coordinates: message.location.coordinates,

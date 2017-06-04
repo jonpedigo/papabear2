@@ -7,13 +7,15 @@ import { craftItem, plantBug, removeBug, equipItem, unequipItem } from '../../..
 import { sneakThroughLocation, stealFromLocation, invadeLocation, travelToLocaton, messageLocation } from '../../../../actions/Game/location'
 import { attackCharacter, senseCharacter, recordCharacter, messageCharacter } from '../../../../actions/Game/character'
 
+import socket from '../../../../actions/socket'
+
 class EventPopup extends Component {
   constructor(props){
     super(props)
     this.state = {}
     if(props.eventState.event === 'travelToLocation'){
       let TT = Date.now() - props.eventState.travelStart
-      this.state.secondsRemaining = Math.ceil((props.eventState.travelTime - TT)/1000) + 1
+      this.state.secondsRemaining = Math.ceil((props.eventState.travelTime - TT)/1000) - 1
     }
   }
 
@@ -21,12 +23,16 @@ class EventPopup extends Component {
     this.setState({secondsRemaining: this.state.secondsRemaining - 1});
     if (this.state.secondsRemaining <= 0) {
       clearInterval(this.interval)
-      this.props.closeEventPopup()
     }
   }
 
   componentDidMount() {
-    if(this.props.eventState.event === 'travelToLocation') this.interval = setInterval(this.tick.bind(this), 1000);
+    if(this.props.eventState.event === 'travelToLocation') {
+      this.interval = setInterval(this.tick.bind(this), 1000)
+      socket.on('arrived', () => {
+        this.props.closeEventPopup()
+      })
+    }
   }
 
   componentWillUnmount() {
@@ -43,9 +49,14 @@ class EventPopup extends Component {
 	}
 
   render_travelToLocation(){
+    let text
+    
+    if(this.state.secondsRemaining >= 1) text = `You will arrive @ ${this.props.eventState.location.name} in ${this.state.secondsRemaining} seconds`
+    else text = 'Arriving...'
+
     return (
       <div className='TravelToLocation'>
-        {`You will arrive @ ${this.props.eventState.location.name} in ${this.state.secondsRemaining} seconds`}
+      {text}
       </div>
     )
   }

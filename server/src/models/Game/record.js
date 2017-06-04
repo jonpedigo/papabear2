@@ -33,6 +33,9 @@ const RecordSchema = new Schema({
       ref: 'Location'
     }
   }]
+},{
+  collection: 'sceneItems',
+  timestamps: true
 })
 
 module.exports = mongoose.model('Record', RecordSchema)

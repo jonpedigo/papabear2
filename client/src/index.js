@@ -40,8 +40,8 @@ if (token && user) {
   store.dispatch(resumeGame())
   socket.emit('authenticate', token) 
     .on('authenticated', function () {
+      socket.authenticated = true
       console.log('socket authorized, joining game')
-      socket.emit('join game')
       socket.on('update game', (playerState, worldState) => {
         store.dispatch({ type: UPDATE_GAME, playerState, worldState})
       })

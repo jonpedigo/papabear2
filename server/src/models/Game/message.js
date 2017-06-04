@@ -19,6 +19,7 @@ const MessageSchema = new Schema({
     ref: 'Character'
   }
 }, {
+  collection: 'sceneItems',
   timestamps: true // Saves createdAt and updatedAt as dates. createdAt will be our timestamp.
 })
 
@@ -26,7 +27,7 @@ const MessageSchema = new Schema({
 MessageSchema.methods.initialize = function(state){
   if(this.location && !this.location._id) this.location = state[this.location]
   if(this.recipient && !this.recipient._id) this.recipient = state[this.recipient]
-  if(!this.author._id) this.author = state[this.author]
+  if(this.author && !this.author._id) this.author = state[this.author]
 }
 
 module.exports = mongoose.model('Message', MessageSchema)

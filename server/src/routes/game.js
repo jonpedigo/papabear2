@@ -72,7 +72,6 @@ const getCharacter = (req, res, next) => {
   next()
 }
 
-
 const socketEvents = (io) => {
   io.playerSockets = {}
   io.on('connection', (socket) => {
@@ -100,6 +99,21 @@ const socketEvents = (io) => {
       socket.leave(socket.player.kingdom._id)
       socket.emit('left game', socket.user.game)
     })
+    socket.on('get scene', () => {
+     socket.player.currentLocation.getScene(100).then((scene) => {
+      let packagedScene = scene.map((message_record) => {
+        message_record.initialize(socket.game.state)
+        if(message_record.constructor.modelName === 'Message'){
+          let message = message_record
+          return DESIGN.CLIENT.MESSAGE(message)
+        }else if(message_record.constructor.modelName === 'Record'){
+          let record = message_record
+          return DESIGN.CLIENT.RECORD(record)
+        }
+      })
+      socket.emit('add to scene', packagedScene)
+     })
+    })
   })
 }
 
@@ -112,6 +126,17 @@ let popState = {
 
 module.exports = function (app, io) {
   socketEvents(io)
+
+  const sendNewMessage = (game, message) => {
+    message.initialize(game.state)
+    let messagePackage = DESIGN.CLIENT.MESSAGE(message)
+    if(message.location) io.in(message.location._id).emit('add to scene', [messagePackage])
+    if(message.recipient) io.in(message.recipient._id).emit('add to scene', [messagePackage])
+  }
+
+  const sendNewRecord = () => {
+
+  }
 
   const updateCharacter = (game, character) => {
     io.in(character._id).emit('update game', DESIGN.CLIENT.PLAYER_STATE(game, character), DESIGN.CLIENT.WORLD_STATE(game))
@@ -268,8 +293,7 @@ module.exports = function (app, io) {
     props.author = req.player
     messageController.create(props, (err, message) => {
       if(err) return next(err)
-      message.initialize(req.game.state)
-      io.in(req.location._id).emit('add message', DESIGN.CLIENT.MESSAGE(message))
+      sendNewMessage(req.game, message)
       res.send('Success')
     })
   })

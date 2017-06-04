@@ -25,30 +25,45 @@ class GameCard extends Component {
 		super()
 		this.state = {
 			summaryView: 'location',
-			listView: 'messages',
+			listView: 'scene',
 			selectedCharacter: null,
       selectedItem: null,
       selectedLocation: null,
-      locationMessages: [],
-      characterMessages: []
+      scene: [],
+      relationship: []
     }
 	}
 
   componentWillMount(){
-    socket.on('add message', (message) => {
+    socket.on('add to scene', (sceneItems) => {
       let state = this.state
-      if(message.location){
-        state.locationMessages.push(message)
-      }else if(message.recipient){
-        state.characterMessages.push(message)
-      }
+      sceneItems.forEach((sceneItem) => {
+        if(sceneItem.location){
+          state.scene.push(sceneItem)
+        }else if(sceneItem.recipient){
+          state.relationship.push(sceneItem)
+        }
+      })
       this.setState(state)
     })
-    socket.on('arrived', (message) => {
+    socket.on('arrived', () => {
       let state = this.state
-      state.locationMessages = []
+      state.scene = []
       this.setState(state)
+      socket.emit('get scene')
     })
+    socket.on('joined game', () => {
+      socket.emit('get scene')
+    })
+
+    if(socket.authenticated){
+      socket.emit('join game')
+    }else{
+      socket.on('authenticated', () => {
+        socket.emit('join game')
+      })
+    }
+    // socket.emit('get messages from current location')
   }
 
 	goToCharacterSummary(character) {
@@ -56,7 +71,7 @@ class GameCard extends Component {
 		state.summaryView = 'character'
     state.listView = 'records'
 		state.selectedCharacter = character
-    state.characterMessages = []
+    state.relationship = []
 		this.setState(state)
 	}
 
@@ -70,7 +85,7 @@ class GameCard extends Component {
   goToLocationSummary(){
     let state = this.state
     state.summaryView = 'location'
-    state.listView = 'messages'
+    state.listView = 'scene'
     this.setState(state)
   }
 
@@ -99,8 +114,8 @@ class GameCard extends Component {
     let selectedItem = this.state.selectedItem
     let selectedLocation = this.state.selectedLocation
     let world = this.props.worldState
-    let locationMessages = this.state.locationMessages
-    let characterMessages = this.state.characterMessages
+    let scene = this.state.scene
+    let relationship = this.state.relationship
 
   	let summary
     let back
@@ -134,16 +149,22 @@ class GameCard extends Component {
         }
       })
     }
-    if(this.state.listView === 'messages'){
+    if(this.state.listView === 'scene'){
       if(this.state.summaryView ==='location'){
-        console.log(this.state)
-        list = locationMessages.map((message) => {
-          return (
-            <MessageListItem message={message}></MessageListItem>
-          )
+        list = scene.map((sceneItem) => {
+          if(sceneItem.category === 'message'){
+             return (
+              <MessageListItem message={sceneItem}></MessageListItem>
+            ) 
+          }else if(sceneItem.category === 'record'){
+            return (
+              <RecordListItem record={sceneItem}></RecordListItem>
+            )
+          }
+
         })
       }else{
-        list = characterMessages.map((message) => {
+        list = relationship.map((message) => {
           return (
             <MessageListItem message={message}></MessageListItem>
           )
