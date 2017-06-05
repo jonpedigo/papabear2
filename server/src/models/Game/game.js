@@ -42,7 +42,7 @@ GameSchema.methods.add = function (gameObject, options = {}, cb) {
     this.nodes.push(gameObject)
   }
 
-  this.saveState.push({value: gameObject, ref: collection})
+  this.saveState.push({value: gameObject, ref: collection, loop: options.loop})
 
   // only do this if the game is initalized, cuz it will happen on initzation
   if (!this.initialized) return
@@ -134,6 +134,7 @@ GameSchema.methods.saveAll = function (cb) {
 }
 
 GameSchema.methods.loop = function (cb) {
+  this.nodes
   cb(this)
 }
 

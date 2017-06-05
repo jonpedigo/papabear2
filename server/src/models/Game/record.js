@@ -34,7 +34,6 @@ const RecordSchema = new Schema({
     }
   }]
 },{
-  collection: 'sceneItems',
   timestamps: true
 })
 

@@ -19,7 +19,6 @@ const MessageSchema = new Schema({
     ref: 'Character'
   }
 }, {
-  collection: 'sceneItems',
   timestamps: true // Saves createdAt and updatedAt as dates. createdAt will be our timestamp.
 })
 

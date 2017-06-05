@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');mongoose.Promise = require('bluebird');
-const config = require('../src/config/main');
-mongoose.Promise = require('bluebird');
+const mongoose = require('mongoose')
+const config = require('../src/config/main')
+mongoose.Promise = require('bluebird')
 const bluebird = require('bluebird')
 
 const Routine = require('../src/models/Game/routine')
@@ -11,8 +11,7 @@ const Location = require('../src/models/Game/location')
 const Kingdom = require('../src/models/Game/kingdom')
 const Game = require('../src/models/Game/game')
 const User = require('../src/models/user')
-const Conversation = require('../src/models/conversation')
-const Message = require('../src/models/message')
+const Message = require('../src/models/Game/message')
 
 
 mongoose.connect(config.database).then(() => {
@@ -38,9 +37,6 @@ mongoose.connect(config.database).then(() => {
 	   console.log('collection removed') 
 	})
 	User.remove({}, function(err) { 
-	   console.log('collection removed') 
-	})
-	Conversation.remove({}, function(err) { 
 	   console.log('collection removed') 
 	})
 	Message.remove({}, function(err) { 

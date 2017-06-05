@@ -162,7 +162,6 @@ const WORLD_STATE = function(game){
 }
 
 const MESSAGE = function(message){
-	console.log("...did we fuk up?")
 	return {
 		body: message.body,
 		category: 'message',

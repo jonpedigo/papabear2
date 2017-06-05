@@ -101,6 +101,12 @@ class GameCard extends Component {
     this.setState(state)
   }
 
+  goToListView(name){
+    let state = this.state
+    state.listView = name
+    this.setState(state)
+  }
+
   render() {
   	if(!this.props.playerState && !this.props.worldState){
   		return (
@@ -131,7 +137,9 @@ class GameCard extends Component {
     }
 
   	let list = []
-  	if(this.state.listView === 'characters'){
+    //real statement below
+    //this.state.listView === 'characters' && 
+  	if(this.state.summaryView !== 'world'  && this.state.summaryView !== 'character'){
   		list = currentLocation.characters.map((character) => {
   			return (
   				<CharacterListItem goToSummary={this.goToCharacterSummary.bind(this, character)} character={character}/>
@@ -241,6 +249,8 @@ class GameCard extends Component {
         }
       })
     }
+
+          // <div onClick={this.goToListView.bind(this, 'characters')}> {'See Everyone Here >'}</div>
 
     return (
       <div className="GameCard">
