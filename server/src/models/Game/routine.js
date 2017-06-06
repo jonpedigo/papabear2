@@ -30,6 +30,26 @@ RoutineSchema.methods.initialize = function (state, cb) {
   // this.owner = state['Character'].find((character) => (character.family && character.family._id == this._id) || character.family == this._id)
 }
 
+RoutineSchema.methods.loop = function(game, character){
+  switch(this.category){
+    case 'woodcut':
+
+    break;
+    case 'mine':
+
+    break;
+    case 'herd':
+    break;
+    case 'trainWarfare':
+          //add experience
+    break;
+    case 'trainMagic':
+    break;
+    case 'trainStealth':
+    break;
+  }
+}
+
 const Routine = mongoose.model('Routine', RoutineSchema)
 
 // //= ===============================

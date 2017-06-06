@@ -74,7 +74,12 @@ const CharacterSchema = new Schema({
 // = ===============================
 
 CharacterSchema.methods.loop = function(game){
+  // if(this.currentRoutine){
+  //   console.log(this.currentRoutine.category)
+  // }else console.log('no routine')
+  if(this.currentRoutine){
 
+  }
 }
 
 CharacterSchema.methods.update = function(props){

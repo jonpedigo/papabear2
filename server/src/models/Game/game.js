@@ -134,7 +134,9 @@ GameSchema.methods.saveAll = function (cb) {
 }
 
 GameSchema.methods.loop = function (cb) {
-  this.nodes
+  this.nodes.forEach((node) => {
+    node.value.loop(this)
+  })
   cb(this)
 }
 
