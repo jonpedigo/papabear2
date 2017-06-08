@@ -12,7 +12,7 @@ const LOCATIONS = require('./locations')
 const CHARACTERS = require('./characters')
 const GAME = require('./game')
 
-const DEFAULT_KINGDOM_LOCATIONS = ['quarry', 'field', 'forest', 'barracks', 'sewers', 'tower', 'gate', 'supplyDepot', 'royalChambers', 'townCenter']
+const DEFAULT_KINGDOM_LOCATIONS = ['quarry', 'field', 'forest', 'gate', 'royalChambers', 'townCenter']
 
 module.exports = {
   SKILLS: SKILLS,

@@ -49,22 +49,22 @@ var locations = [
 		name: 'Casterly Rock',
 		category: 'royalChambers'
 	},
-	{
-		name: 'Storage...space',
-		category: 'supplyDepot'
-	},
-	{
-		name: 'Wizards TOWER',
-		category: 'tower'
-	},
-	{
-		name: 'Poop zone',
-		category: 'sewers'
-	},
-	{
-		name: 'BADABUM BUMP',
-		category: 'barracks'
-	}
+	// {
+	// 	name: 'Storage...space',
+	// 	category: 'supplyDepot'
+	// },
+	// {
+	// 	name: 'Wizards TOWER',
+	// 	category: 'tower'
+	// },
+	// {
+	// 	name: 'Poop zone',
+	// 	category: 'sewers'
+	// },
+	// {
+	// 	name: 'BADABUM BUMP',
+	// 	category: 'barracks'
+	// }
 ]
 
 //kingdoms are 8,8 in size
