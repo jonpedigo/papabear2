@@ -32,7 +32,8 @@ const PLAYER_STATE = function(game, player){
 			// end supply map--
 			kingdom: {
 				_id: player.currentLocation.kingdom._id,
-				name: player.currentLocation.kingdom.name
+				name: player.currentLocation.kingdom.name,
+				//charactersLength for the front end...cant be a function...?? //actually get the characters?? and return an object with the .length..idk
 			},
 			// need to remove player character
 			// -- characters map
@@ -59,9 +60,11 @@ const PLAYER_STATE = function(game, player){
 					damage: character.damage,
 					currentRoutine: character.currentRoutine ? {
 				  	category: character.currentRoutine.category 
-					} : null
+					} : null,
+					experience : character.experience
 				}
 			}),
+			
 			// end characters map --
 			deficit: player.currentLocation.deficit,
 			coordinates: player.currentLocation.coordinates,

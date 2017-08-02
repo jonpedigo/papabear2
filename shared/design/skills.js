@@ -23,12 +23,66 @@ SKILLS['stealth'] = {
 		'sneak',
 		'steal',
 		'start at 8',
-		'sense skills',
+		'sense charm level?? I still like sense skill....you CANT do sense charm',
 		'sense abilities',
 		'start at 20',
 		'bug',
 		'start at 50'
-	]
+	],
+	CALCULATE_SNEAK: function(location, character, analysis){
+		///does it add this function to the front end?? or do I check to see if im on front end here or not...
+		var totalWarfareLevelOfGuards = location.getCharacters().reduce(function(character){
+			return SKILLS.GET_LEVEL(character.experience.warfare)
+		}, 0)
+
+		///just need .length. perhaps create a function on front end that grabs the characters from the world objects?
+		var maxTotalWarfareLevel = (location.kingdom.getCharacters().length / 4) * 100
+
+		//lower limit 1-99 1%-7%
+		//higher limit 70%
+		var lowerLimit = 7 //lower limit w 100 stealth
+		var upperLimit = 70 //upper limit w 100 stealth
+		var variablePortion = upperLimit - lowerLimit
+		var increment = variablePortion/maxTotalLevel; //only use difference of total percent
+		var percentGuarded = 0
+
+		for(var i = 0; i < maxTotalWarfareLevel; i++){
+			if(i > totalWarfareLevelOfGuards) break; //stop running if youve reached total level
+			percentGuarded += increment
+			//diminishing increase in (percent subractd from stealth success)
+		}
+
+		//analysis so short circuit
+		if(analysis && !character){
+			return {
+				percentGuarded: percentGuarded
+			}
+		}
+
+		var percent = upperLimit - percentGuarded
+
+		var stealthLevel = SKILLS.GET_LEVEL(character.experience.stealth)
+		percent = (stealthLevel/100) * percent
+		//only take a fraction of the remaining percent 
+
+		//analysis so short circuit
+		if(analysis && character){
+			return {
+				chance: percent,
+			}
+		}
+
+		//not analysis, dont short circuit
+		let roll = Math.random() * 100;
+		console.log(character.name + ' ' + character.family.name " rolled a " + roll + ' on a stealth roll up against ' + percent ' percent chance at the ' + location.name + ' of ' + location.kingdom.name)
+		//roll falls within the range specified
+		if(roll <= percent){
+ 			return true
+		}else{
+			return false
+		}
+
+	}
 }
 
 SKILLS['warfare'] = {
