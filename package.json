@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "API server for MERN Starter, powered by Express.",
   "main": "index.js",
-  "scripts": {
-    "test": "mocha -S --ui bdd --require ./tests/spec_helper.js --recursive ./tests --reporter spec",
-    "dev": "nodemon server/index.js --watch server --watch ./client/src/design"
-  },
   "keywords": [
     "mern",
     "api",
