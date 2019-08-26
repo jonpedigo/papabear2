@@ -1,6 +1,6 @@
 import { reset } from 'redux-form';
 import { getData, postData, putData, deleteData } from '../index';
-import { EVENT_RESULT, EVENT_ANALYZE, EVENT_CLOSE, EVENT_REVIEW, GIVE_EVENT_LOCAL_PROPS, GAME_ERROR, GAME_SUCCESS } from '../types'
+import { EVENT_OPEN, EVENT_RESULT, EVENT_ANALYZE, EVENT_CLOSE, EVENT_REVIEW, GIVE_EVENT_LOCAL_PROPS, GAME_ERROR, GAME_SUCCESS } from '../types'
 
 //= ===============================
 // Character actions
@@ -30,5 +30,11 @@ export function giveEventLocalProps(props){
 export function closeEventPopup(props) {
   return (dispatch) => {
     dispatch({type: EVENT_CLOSE})
+  };
+}
+
+export function openEventPopup(props) {
+  return (dispatch) => {
+    dispatch({type: EVENT_OPEN})
   };
 }

@@ -12,14 +12,14 @@ const Kingdom = require('../src/models/Game/kingdom')
 const Game = require('../src/models/Game/game')
 const User = require('../src/models/user')
 
-const RoutineController = require("../src/controllers/Game/routine")()
-const CharacterController = require("../src/controllers/Game/character")()
-const LocationController = require("../src/controllers/Game/location")()
-const FamilyController = require("../src/controllers/Game/family")()
-const GameController = require("../src/controllers/Game/game")()
-const ItemController = require("../src/controllers/Game/item")()
+const RoutineController = require('../src/controllers/Game/routine')()
+const CharacterController = require('../src/controllers/Game/character')()
+const LocationController = require('../src/controllers/Game/location')()
+const FamilyController = require('../src/controllers/Game/family')()
+const GameController = require('../src/controllers/Game/game')()
+const ItemController = require('../src/controllers/Game/item')()
 
-const DESIGN = require('../../shared/design')
+const DESIGN = require('../client/src/design')
 
 var familys = [
 	{
@@ -59,9 +59,6 @@ var familys = [
 		name: 'Gould'
 	},
 	{
-		name: 'Patinella'
-	},
-	{
 		name: 'Rosenblum'
 	}
 ]
@@ -94,9 +91,6 @@ var characters = [
 	},
 	{
 		name: 'Snow'
-	},
-	{
-		name: 'Sam'
 	},
 	{
 		name: 'Cartman'
@@ -211,7 +205,7 @@ mongoose.connect(config.database).then(() => {
 // 		return FamilyController.add(game, family)
 // 	}).then((family) => {
 // 		let character = {
-// 			name: `FIRST NAME ${kingdom.name}`, 
+// 			name: `FIRST NAME ${kingdom.name}`,
 // 			kingdom: family.kingdom._id,
 // 			family: family._id
 // 		}

@@ -1,6 +1,6 @@
 // Importing Node packages required for schema
 const mongoose = require('mongoose')
-const LOCATIONS = require('../../../../shared/design').LOCATIONS
+const LOCATIONS = require('../../../client/src/design').LOCATIONS
 const Message = require('./message')
 const Record = require('./record')
 

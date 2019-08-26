@@ -1,6 +1,6 @@
 const locationModel = require('../../models/Game/location')
-const LOCATIONS = require('../../../../shared/design').LOCATIONS
-const GAME = require('../../../../shared/design').GAME
+const LOCATIONS = require('../../../client/src/design').LOCATIONS
+const GAME = require('../../../client/src/design').GAME
 
 module.exports = function () {
 

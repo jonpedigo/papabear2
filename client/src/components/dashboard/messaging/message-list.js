@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import MessageItem from './message-item';
+
 const moment = require('moment');
 
-import MessageItem from './message-item';
 
 class MessageList extends Component {
   render() {

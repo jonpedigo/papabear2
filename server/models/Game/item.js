@@ -2,7 +2,7 @@
 const mongoose = require('mongoose')
 // const extend = require('mongoose-schema-extend')
 
-const ITEMS = require('../../../../shared/design').ITEMS
+const ITEMS = require('../../../client/src/design').ITEMS
 
 const Schema = mongoose.Schema
 

@@ -1,6 +1,6 @@
 // Importing Node packages required for schema
 const mongoose = require('mongoose')
-const DEFAULT_KINGDOM_LOCATIONS = require('../../../../shared/design').DEFAULT_KINGDOM_LOCATIONS
+const DEFAULT_KINGDOM_LOCATIONS = require('../../../client/src/design').DEFAULT_KINGDOM_LOCATIONS
 
 const Schema = mongoose.Schema
 

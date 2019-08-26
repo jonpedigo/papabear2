@@ -13,7 +13,7 @@ export function sneakThroughLocation(props) {
     postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data)
   }
 }
-	
+
 //item and location id
 export function stealFromLocation(props, analysis = true) {
   const data = props
@@ -28,7 +28,7 @@ export function invadeLocation(props, analysis = true) {
   const data = props
   const url = `/location/${props.locationId}/invade`
   return (dispatch) => {
-  	if(analysis) return dispatch(analyzeEvent(prop))
+  	if(analysis) return dispatch(analyzeEvent(props))
     postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data)
   }
 }

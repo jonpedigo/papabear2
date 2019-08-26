@@ -74,6 +74,8 @@ class ResetPassword extends Component {
   render() {
     const { handleSubmit } = this.props;
 
+    const { passwordConfirm } = this.state;
+    
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
         <fieldset className="form-group">

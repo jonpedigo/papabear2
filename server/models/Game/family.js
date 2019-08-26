@@ -1,6 +1,6 @@
 // Importing Node packages required for schema
 const mongoose = require('mongoose')
-const SKILLS_LIST = require('../../../../shared/design').SKILLS.LIST
+const SKILLS_LIST = require('../../../client/src/design').SKILLS.LIST
 
 const Schema = mongoose.Schema
 

@@ -4,7 +4,7 @@ import cookie from 'react-cookie';
 import { postData, API_URL, CLIENT_ROOT_URL, errorHandler } from './index';
 import { AUTH_USER, AUTH_ERROR, UNAUTH_USER, FORGOT_PASSWORD_REQUEST, RESET_PASSWORD_REQUEST, PROTECTED_TEST, EVENT_SUCCESS, GAME_ERROR, SET_FAMILY, SET_KINGDOM, SET_GAME, SET_PLAYER, EVENT_RESULT } from './types';
 import socket from './socket'
-import {id} from '../../../shared/design/game'
+import { id } from '../design/game'
 let gameId = id
 
 

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -S --ui bdd --require ./tests/spec_helper.js --recursive ./tests --reporter spec",
-    "dev": "nodemon src/index.js --watch src --watch ../shared/design"
+    "dev": "nodemon server/index.js --watch server --watch ./client/src/design"
   },
   "keywords": [
     "mern",
@@ -42,8 +42,9 @@
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.6.0",
     "mocha": "^3.2.0",
+    "nodemon": "^1.11.0",
     "should": "^11.1.1",
     "supertest": "^2.0.0",
-    "nodemon": "^1.11.0"
+    "webpack": "^4.39.2"
   }
 }

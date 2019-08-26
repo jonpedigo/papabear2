@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import * as actions from '../../actions/billing';
+import CheckoutForm from './checkout-form';
+
 const moment = require('moment');
 
-import CheckoutForm from './checkout-form';
 
 class BillingSettings extends Component {
   constructor(props) {

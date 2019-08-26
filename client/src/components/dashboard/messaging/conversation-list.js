@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import cookie from 'react-cookie';
+import ConversationItem from './conversation-item';
+
 const moment = require('moment');
 
-import ConversationItem from './conversation-item';
 
 class ConversationList extends Component {
   constructor(props) {

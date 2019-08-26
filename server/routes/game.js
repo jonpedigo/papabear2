@@ -17,7 +17,7 @@ const stealthController = require('../controllers/Game/stealth')()
 const travelController = require('../controllers/Game/travel')()
 const warController = require('../controllers/Game/war')()
 
-const DESIGN = require('../../../shared/design')
+const DESIGN = require('../../client/src/design')
 
 const User = require('../models/user')
 const setUserInfo = require('../helpers').setUserInfo;

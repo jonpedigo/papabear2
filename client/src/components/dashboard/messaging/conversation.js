@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import * as actions from '../../../actions/messaging';
+import socket from '../../../actions/socket';
+import { fetchConversation } from '../../../actions/messaging';
 
 import MessageList from './message-list';
 import ReplyMessage from './reply-message';
-
-const socket = actions.socket;
 
 class Conversation extends Component {
   constructor(props) {
@@ -58,4 +57,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, actions)(Conversation);
+export default connect(mapStateToProps, { fetchConversation })(Conversation);

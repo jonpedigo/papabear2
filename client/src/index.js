@@ -13,13 +13,13 @@ import { AUTH_USER, UPDATE_GAME } from './actions/types'
 import { createLogger } from 'redux-logger'
 import socket from './actions/socket'
 
+// Import stylesheets
+import './stylesheets/base.scss'
+import './components/Game/components/index.scss'
+
 const logger = createLogger({
   predicate: (getState, action) => action.type !== UPDATE_GAME
 })
-
-// Import stylesheets
-import './public/stylesheets/base.scss'
-import './components/Game/components/index.scss'
 
 // Initialize Google Analytics
 ReactGA.initialize('UA-000000-01')
@@ -38,7 +38,7 @@ if (token && user) {
   // Update application state. User has token and is probably authenticated
   store.dispatch({ type: AUTH_USER })
   store.dispatch(resumeGame())
-  socket.emit('authenticate', token) 
+  socket.emit('authenticate', token)
     .on('authenticated', function () {
       socket.authenticated = true
       console.log('socket authorized, joining game')

@@ -26,7 +26,7 @@ export function startConversation({ recipient, composedMessage }) {
 
     // Clear form after message is sent
     dispatch(reset('composeMessage'));
-    browserHistory.push(`/dashboard/conversation/view/${response.data.conversationId}`);
+    browserHistory.push(`/dashboard/conversation/view/${data.conversationId}`);
   };
 }
 

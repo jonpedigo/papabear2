@@ -7,7 +7,7 @@ import { analyzeEvent } from './eventPopup'
 // Character actions
 //= ===============================
 
-export function attackCharacter({category, character: { _id: characterId }}, analysis = true) {
+export function attackCharacter(props, analysis = true) {
   const data = props;
   const url = `/character/{props.characterId}/attack`;
   return (dispatch) => {
@@ -16,11 +16,11 @@ export function attackCharacter({category, character: { _id: characterId }}, ana
   };
 }
 
-export function senseCharacter({category, character: { _id: characterId }}, analysis = true) {
+export function senseCharacter(props, analysis = true) {
   const data = props;
   const url = `/character/${props.characterId}/sense/${props.category}`;
   return (dispatch) => {
-  	if(analysis && category !== 'bug') return dispatch(analyzeEvent(props))
+  	if(analysis && props.category !== 'bug') return dispatch(analyzeEvent(props))
     postData(EVENT_RESULT, GAME_ERROR, true, url, dispatch, data);
   };
 }

@@ -12,6 +12,7 @@ export const AUTH_USER = 'auth_user',
 // User Profile Actions
 //= =====================
 export const FETCH_USER = 'fetch_user';
+export const ERROR_RESPONSE = 'error_reponse';
 
 //= =====================
 // Messaging Actions
@@ -47,6 +48,7 @@ export const GAME_ERROR = 'game_error';
 export const GAME_SUCCESS = 'event_success';
 export const EVENT_RESULT = 'event_result';
 export const EVENT_CLOSE = 'event_close';
+export const EVENT_OPEN = 'event_open';
 export const EVENT_ANALYZE = 'event_analyze';
 export const EVENT_REVIEW = 'event_review';
 export const GIVE_EVENT_LOCAL_PROPS = 'give_event_local_props';
@@ -54,7 +56,3 @@ export const SET_PLAYER = 'set_player';
 export const SET_KINGDOM = 'set_kingdom';
 export const SET_FAMILY = 'set_family';
 export const SET_GAME = 'set_game';
-
-
-
-

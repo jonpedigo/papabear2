@@ -1,4 +1,4 @@
-const ITEMS = require('../../../../shared/design').ITEMS
+const ITEMS = require('../../../client/src/design').ITEMS
 const itemModel = require('../../models/Game/item').Item
 
 module.exports = function () {
@@ -27,7 +27,7 @@ module.exports = function () {
 		if(player.currentLocation.kingdom.name !== player.kingdom.name) return cb('You can only craft items for your team')
 		if(player.currentLocation.category !== 'supplyDepot') return cb('You can only craft items while you are at a supply depot')
 		if(!ITEMS[props.name].CRAFT_CHECK(player, player.currentLocation.supply)) return cb('You don\'t have the resources to craft this item')
-		
+
 		add(game, props, (err, item) => {
 			if(err) return cb(err)
 			player.currentLocation.supply.push(item)

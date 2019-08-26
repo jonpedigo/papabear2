@@ -12,7 +12,7 @@ var ITEMS = {}
 ITEMS['fire wizard staff'] = {
 	CRAFT_CHECK: function(player, supply){
 		if(player.activeLevels().sorcery < 20) return false
-		if(supply.filter(function(item){item.name === 'fire logs'}).length < 20)  return false
+		if(supply.filter(function(item){ return item.name === 'fire logs' }).length < 20) return false
 		return true
 	},
 	MODIFIER: function(attacker, defender){

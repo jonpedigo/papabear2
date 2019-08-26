@@ -57,8 +57,8 @@ class CheckoutForm extends Component {
 
     that.setState({ error: '' });
 
-    Stripe.setPublishableKey(this.state.stripePublicKey);
-    Stripe.card.createToken({
+    window.Stripe.setPublishableKey(this.state.stripePublicKey);
+    window.Stripe.card.createToken({
       number: this.state.cardNumber,
       cvc: this.state.cvc,
       exp_month: this.state.expMonth,

@@ -1,7 +1,7 @@
 //WARFARE active level includes possible equipment
 
 var SKILLS = {
-	//other stealth names - secrecy, silence, camoflauge, covert, spycraft, theivery, asassination, padfoot??? 
+	//other stealth names - secrecy, silence, camoflauge, covert, spycraft, theivery, asassination, padfoot???
 	LIST: ['mining', 'woodcutting', 'herding', 'stealth', 'magic', 'warfare'],
 }
 
@@ -43,7 +43,7 @@ SKILLS['stealth'] = {
 		var lowerLimit = 7 //lower limit w 100 stealth
 		var upperLimit = 70 //upper limit w 100 stealth
 		var variablePortion = upperLimit - lowerLimit
-		var increment = variablePortion/maxTotalLevel; //only use difference of total percent
+		var increment = variablePortion/maxTotalWarfareLevel; //only use difference of total percent
 		var percentGuarded = 0
 
 		for(var i = 0; i < maxTotalWarfareLevel; i++){
@@ -63,7 +63,7 @@ SKILLS['stealth'] = {
 
 		var stealthLevel = SKILLS.GET_LEVEL(character.experience.stealth)
 		percent = (stealthLevel/100) * percent
-		//only take a fraction of the remaining percent 
+		//only take a fraction of the remaining percent
 
 		//analysis so short circuit
 		if(analysis && character){
@@ -73,8 +73,8 @@ SKILLS['stealth'] = {
 		}
 
 		//not analysis, dont short circuit
-		let roll = Math.random() * 100;
-		console.log(character.name + ' ' + character.family.name " rolled a " + roll + ' on a stealth roll up against ' + percent ' percent chance at the ' + location.name + ' of ' + location.kingdom.name)
+		var roll = Math.random() * 100;
+		console.log(character.name + ' ' + character.family.name + " rolled a " + roll + ' on a stealth roll up against ' + percent + ' percent chance at the ' + location.name + ' of ' + location.kingdom.name)
 		//roll falls within the range specified
 		if(roll <= percent){
  			return true
@@ -146,12 +146,12 @@ SKILLS.GET_LEVEL = function(experience){
 }
 
 SKILLS.GET_ABILITIES = function(skillName, experience){
-	let abilities = []
+	var abilities = []
 
 	for(var i = 0; i < this.ABILITY_CURVE.length; i++){
 		if(experience > this.ABILITY_CURVE[i]){
 			abilities.push(this[skillName].ABILITIES[i])
-		} 
+		}
 	}
 
 	return abilities
@@ -162,9 +162,9 @@ SKILLS.LEVEL_CURVE = function(){
 		return (Math.pow(level, 1.8) * 100) / 2
 	}
 
-	let levels = [0]
+	var levels = [0]
 
-	for(i = 1; i <= 100; i++){
+	for(var i = 1; i <= 100; i++){
 		levels.push(equation(i))
 	}
 
@@ -176,9 +176,9 @@ SKILLS.ABILITY_CURVE = function(){
 		return (Math.pow(2, number) * (3600 * 2))
 	}
 
-	let abilities = [0] //<-- you can always use the first ability
+	var abilities = [0] //<-- you can always use the first ability
 
-	for(i = 1; i < 8; i++){
+	for(var i = 1; i < 8; i++){
 		abilities.push(equation(i))
 	}
 

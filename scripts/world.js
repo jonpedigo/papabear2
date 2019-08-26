@@ -19,7 +19,7 @@ const FamilyController = require("../src/controllers/Game/family")()
 const GameController = require("../src/controllers/Game/game")()
 const ItemController = require("../src/controllers/Game/item")()
 
-const DESIGN = require('../../shared/design')
+const DESIGN = require('../client/src/design')
 
 //I should just have a file for 1) making a game 2) adding a kingdom, w character 3) adding items?
 var game
@@ -138,4 +138,3 @@ mongoose.connect(config.database).then(() => {
 		}).catch(console.log)
 	})
 })
-

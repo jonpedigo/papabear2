@@ -45,7 +45,7 @@ io.sockets.on('connection', function(socket){
         socket.user = user
         socket.emit('authenticated')
       } else socket.emit('unauthorized')
-    })   
+    })
   })
 })
 
@@ -60,7 +60,7 @@ require('./models/Game/game')
 require('./models/Game/record')
 require('./models/Game/message')
 
-const DESIGN = require('../../shared/design')
+const DESIGN = require('../client/src/design')
 gameController = require('./controllers/Game/game')()
 gameController.populateGames((game) => {
   game.state['Character'].forEach((character) => {

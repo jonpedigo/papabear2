@@ -1,4 +1,4 @@
-const SPEED = require('../../../../shared/design/game').SPEED
+const SPEED = require('../../../client/src/design/game').SPEED
 
 const routineModel = require('../../models/Game/routine')
 
