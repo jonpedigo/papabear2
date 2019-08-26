@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha -S --ui bdd --require ./tests/spec_helper.js --recursive ./tests --reporter spec",
     "dev": "nodemon server/index.js --watch server --watch ./client/src/design",
-    "start": "node server/index.js && react-scripts-start"
+    "start": "node server/index.js && serve -s build"
   },
   "keywords": [
     "mern",
@@ -43,6 +43,6 @@
     "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
     "should": "^11.1.1",
-    "supertest": "^2.0.0"
+    "supertest": "^2.0.0",
   }
 }
