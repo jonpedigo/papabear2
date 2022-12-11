@@ -19,7 +19,7 @@
     "bluebird": "^3.5.0",
     "body-parser": "^1.15.0",
     "cookie-parser": "^1.4.3",
-    "express": "^4.13.4",
+    "express": "^4.17.3",
     "express-session": "^1.15.2",
     "jsonwebtoken": "^5.7.0",
     "mailchimp-v3": "^1.0.1",
